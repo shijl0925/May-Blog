@@ -1,0 +1,22 @@
+{% macro render_field_with_errors(field, icon_class=None) %}
+  <div class="form-group">
+    <div class="input-group">
+        {% if icon_class %}
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="{{ icon_class }}"></i></span>
+        </div>
+        {% endif %}
+        {{ field(placeholder=field.label.text, class_='form-control', **kwargs)|safe }}
+    </div>
+
+    {% if field.errors %}
+      <ul>
+      {% for error in field.errors %}
+        <li>
+            <small class="form-text text-muted mb-4">{{ error }}</small>
+        </li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+{% endmacro %}

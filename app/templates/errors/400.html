@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+    .navbar {
+        background-color: #6f7782;
+    }
+    footer.page-footer {
+        background-color: #6f7782;
+    }
+    </style>
+{% endblock styles %}
+
+{% block title %}400 Error{% endblock %}
+
+{% block page_content %}
+    <div class="error">
+        <div class="error__content">
+          <h2>400</h2>
+          <h3>{{ description|default('Bad Request') }}</h3>
+          <a href="{{ url_for("posts.posts") }}" class="btn btn-accent" style="border-radius: 50px;">&larr; Go Home</a>
+        </div>
+    </div>
+{% endblock %}

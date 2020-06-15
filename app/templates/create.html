@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% from "macro.html" import render_field_with_errors %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+    .navbar {
+        background-color: #6f7782;
+    }
+    footer.page-footer {
+        background-color: #6f7782;
+    }
+    </style>
+{% endblock styles %}
+
+{% block page_content %}
+    <div class="row mt-1 mb-5 pt-3 mx-4">
+        <!-- Main List -->
+        <div class="col-lg-12 col-12">
+            <div class="card">
+                <!-- Card content -->
+                <form class="card-body" method="POST"
+                      action="{% if post %}{{ url_for('posts.edit_post', post_slug=post.slug) }}{% else %}{{ url_for('posts.create_post') }}{% endif %}">
+                    {{ form.csrf_token }}
+                    <div class="row">
+                      <!-- Grid column -->
+                      <div class="col-md-8">
+                          {{ render_field_with_errors(form.title) }}
+                      </div>
+                      <!-- Grid column -->
+
+                      <!-- Grid column -->
+                      <div class="col-md-4">
+                          <div class="form-group">
+                              {{ form.category.label }}
+                              <div style="display: inline-block;vertical-align: top; margin-left: -15px; margin-top: -15px;">
+                                <span data-toggle="modal" data-target="#create_category" style="display: inline-block;">
+                                    <button type="button" class="btn btn-sm btn-link" style="width:40px;padding-left:2px;padding-right:2px;">
+                                        <i class="fas fa-plus-circle" style="color: #3f51b5; font-size: 12px;"></i>
+                                    </button>
+                                </span>
+                              </div>
+                              {{ form.category }}
+                          </div>
+                      </div>
+                      <!-- Grid column -->
+                    </div>
+
+                    {{ render_field_with_errors(form.slug) }}
+                    {{ render_field_with_errors(form.body) }}
+
+                    <div class="btn-group">
+                        <div class="form-group">
+                            {{ form.publish_submit }}
+                        </div>
+                        <div class="form-group ml-1">
+                            {{ form.save_submit }}
+                        </div>
+                    </div>
+                </form>
+                <div class="modal fade" style="z-index: 11112;" id="create_category" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-notify modal-info">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h6 class="modal-title" id="exampleModalLabel">Creat a new category</h6>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="mt-3" method="POST" action="{{ url_for('posts.create_category') }}">
+                                    {{ create_category_form.csrf_token }}
+                                    {{ render_field_with_errors(create_category_form.name) }}
+
+                                    <div>
+                                        <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main List -->
+    </div>
+{% endblock page_content %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='body') }}
+{% endblock %}
+
+{% block footer_attribs %}fixed-bottom{% endblock footer_attribs %}

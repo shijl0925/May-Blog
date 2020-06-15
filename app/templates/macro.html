@@ -1,0 +1,29 @@
+{% macro nav_active_item(endpoints, text, icon_class) -%}
+    <li class="nav-item ml-4 mb-0{% if request.endpoint and request.endpoint in endpoints %} active{% endif %}">
+        <a class="nav-link waves-effect waves-light font-weight-bold" href="{{ url_for(endpoints[0], **kwargs) }}">
+            <i class="{{ icon_class }}"></i>
+            {{ text }}
+            {% if request.endpoint and request.endpoint == endpoint %}
+              <span class="sr-only">(current)</span>
+            {% endif %}
+        </a>
+    </li>
+{%- endmacro %}
+
+
+{% macro render_field_with_errors(field) %}
+  <div class="form-group">
+    {{ field.label }}
+    {{ field(**kwargs)|safe }}
+
+    {% if field.errors %}
+      <ul>
+      {% for error in field.errors %}
+        <li>
+            <small class="form-text text-muted mb-4">{{ error }}</small>
+        </li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+{% endmacro %}

@@ -1,0 +1,16 @@
+flask
+flask-wtf
+WTForms-SQLAlchemy
+flask-bootstrap
+flask-mail
+flask-security
+flask-script
+flask-avatars
+flask-migrate
+flask-debugtoolbar
+SQLAlchemy>=1.2.15
+Flask-SQLAlchemy>=2.3.2
+gevent>=1.4.0
+gunicorn>=19.9.0
+Flask_AdminLTE3
+Flask-MDBootstrap

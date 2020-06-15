@@ -1,0 +1,67 @@
+{% extends 'myadmin3/my_master.html' %}
+{% block head_css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='jcrop/jquery.Jcrop.min.css') }}">
+{% endblock head_css %}
+
+{% block body %}
+    {{ super() }}
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Change Avatar</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{ admin_view.admin.url }}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{{ url_for('profile.index') }}">User Profile</a></li>
+              <li class="breadcrumb-item active">Change Avatar</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <div class="container">
+        <section class="section team-section">
+            <div class="row">
+                <div class="col-md-6">
+                    <form method="POST" action="{{ url_for('profile.upload_avatar') }}" enctype="multipart/form-data">
+                        {{ upload_form.csrf_token }}
+                        <div class="md-form mb-3">
+                            {{ upload_form.image }}
+                        </div>
+                        <div class="form-group">
+                            {{ upload_form.submit }}
+                        </div>
+                    </form>
+
+                    <small class="text-danger">
+                        Your file's size must be less than 3 MB, the allowed formats are png and jpg.
+                    </small>
+                </div>
+
+                <div class="col-md-6">
+                    {{ avatars.crop_box('auth.get_avatar', current_user.avatar_raw) }}
+                    {{ avatars.preview_box('auth.get_avatar', current_user.avatar_raw) }}
+                    <form method="POST" action="{{ url_for('profile.crop_avatar') }}">
+                        {{ crop_form.csrf_token }}
+                        {{ crop_form.x }}
+                        {{ crop_form.y }}
+                        {{ crop_form.w }}
+                        {{ crop_form.h }}
+                        <div class="form-group mt-1">
+                            {{ crop_form.submit }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block tail_js %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='jcrop/jquery.Jcrop.min.js') }}"></script>
+    {{ avatars.init_jcrop() }}
+{% endblock tail_js %}

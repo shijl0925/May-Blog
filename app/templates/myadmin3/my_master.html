@@ -1,0 +1,31 @@
+{% extends 'flask-admin/base.html' %}
+
+{% block nav_control %}
+    <ul class="navbar-nav">
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ admin_view.admin.url }}" class="nav-link">Home</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block user_panel %}
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{{ url_for('auth.get_avatar', filename=current_user.avatar_m) }}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+            <a class="d-block" href="{{ url_for('profile.index') }}">
+                {% if current_user.full_name %}
+                    {{ current_user.full_name }}
+                {% endif %}
+            </a>
+        </div>
+      </div>
+{% endblock user_panel %}
+
+{% block footer %}
+    <div class="float-right d-none d-sm-inline">
+        Version 1.0.0
+    </div>
+    <strong>Copyright © 2019-2020 Flask-Base.</strong> All rights reserved.
+{% endblock footer %}

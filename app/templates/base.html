@@ -1,0 +1,109 @@
+{% extends "mdbootstrap/base.html" %}
+{% from 'macro.html' import nav_active_item %}
+{% block title %}May Notes{% endblock title %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/signin.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/error.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/progress.css') }}">
+
+{% endblock %}
+
+{% block header %}
+    <header>
+        {% block navbar %}
+            <nav class="navbar navbar-expand-lg navbar-dark {% block navbar_attribs %}{% endblock navbar_attribs %}">
+                <div class="container">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            {{ nav_active_item(['posts.posts'], 'Home', 'fas fa-home') }}
+                        </ul>
+                        <ul class="navbar-nav">
+                            {% if current_user.is_authenticated %}
+                                <li class="nav-item dropdown ml-4 mb-0">
+                                    <a class="nav-link dropdown-toggle waves-effect waves-light font-weight-bold" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <img class="rounded-circle z-depth-0" src="{{ url_for('auth.get_avatar', filename=current_user.avatar_s) }}"/>
+                                        <span class="clearfix d-none d-sm-inline-block">
+                                                {{ current_user.full_name }}
+                                        </span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="{{ url_for('posts.create_post') }}">
+                                            <i class="fas fa-file-alt"></i>
+                                            <span class="ml-1">Create A Post</span>
+                                        </a>
+                                        <a class="dropdown-item" href="{{ url_for('admin.index') }}">
+                                            <i class="fas fa-toolbox"></i>
+                                            <span class="ml-1">{{ _("Admin Dashboard") }}</span>
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+
+                                        <a class="dropdown-item" href="{{ url_for('security.logout') }}">
+                                            <i class="fas fa-sign-out-alt"></i>
+                                            <span class="ml-1">{{ _("Logout") }}</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            {% else %}
+                                <li class="nav-item ml-4 mb-0">
+                                    <a class="nav-link waves-effect waves-light font-weight-bold" href="{{ url_for('security.login') }}">
+                                        <i class="fas fa-sign-in-alt"></i>
+                                        <span class="clearfix d-none d-sm-inline-block">{{ _("Login") }}</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        {% endblock navbar %}
+
+        {% block intro %}
+        {% endblock intro %}
+    </header>
+{% endblock header %}
+
+{% block content %}
+    <!--Main Layout-->
+    <main>
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" style="position: fixed;top: 0;left: 0; right: 0;width: 100%;z-index: 11111;">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h5>{{ message }}</h5>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <div style="padding: 15px 0;">
+                {% block page_content %}
+                {% endblock %}
+            </div>
+        </div>
+    </main>
+{% endblock content %}
+
+{% block footer %}
+    <footer class="page-footer text-center text-md-left {% block footer_attribs %}{% endblock footer_attribs %}">
+    <!--Copyright-->
+    <div class="footer-copyright py-3 text-center">
+      <div class="container-fluid">
+          © 2019-2020 Copyright:
+          <a href="https://github.com/shijl0925">
+              <i class="fab fa-github"></i>
+              <strong>shijl0925</strong>
+          </a>
+      </div>
+    </div>
+    <!--/.Copyright-->
+    </footer>
+{% endblock %}
+
+

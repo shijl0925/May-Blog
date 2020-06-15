@@ -1,0 +1,73 @@
+  <section>
+    <div class="container-fluid white mb-1">
+      <hr class="mt-0">
+      <div class="container">
+        <!-- Grid row -->
+        <div class="row">
+          <!-- Grid column -->
+          <div class="col-md-6">
+            <h6 class="font-weight-bold mt-5 mb-3">LATESTS POSTS</h6>
+            <hr class="mb-5">
+            {% for post in latest_posts %}
+            <!-- Grid row -->
+            <div class="row mt-4">
+              <!-- Second column -->
+              <div class="col-12 mb-1">
+
+                <!-- Post data -->
+                <div class="">
+                  <p class="mb-1">
+                    <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="text-hover font-weight-bold">{{ post.title }}</a>
+                  </p>
+                  <p class="font-small grey-text">
+                    <em>{{ post.publish_time.strftime('%d/%m/%Y') }}</em>
+                  </p>
+                </div>
+
+              </div>
+              <!-- Second column -->
+
+            </div>
+            <!-- Grid row -->
+            {% endfor %}
+
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-6">
+            <h6 class="font-weight-bold mt-5 mb-3">OLDER POSTS</h6>
+            <hr class="mb-5">
+            {% for post in older_posts %}
+            <!-- Grid row -->
+            <div class="row mt-4">
+              <!-- Second column -->
+              <div class="col-12 mb-1">
+
+                <!-- Post data -->
+                <div>
+                  <p class="mb-1">
+                    <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="text-hover font-weight-bold">{{ post.title }}</a>
+                  </p>
+                  <p class="font-small grey-text">
+                    <em>{{ post.publish_time.strftime('%d/%m/%Y') }}</em>
+                  </p>
+
+                </div>
+
+              </div>
+              <!-- Second column -->
+
+            </div>
+            <!-- Grid row -->
+            {% endfor %}
+
+          </div>
+          <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+      </div>
+    </div>
+  </section>

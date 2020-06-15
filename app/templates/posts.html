@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+    .navbar {
+        background-color: #6f7782;
+    }
+    footer.page-footer {
+        background-color: #6f7782;
+    }
+    </style>
+{% endblock styles %}
+
+{% block page_content %}
+    <div class="row mt-3 pt-3">
+        <!-- Main List -->
+        {% include "list.html" %}
+        <!-- Main List -->
+
+        <!-- Sidebar -->
+        {% include "sidebar.html" %}
+        <!-- Sidebar -->
+    </div>
+    {% include "tail.html" %}
+{% endblock page_content %}

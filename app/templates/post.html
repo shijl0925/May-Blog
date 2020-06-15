@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+    .navbar {
+        background-color: #6f7782;
+    }
+    footer.page-footer {
+        background-color: #6f7782;
+    }
+    </style>
+{% endblock styles %}
+
+{% block page_content %}
+    <div class="row mt-3 pt-3">
+        <!-- Main List -->
+        <div class="col-lg-9 col-12 mt-1">
+          <!--Section: Blog v.4-->
+          <section class="section pb-3 wow fadeIn">
+
+            <!--Grid row-->
+            <div class="row mb-4">
+              <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center">
+                          <h2 class="card-title"><a><strong>{{ post.title }}</strong></a></h2>
+                          <p class="dark-grey-text">Written by <a><strong>{{ post.author.full_name }}</strong></a>, {{ post.publish_time.strftime('%d/%m/%Y') }}</p>
+                          {% if current_user.is_authenticated %}
+                          <div class="btn-group" role="group">
+                              <a href="{{ url_for('posts.edit_post', post_slug=post.slug) }}">
+                                  <button type="submit" class="btn btn-sm btn-blue-grey">
+                                      Edit
+                                  </button>
+                              </a>
+                              <form method="POST" action="{{ url_for('posts.delete_post', post_slug=post.slug) }}" onclick="return del()">
+                                  {{ operate_form.csrf_token }}
+                                  <button type="submit" class="btn btn-sm btn-blue-grey">
+                                      Delete
+                                  </button>
+                              </form>
+                          </div>
+                          {% endif %}
+                        </div>
+
+                        <div class="dark-grey-text mb-3 mt-4 mx-4">
+                            {{ post.body|safe }}
+                          <div class="mt-4 justify-content-end">
+                              <a class="float-left" href="{{ url_for("posts.posts") }}">
+                                  <i class="fas fa-arrow-circle-left"></i>
+                              </a>
+                              <a class="float-right">
+                                  <span class="badge badge-info">{{ post.category.name }}</span>
+                              </a>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <!--Grid row-->
+
+          </section>
+          <!--Section: Blog v.4-->
+        </div>
+
+        <!-- Sidebar -->
+        {% include "sidebar.html" %}
+        <!-- Sidebar -->
+    </div>
+    {% include "tail.html" %}
+{% endblock page_content %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript">
+        function del(){
+            if(!confirm("Are you Sure delete this post?")){
+                window.event.returnValue = false;
+            }
+        }
+    </script>
+{% endblock %}

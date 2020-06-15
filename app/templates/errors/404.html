@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+    .navbar {
+        background-color: #6f7782;
+    }
+    footer.page-footer {
+        background-color: #6f7782;
+    }
+    </style>
+{% endblock styles %}
+
+{% block title %}404 Error{% endblock %}
+
+{% block content %}
+    <div class="error">
+        <div class="error__content">
+          <h2>404</h2>
+          <h3>Something went wrong!</h3>
+          <p>Oops! This obviously isn't a page you were looking for.</p>
+          <a href="{{ url_for("posts.posts") }}" class="btn btn-accent" style="border-radius: 50px;">&larr; Go Home</a>
+        </div>
+    </div>
+{% endblock %}

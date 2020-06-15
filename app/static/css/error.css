@@ -1,0 +1,45 @@
+.error {
+    height: calc(100vh - 3.75rem);
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.error__content {
+    padding: 0 .9375rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: column;
+    flex-flow: column;
+    margin: auto;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+}
+
+.error__content h2 {
+    color: #cacedb;
+    font-weight: 700;
+    font-size: 3.75rem;
+    margin-bottom: 1.5625rem;
+}
+
+.error__content h3 {
+    font-weight: 500;
+    font-size: 2.1875rem;
+    margin-bottom: .625rem;
+}
+
+.error__content p {
+    color: #818ea3;
+}
+
+.btn.btn-pill {
+    border-radius: 50px;
+}
+
+.btn-accent {
+    color: #fff;
+    border-color: #007bff;
+    background-color: #007bff;
+    box-shadow: none;
+}

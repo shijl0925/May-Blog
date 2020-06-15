@@ -1,0 +1,225 @@
+{% extends 'myadmin3/my_master.html' %}
+
+{% block body %}
+    {{ super() }}
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">User Profile</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{ admin_view.admin.url }}">Home</a></li>
+              <li class="breadcrumb-item active">User Profile</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+
+    <div class="container">
+      <!-- Section: Team v.1 -->
+      <section class="section team-section">
+        <!-- Grid row -->
+        <div class="row">
+          <!-- Grid column -->
+          <div class="col-md-8 mb-4">
+            <!-- Card -->
+            <div class="card">
+              <!-- Card Data -->
+                <div class="card-header text-center">
+                    <h3 class="mb-0 font-weight-normal">Edit User Profile</h3>
+                </div>
+              <!-- Card Data -->
+
+              <!-- Card content -->
+              <form class="card-body" method="POST" action="{{ url_for('profile.index') }}">
+                <!-- Grid row -->
+                <div class="row mb-3">
+                  <!-- Grid column -->
+                  <div class="col-md-6">
+                    <div class="md-form form-sm mb-0">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" class="form-control form-control-sm" id="username" value="{{ current_user.username }}" disabled>
+                    </div>
+                  </div>
+                  <!-- Grid column -->
+
+                  <!-- Grid column -->
+                  <div class="col-md-6">
+                    <div class="md-form form-sm mb-0">
+                        <label for="email">Email Address</label>
+                        <input type="email" name="email" class="form-control form-control-sm" id="email" value="{{current_user.email}}" disabled>
+                    </div>
+                  </div>
+                  <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+
+                <!-- Grid row -->
+                <div class="row mb-3">
+                  <!-- Grid column -->
+                  <div class="col-md-6">
+                    <div class="md-form form-sm mb-0">
+                        <label for="first_name">First Name</label>
+                        <input type="text" name="first_name" class="form-control form-control-sm" id="first_name" value="{{ current_user.first_name }}">
+                    </div>
+                  </div>
+                  <!-- Grid column -->
+
+                  <!-- Grid column -->
+                  <div class="col-md-6">
+                    <div class="md-form form-sm mb-0">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" name="last_name" class="form-control form-control-sm" id="last_name" value="{{ current_user.last_name }}">
+                    </div>
+                  </div>
+                  <!-- Grid column -->
+
+                </div>
+                <!-- Grid row -->
+
+                <!-- Grid row -->
+                <div class="row mb-3">
+                  <!-- Grid column -->
+                  <div class="col-md-12">
+                    <div class="md-form form-sm mb-0">
+                        <label for="location">Address</label>
+                        <input type="text" name="location" class="form-control form-control-sm" id="location" value="{{ current_user.location }}">
+                    </div>
+                  </div>
+                  <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+
+                <!-- Grid row -->
+                <div class="row mb-3">
+                  <!-- Grid column -->
+                  <div class="col-md-12">
+                    <div class="md-form form-sm mb-0">
+                        <label for="website">Website</label>
+                        <input type="text" name="website" class="form-control form-control-sm" id="website" value="{{ current_user.website }}">
+                    </div>
+                  </div>
+                  <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+
+                <!-- Grid row -->
+                <div class="row mb-3">
+                  <!-- Grid column -->
+                  <div class="col-md-12">
+                    <h4 class="text-muted text-left">About me</h4>
+                    <!-- Basic textarea -->
+                    <div class="md-form mb-0">
+                        <textarea name="bio" class="form-control md-textarea" id="bio" placeholder="Basic textarea">{{ current_user.bio }}</textarea>
+                    </div>
+                  </div>
+                  <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                </div>
+              </form>
+              <!-- Card content -->
+            </div>
+          </div>
+            <!-- Card -->
+
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-4 mb-4">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-body text-center">
+                    <a href="{{ url_for('profile.change_avatar') }}">
+                        <img class="rounded-circle" src="{{ url_for('auth.get_avatar', filename=current_user.avatar_m) }}"
+                             alt="User profile picture">
+                    </a>
+                    <h3 class="profile-username">
+                      <strong>{{ current_user.full_name }}</strong>
+                    </h3>
+
+                    <p class="text-muted">
+                    {% if current_user.roles %} {{ current_user.roles[0].name }} {% endif %}
+                    </p>
+
+                    <ul class="list-group list-group-unbordered mb-3">
+                      <li class="list-group-item">
+                          <b class="float-left">Username</b>
+                          <a class="float-right">{{ current_user.username }}</a>
+                      </li>
+                      <li class="list-group-item">
+                          <b class="float-left">Email</b>
+                          <a class="float-right">{{ current_user.email }}</a>
+                      </li>
+                      <li class="list-group-item">
+                          <b class="float-left">Address</b>
+                          <a class="float-right">{{ current_user.location }}</a>
+                      </li>
+                      <li class="list-group-item">
+                          <b class="float-left">Website</b>
+                          <a class="float-right">{{ current_user.website }}</a>
+                      </li>
+                      <li class="list-group-item">
+                          <b class="float-left">Bio</b>
+                          <a class="float-right">{{ current_user.bio }}</a>
+                      </li>
+                    </ul>
+
+                    <button class="btn btn-danger btn-block btn-sm" data-toggle="modal" data-target="#modal-default">
+                        Change Password
+                    </button>
+                </div>
+
+                <div class="modal fade" id="modal-default">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Change Password</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="{{ url_for('profile.set_password') }}" role="form" oninput='password2.setCustomValidity(password.value != password2.value ? "Passwords do not match." : "")'>
+                              <div class="modal-body">
+                                <div class="form-group">
+                                  <label for="currentPassword">Old Password</label>
+                                  <input type="password" class="form-control" id="currentPassword" required name="old_password">
+                                </div>
+                                <div class="form-group">
+                                  <label for="newPassword">New Password</label>
+                                  <input type="password" class="form-control" id="newPassword" required name="password">
+                                </div>
+                                <div class="form-group">
+                                  <label for="confirmedPassword">Confirm Password</label>
+                                  <input type="password" class="form-control" id="confirmedPassword" name="password2">
+                                </div>
+                              </div>
+                                <div class="modal-footer justify-content-between">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+            <!-- Card -->
+
+          <!-- Grid column -->
+        </div>
+        <!-- Grid row -->
+
+      </section>
+      <!-- Section: Team v.1 -->
+
+    </div>
+{% endblock %}

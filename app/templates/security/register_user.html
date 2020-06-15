@@ -1,0 +1,63 @@
+{% extends "security/base.html" %}
+
+{% block content %}
+{% from "security/_macros.html" import render_field_with_errors %}
+    <div class="security-box">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center primary-text">
+                    <h3><i class="fas fa-user"></i> {{ _("Register") }}</h3>
+                    <hr class="mt-2 mb-2">
+                </div>
+                <form class="form-signin" method="POST" action="{{ url_for('security.register') }}" name="register_user_form">
+                        {{ register_user_form.hidden_tag() }}
+                        {{ render_field_with_errors(register_user_form.first_name) }}
+                        {{ render_field_with_errors(register_user_form.last_name) }}
+                        {{ render_field_with_errors(register_user_form.username) }}
+                        {{ render_field_with_errors(register_user_form.email) }}
+                        {{ render_field_with_errors(register_user_form.password) }}
+                        {% if register_user_form.password_confirm %}
+                            {{ render_field_with_errors(register_user_form.password_confirm) }}
+                        {% endif %}
+                        <div class="text-center mt-2">
+                            {{ register_user_form.submit }}
+                        </div>
+                </form>
+            </div>
+            <div class="modal-footer mx-5 pt-3 mb-1">
+                {% include "security/_menu.html" %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
+    <script>
+      $('#password').after('<progress class="mt-3" style="display: none;" value="0" max="4" id="password-strength-meter"></progress><p id="password-strength-text"></p>');
+      var meter = document.getElementById('password-strength-meter');
+      var text = $('#password-strength-text');
+      var strength = {
+        0: "Bad",
+        1: "Okay",
+        2: "Good",
+        3: "Very Good",
+        4: "Strong"
+      }
+
+      $('#password').keyup(function() {
+        var result = zxcvbn($(this).val());
+        // Update the password strength meter
+        meter.value = result.score;
+        // Update the text indicator
+        if ($(this).val() !== "") {
+          $(text).html("Strength: " + strength[result.score]);
+          $(meter).css('display', 'block');
+        } else {
+          $(text).html("");
+          $(meter).css('display', 'none');
+        }
+      });
+    </script>
+{% endblock %}

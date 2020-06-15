@@ -1,0 +1,66 @@
+<div class="col-lg-9 col-12 mt-1">
+  <section class="pb-3 text-center text-lg-left">
+
+    {% for post in posts %}
+    <!-- Grid row -->
+    <div class="row">
+      <!-- Grid column -->
+      <div class="col-lg-12 ml-xl-4 mb-4">
+        <!-- Grid row -->
+        <div class="row">
+
+          <!-- Grid column -->
+          <div class="col-xl-1 col-md-6 text-sm-center text-md-right text-lg-left">
+            <p class="orange-text font-small font-weight-bold mb-1 spacing">
+              <a>
+                <strong>{{ post.category.name }}</strong>
+              </a>
+            </p>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-xl-6 col-md-6 text-sm-center text-md-left">
+            <p class="font-small grey-text">
+              <em>{{ post.publish_time.strftime('%d/%m/%Y') }}</em>
+            </p>
+          </div>
+          <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+        <h4 class="mb-3 dark-grey-text mt-0">
+          <strong>
+            {{ post.title }}
+          </strong>
+        </h4>
+        <p class="dark-grey-text">
+            {{ post.body|truncate(225)|safe }}
+        </p>
+
+        <!-- Deep-orange -->
+        <a href="{{ url_for('posts.post', post_slug=post.slug) }}">
+            <button type="button" class="btn btn-outline-deep-orange btn-sm waves-effect waves-light shadow-none ml-0">Read more</button>
+        </a>
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+    <hr class="mb-5">
+    {% endfor %}
+  </section>
+
+  <!-- Pagination dark grey -->
+  <nav class="mb-5 pb-2">
+      {% from "mdbootstrap/pagination.html" import render_pagination %}
+      {{ render_pagination(pagination,
+      prev=('<span aria-hidden="true">&larr;</span> Pre')|safe,
+      next=('Next <span aria-hidden="true">&rarr;</span>')|safe,
+      align="center") }}
+  </nav>
+  <!-- Pagination dark grey -->
+
+</div>

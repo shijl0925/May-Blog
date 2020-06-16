@@ -1,6 +1,6 @@
 <div class="col-lg-3 col-12 px-4 mt-1">
 
-    <!-- Card -->
+    <!-- Author -->
     <div class="card mb-5">
 
       <!-- Card image -->
@@ -21,17 +21,98 @@
 
         <!-- Description -->
         <p class="mt-3 dark-grey-text font-small text-center">
-          <em>Welcome to my blog!. {{ author.bio }}, currently living in {{ author.location }}.
-          You can also find me on <a href="{{ author.website }}">Github</a>.Thank you for visiting!</em>
+          <em>Welcome to my blog!. {{ author.bio }}, currently living in {{ author.location }}. Thank you for visiting!</em>
         </p>
+        <ul class="list-unstyled list-inline-item list-unstyled flex-center">
+            <!-- Github -->
+            <li>
+                <a href="{{ author.website }}" style="color: #171c2b!important;">
+                    <span class="badge badge-pill pink"><i class="fab fa-github" aria-hidden="true"></i></span>
+                </a>
+            </li>
+
+        </ul>
       </div>
       <!-- Card content -->
 
     </div>
-    <!-- Card -->
+    <!-- Author -->
+
+    <!-- Tags -->
+    <section class="section widget-content mb-5">
+        <!--  Card -->
+        <div class="card card-body pb-0">
+          <p class="font-weight-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
+            <strong>TAGS</strong>
+          </p>
+          <div class="single-post">
+            <!-- Grid row -->
+            <div class="row mb-4">
+              <!-- Excerpt -->
+              <div class="col-12">
+                  {% for tag in tags %}
+                  <span class="badge badge-info mx-1">
+                      <a href="{{ url_for('posts.posts', tag=tag.name) }}" class="dark-grey-text">{{ tag.name }}</a>
+                  </span>
+                  {% endfor %}
+              </div>
+              <!--  Excerpt -->
+            </div>
+            <!--  Grid row -->
+          </div>
+        </div>
+    </section>
+    <!-- Tags -->
+
+    <!-- ARCHIVE -->
+    <section class="archive mb-5">
+        <!--  Card -->
+        <div class="card card-body pb-0">
+          <div class="single-post">
+
+            <p class="font-weight-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
+              <strong>ARCHIVE</strong>
+            </p>
+
+            <!-- Grid row -->
+            <div class="row mb-4">
+
+              <!-- Grid column -->
+              <div class="col-md-12 text-center">
+
+                <!-- List -->
+                <ul class="list-unstyled">
+                  {% for archive in archives %}
+                  <li class="d-flex justify-content-between align-items-center">
+                      <a href="{{ url_for('posts.posts', archive=archive.babel) }}" class="dark-grey-text">
+                          <p class="mb-1">{{ archive.babel }}</p>
+                      </a>
+                      {% with post_nums = archive.posts|length  %}
+                        {% if post_nums %}
+                          <span class="badge badge-pill badge-primary font-small">{{ post_nums }}</span>
+                        {% endif %}
+                      {% endwith %}
+                  </li>
+                  {% endfor %}
+                </ul>
+                <!-- List -->
+
+              </div>
+              <!-- Grid column -->
+
+            </div>
+            <!-- Grid row -->
+
+          </div>
+
+        </div>
+        <!--  Card -->
+
+      </section>
+    <!-- ARCHIVE -->
 
     <!-- Section: Categories -->
-    <section class="section mb-5">
+    <section class="category mb-5">
 
       <!--  Card -->
       <div class="card card-body pb-0">
@@ -41,20 +122,24 @@
             <strong>CATEGORIES</strong>
           </p>
 
-          <ul class="list-group my-4">
-            {% for category in categories %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <a href="{{ url_for('posts.posts', category=category.name) }}">
-                <p class="mb-0">{{ category.name }}</p>
-              </a>
-              {% with post_nums = category.posts|length  %}
-                {% if post_nums %}
-                  <span class="badge teal badge-pill font-small">{{ post_nums }}</span>
-                {% endif %}
-              {% endwith %}
-            </li>
-            {% endfor %}
-          </ul>
+          <div class="row mb-4">
+              <div class="col-md-12 text-center">
+                  <ul class="list-unstyled">
+                    {% for category in categories %}
+                    <li class="d-flex justify-content-between align-items-center">
+                      <a href="{{ url_for('posts.posts', category=category.name) }}" class="dark-grey-text">
+                        <p class="mb-1">{{ category.name }}</p>
+                      </a>
+                      {% with post_nums = category.posts|length  %}
+                        {% if post_nums %}
+                          <span class="badge badge-pill badge-primary font-small">{{ post_nums }}</span>
+                        {% endif %}
+                      {% endwith %}
+                    </li>
+                    {% endfor %}
+                  </ul>
+              </div>
+          </div>
         </div>
       </div>
     </section>

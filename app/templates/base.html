@@ -7,6 +7,29 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/error.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/progress.css') }}">
 
+    <style>
+        .archive ul li:first-of-type {
+            border-top: none;
+        }
+        .archive ul li {
+            padding-top: .8rem;
+            border-top: 1px solid #eceeef;
+            padding-bottom: .3rem;
+        }
+        .category ul li:first-of-type {
+            border-top: none;
+        }
+        .category ul li {
+            padding-top: .8rem;
+            border-top: 1px solid #eceeef;
+            padding-bottom: .3rem;
+        }
+        .text-hover {
+            color: #424242;
+            transition: .4s;
+        }
+    </style>
+
 {% endblock %}
 
 {% block header %}

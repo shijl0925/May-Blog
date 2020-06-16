@@ -196,11 +196,28 @@ class Category(db.Model):
         return '<Category %r>' % self.name
 
 
+post_tag = db.Table(
+    'post_tag',
+    db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
+)
+
+
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30), unique=True)
+
+    posts = db.relationship('Post', secondary=post_tag, back_populates='tags')
+
+    def __repr__(self):
+        return '<Tag %r>' % self.name
+
+
 class Post(db.Model):
-    __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
 
     title = db.Column(db.String(256), nullable=False)
+    abstract = db.Column(db.String(256), nullable=False)
     body = db.Column(db.Text, nullable=False)
     slug = db.Column(db.String(256), nullable=False)
 
@@ -215,8 +232,35 @@ class Post(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     category = db.relationship('Category', back_populates='posts')
 
+    archive_id = db.Column(db.Integer, db.ForeignKey('archive.id'))
+    archive = db.relationship('Archive', back_populates='posts')
+
+    tags = db.relationship('Tag', secondary='post_tag', back_populates='posts')
+
     def __repr__(self):
         return '<Post %r>' % self.slug
+
+
+@db.event.listens_for(Post.publish_time, 'set', named=True)
+def update_post_archive(target, value, oldvalue, initiator):
+    babel = datetime.strftime(value, "%Y/%m")
+    search_archive = Archive.query.filter_by(babel=babel).first()
+    if search_archive is None:
+        search_archive = Archive(babel=babel)
+
+    target.archive = search_archive
+
+
+class Archive(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    babel = db.Column(db.String(32), nullable=False)
+
+    posts = db.relationship('Post', back_populates='archive')
+
+    def __repr__(self):
+        return '<Archive %r>' % self.babel
+
+    __mapper_args__ = {"order_by": babel.desc()}
 
 
 class Settings(db.Model):

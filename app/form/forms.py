@@ -3,10 +3,10 @@
 # @Author: Jialiang Shi
 from flask_wtf import FlaskForm
 from flask_ckeditor import CKEditorField
-from wtforms_sqlalchemy.fields import QuerySelectField
+from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms import widgets, StringField, TextAreaField, validators, SubmitField, ValidationError
 from app.controller.extensions import db
-from app.model.models import Post, Category
+from app.model.models import Post, Category, Tag
 
 
 class OperateForm(FlaskForm):
@@ -36,6 +36,10 @@ class SearchForm(FlaskForm):
     )
 
 
+def tag_choices():
+    return [item.name for item in db.session.query(Tag).all()]
+
+
 class PostForm(FlaskForm):
     def query_factory(*args):
         return [item.name for item in db.session.query(Category).all()]
@@ -52,11 +56,29 @@ class PostForm(FlaskForm):
         render_kw={'class': 'form-control'}
     )
 
+    abstract = StringField(
+        'Abstract',
+        validators=[
+            validators.DataRequired(),
+            validators.Length(1, 256)
+        ],
+        render_kw={'class': 'form-control'}
+    )
+
     category = QuerySelectField(
         'Category',
         validators=[validators.DataRequired()],
         render_kw={'class': 'browser-default custom-select'},
         query_factory=query_factory,
+        get_pk=get_pk
+    )
+
+    tags = QuerySelectMultipleField(
+        'Tags',
+        validators=[validators.DataRequired()],
+        render_kw={'class': 'custom-select'},
+        query_factory=tag_choices,
+        allow_blank=True,
         get_pk=get_pk
     )
 
@@ -75,7 +97,7 @@ class PostForm(FlaskForm):
     )
 
     save_submit = SubmitField(
-        'Save',
+        'Save As Draft',
         render_kw={'class': 'btn btn-blue-grey shadow-none'}
     )
 
@@ -85,7 +107,7 @@ class PostForm(FlaskForm):
     )
 
 
-class CreateCategoryForm(FlaskForm):
+class CreateForm(FlaskForm):
     name = StringField(
         'Name',
         validators=[

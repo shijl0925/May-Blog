@@ -3,35 +3,44 @@
 {% block styles %}
     {{ super() }}
     <style>
-
-    html,
+        html,
         body,
         header,
         .jarallax {
-          height: 700px;
+          height: 600px;
+          min-height: 600px;
         }
 
         @media (max-width: 740px) {
+
           html,
           body,
           header,
           .jarallax {
-            height: 100vh;
+            height: 100%;
+            min-height: 100%;
           }
         }
 
         @media (min-width: 800px) and (max-width: 850px) {
+
           html,
           body,
           header,
           .jarallax {
-            height: 100vh;
+            height: 100%;
+            min-height: 100%;
           }
         }
 
-        @media (min-width: 560px) and (max-width: 650px) {
-          header .jarallax h5 {
-            margin-bottom: 1.5rem !important;
+        @media (min-width: 1020px) and (max-width: 1500px) {
+
+          html,
+          body,
+          header,
+          .jarallax {
+            height: 460px;
+            min-height: 460px;
           }
         }
 

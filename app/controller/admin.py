@@ -11,7 +11,7 @@ from flask_admin.menu import MenuLink
 from flask_admin.helpers import get_form_data
 from flask_security import current_user
 from flask_security.utils import encrypt_password
-from app.model.models import User, Role, Permission, Settings, Post, Category
+from app.model.models import User, Role, Permission, Settings, Post, Category, Archive, Tag
 from app.controller.extensions import db, avatars
 from app.form.auth import CropAvatarForm, UploadAvatarForm
 from app.config import BaseConfig
@@ -289,7 +289,7 @@ class NotificationBaseModelview(MyBaseModelview):
 
 class PostBaseModelview(MyBaseModelview):
     column_editable_list = ["is_draft"]
-    column_exclude_list = ["body"]
+    column_exclude_list = ["abstract", "body"]
     form_overrides = {
         'body': CKTextAreaField
     }
@@ -297,6 +297,14 @@ class PostBaseModelview(MyBaseModelview):
 
 
 class CategoryBaseModelview(MyBaseModelview):
+    form_columns = ["name"]
+
+
+class ArchiveBaseModelview(MyBaseModelview):
+    form_columns = ["babel"]
+
+
+class TagBaseModelview(MyBaseModelview):
     form_columns = ["name"]
 
 
@@ -350,6 +358,22 @@ admin.add_view(CategoryBaseModelview(Category,
                                      menu_icon_value='fa-star',
                                      name='Category',
                                      endpoint='category'))
+
+
+admin.add_view(TagBaseModelview(Tag,
+                                db.session,
+                                menu_icon_type='fas',
+                                menu_icon_value='fa-tags',
+                                name='Tag',
+                                endpoint='tag'))
+
+
+admin.add_view(ArchiveBaseModelview(Archive,
+                                    db.session,
+                                    menu_icon_type='fas',
+                                    menu_icon_value='fa-archive',
+                                    name='Archive',
+                                    endpoint='archive'))
 
 
 admin.add_view(MyBaseModelview(Settings,

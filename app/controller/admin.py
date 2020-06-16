@@ -11,7 +11,7 @@ from flask_admin.menu import MenuLink
 from flask_admin.helpers import get_form_data
 from flask_security import current_user
 from flask_security.utils import encrypt_password
-from app.model.models import User, Role, Permission, Settings, Post, Category, Archive, Tag
+from app.model.models import User, Role, Permission, Settings, Post, Category, Archive, Tag, Relate
 from app.controller.extensions import db, avatars
 from app.form.auth import CropAvatarForm, UploadAvatarForm
 from app.config import BaseConfig
@@ -300,8 +300,12 @@ class CategoryBaseModelview(MyBaseModelview):
     form_columns = ["name"]
 
 
+class RelateBaseModelview(MyBaseModelview):
+    form_columns = ["name"]
+
+
 class ArchiveBaseModelview(MyBaseModelview):
-    form_columns = ["babel"]
+    form_columns = ["label"]
 
 
 class TagBaseModelview(MyBaseModelview):
@@ -358,6 +362,14 @@ admin.add_view(CategoryBaseModelview(Category,
                                      menu_icon_value='fa-star',
                                      name='Category',
                                      endpoint='category'))
+
+
+admin.add_view(RelateBaseModelview(Relate,
+                                   db.session,
+                                   menu_icon_type='fas',
+                                   menu_icon_value='fa-network-wired',
+                                   name='Relate',
+                                   endpoint='relate'))
 
 
 admin.add_view(TagBaseModelview(Tag,

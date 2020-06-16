@@ -196,6 +196,16 @@ class Category(db.Model):
         return '<Category %r>' % self.name
 
 
+class Relate(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(256), unique=True)
+
+    posts = db.relationship('Post', back_populates='relate')
+
+    def __repr__(self):
+        return '<Relate %r>' % self.name
+
+
 post_tag = db.Table(
     'post_tag',
     db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
@@ -235,6 +245,9 @@ class Post(db.Model):
     archive_id = db.Column(db.Integer, db.ForeignKey('archive.id'))
     archive = db.relationship('Archive', back_populates='posts')
 
+    relate_id = db.Column(db.Integer, db.ForeignKey('relate.id'))
+    relate = db.relationship('Relate', back_populates='posts')
+
     tags = db.relationship('Tag', secondary='post_tag', back_populates='posts')
 
     def __repr__(self):
@@ -243,24 +256,24 @@ class Post(db.Model):
 
 @db.event.listens_for(Post.publish_time, 'set', named=True)
 def update_post_archive(target, value, oldvalue, initiator):
-    babel = datetime.strftime(value, "%Y/%m")
-    search_archive = Archive.query.filter_by(babel=babel).first()
+    label = datetime.strftime(value, "%Y/%m")
+    search_archive = Archive.query.filter_by(label=label).first()
     if search_archive is None:
-        search_archive = Archive(babel=babel)
+        search_archive = Archive(label=label)
 
     target.archive = search_archive
 
 
 class Archive(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    babel = db.Column(db.String(32), nullable=False)
+    label = db.Column(db.String(32), nullable=False)
 
     posts = db.relationship('Post', back_populates='archive')
 
     def __repr__(self):
-        return '<Archive %r>' % self.babel
+        return '<Archive %r>' % self.label
 
-    __mapper_args__ = {"order_by": babel.desc()}
+    __mapper_args__ = {"order_by": label.desc()}
 
 
 class Settings(db.Model):

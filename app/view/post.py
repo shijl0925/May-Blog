@@ -1,7 +1,7 @@
 from datetime import datetime
 import flask
 from flask_security import login_required, current_user
-from app.model.models import User, Post, Category, Tag, Archive
+from app.model.models import User, Post, Category, Tag, Archive, Relate
 from app.form.forms import PostForm, OperateForm, CreateForm
 from app.controller.extensions import db
 from app.utils.common import redirect_back
@@ -29,7 +29,7 @@ def posts():
         posts = posts.filter(Post.tags.contains(search_tag))
 
     if archive:
-        search_archive = Archive.query.filter_by(babel=archive).first_or_404()
+        search_archive = Archive.query.filter_by(label=archive).first_or_404()
         posts = posts.filter_by(archive=search_archive)
 
     pagination = posts.order_by(Post.publish_time.desc()).paginate(page=page, per_page=6)
@@ -51,6 +51,7 @@ def posts():
         author=author,
         pagination=pagination,
         posts=pagination.items,
+        post=None,
         categories=categories,
         tags=tags,
         archives=archives,
@@ -91,10 +92,12 @@ def post(post_slug):
 def create_post():
     post_form = PostForm()
     create_category_form = CreateForm()
+    create_relate_form = CreateForm()
     create_tag_form = CreateForm()
     if post_form.validate_on_submit():
         title = post_form.title.data
         category = post_form.category.data
+        relate = post_form.relate.data
         tag_names = post_form.tags.data
         slug = post_form.slug.data
         abstract = post_form.abstract.data
@@ -107,6 +110,7 @@ def create_post():
         post = Post(
             title=title,
             category=Category.query.filter_by(name=category).first(),
+            relate=Relate.query.filter_by(name=relate).first(),
             tags=[Tag.query.filter_by(name=item).first() for item in tag_names],
             slug=slug,
             abstract=abstract,
@@ -128,6 +132,7 @@ def create_post():
         form=post_form,
         post=None,
         create_category_form=create_category_form,
+        create_relate_form=create_relate_form,
         create_tag_form=create_tag_form
     )
 
@@ -137,11 +142,16 @@ def create_post():
 def edit_post(post_slug):
     post_form = PostForm()
     create_category_form = CreateForm()
+    create_relate_form = CreateForm()
     create_tag_form = CreateForm()
     search_post = Post.query.filter_by(slug=post_slug).first_or_404()
 
     post_form.title.data = search_post.title
     post_form.category.data = search_post.category.name
+    if search_post.relate:
+        post_form.relate.data = search_post.relate.name
+    else:
+        post_form.relate.data = ""
     post_form.tags.data = [item.name for item in search_post.tags]
     post_form.slug.data = search_post.slug
     post_form.abstract.data = search_post.abstract
@@ -150,6 +160,7 @@ def edit_post(post_slug):
     if post_form.validate_on_submit():
         title = flask.request.form.get('title')
         category_name = flask.request.form.get('category')
+        relate_name = flask.request.form.get('relate')
         tag_names = flask.request.form.getlist('tags')
         slug = flask.request.form.get('slug')
         abstract = flask.request.form.get('abstract')
@@ -161,9 +172,13 @@ def edit_post(post_slug):
 
         search_post.title = title
 
-        category = Category.query.filter_by(name=category_name).first_or_404()
+        category = Category.query.filter_by(name=category_name).first()
         if category:
             search_post.category = category
+
+        relate = Relate.query.filter_by(name=relate_name).first()
+        if relate:
+            search_post.relate = relate
 
         search_post.tags = [Tag.query.filter_by(name=item).first() for item in tag_names]
         search_post.slug = slug
@@ -184,6 +199,7 @@ def edit_post(post_slug):
         form=post_form,
         post=search_post,
         create_category_form=create_category_form,
+        create_relate_form=create_relate_form,
         create_tag_form=create_tag_form
     )
 
@@ -209,6 +225,21 @@ def create_category():
 
         category = Category(name=category_name)
         db.session.add(category)
+        db.session.commit()
+        return redirect_back()
+
+
+@posts_bp.route('/post/relate/new', methods=['POST'])
+@login_required
+def create_relate():
+    if flask.request.method == "POST":
+        relate_name = flask.request.form.get('name')
+        if Relate.query.filter_by(name=relate_name).first():
+            flask.flash("This Relate is already existed!", category="warning")
+            return redirect_back()
+
+        relate = Relate(name=relate_name)
+        db.session.add(relate)
         db.session.commit()
         return redirect_back()
 

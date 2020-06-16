@@ -5,7 +5,7 @@
             <!-- Grid row -->
             <div class="row">
               <!-- Grid column -->
-              <div class="col-lg-12 ml-xl-4 mb-4">
+              <div class="col-lg-12 ml-xl-4 mb-3">
                 <!-- Grid row -->
                 <div class="row">
 
@@ -30,11 +30,13 @@
                 </div>
                 <!-- Grid row -->
 
-                <h4 class="mb-3 dark-grey-text mt-0">
-                  <strong>
-                    {{ post.title }}
-                  </strong>
-                </h4>
+                <a href="{{ url_for('posts.post', post_slug=post.slug) }}">
+                    <h4 class="mb-3 dark-grey-text mt-0">
+                      <strong>
+                        {{ post.title }}
+                      </strong>
+                    </h4>
+                </a>
                 <p class="dark-grey-text">
                     {{ post.abstract|truncate(225) }}
                 </p>
@@ -46,10 +48,6 @@
                         </span>
                     {% endfor %}
                 </p>
-                <!-- Deep-orange -->
-                <a href="{{ url_for('posts.post', post_slug=post.slug) }}">
-                    <button type="button" class="btn btn-outline-deep-orange btn-sm waves-effect waves-light shadow-none ml-0">Read more</button>
-                </a>
               </div>
               <!-- Grid column -->
 

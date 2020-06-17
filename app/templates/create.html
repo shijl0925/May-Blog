@@ -31,18 +31,19 @@
                     <div class="row">
                       <!-- Grid column -->
                       <div class="col-md-9">
-                          {{ render_field_with_errors(form.title) }}
-                          {{ render_field_with_errors(form.abstract) }}
-                          {{ render_field_with_errors(form.body) }}
+                          {{ render_field_with_errors(form.title, necessary=True) }}
+                          {{ render_field_with_errors(form.abstract, necessary=True) }}
+                          {{ render_field_with_errors(form.body, necessary=True) }}
                       </div>
                       <!-- Grid column -->
 
                       <!-- Grid column -->
                       <div class="col-md-3">
-                          {{ render_field_with_errors(form.slug) }}
+                          {{ render_field_with_errors(form.slug, necessary=True) }}
 
                           <div class="form-group">
                               {{ form.category.label }}
+                              <span class="red-text">*</span>
                               <div style="display: inline-block;vertical-align: top; margin-left: -15px; margin-top: -15px;">
                                 <span data-toggle="modal" data-target="#create_category" style="display: inline-block;">
                                     <button type="button" class="btn btn-sm btn-link" style="width:40px;padding-left:2px;padding-right:2px;">
@@ -67,6 +68,7 @@
 
                           <div class="form-group">
                             {{ form.tags.label }}
+                            <span class="red-text">*</span>
                             <div style="display: inline-block;vertical-align: top; margin-left: -15px; margin-top: -15px;">
                                 <span data-toggle="modal" data-target="#create_tag" style="display: inline-block;">
                                     <button type="button" class="btn btn-sm btn-link" style="width:40px;padding-left:2px;padding-right:2px;">

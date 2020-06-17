@@ -4,10 +4,9 @@
 import flask
 from functools import wraps
 from flask_security import current_user
-from flask import current_app, abort
+from flask import current_app
 from werkzeug.local import LocalProxy
 from flask_security.decorators import _get_unauthorized_view
-from flask_jwt_extended import current_user as jwt_current_user
 
 
 _security = LocalProxy(lambda: current_app.extensions['security'])

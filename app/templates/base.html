@@ -28,6 +28,30 @@
             color: #424242;
             transition: .4s;
         }
+        .dropdown .dropdown-menu {
+            padding: .5rem
+        }
+
+        .dropdown .dropdown-menu .dropdown-item {
+            padding: .5rem;
+            margin-left: 0;
+            font-size: .9rem
+        }
+
+        .dropdown .dropdown-menu .dropdown-item:hover,
+        .dropdown .dropdown-menu .dropdown-item:active {
+            background-color: #4285f4;
+            border-radius: .125rem;
+            -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+            -webkit-transition: all 0.1s linear;
+            transition: all 0.1s linear
+        }
+        .alert-error {
+            color: #856404;
+            background-color: #ff4444;
+            border-color: #ff4444;
+        }
     </style>
 
 {% endblock %}
@@ -44,6 +68,11 @@
                         <ul class="navbar-nav mr-auto">
                             {{ nav_active_item(['posts.posts'], 'Home', 'fas fa-home') }}
                         </ul>
+                        <form class="search-form" role="search" method="GET" action="{{ url_for('posts.search_post') }}">
+                          <div class="form-group md-form my-0 waves-light waves-effect waves-light">
+                            <input type="text" name=q class="form-control" placeholder="Search">
+                          </div>
+                        </form>
                         <ul class="navbar-nav">
                             {% if current_user.is_authenticated %}
                                 <li class="nav-item dropdown ml-4 mb-0">
@@ -55,6 +84,7 @@
                                         </span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                        {% if current_user.is_admin %}
                                         <a class="dropdown-item" href="{{ url_for('posts.create_post') }}">
                                             <i class="fas fa-file-alt"></i>
                                             <span class="ml-1">Create A Post</span>
@@ -64,6 +94,7 @@
                                             <span class="ml-1">{{ _("Admin Dashboard") }}</span>
                                         </a>
                                         <div class="dropdown-divider"></div>
+                                        {% endif %}
 
                                         <a class="dropdown-item" href="{{ url_for('security.logout') }}">
                                             <i class="fas fa-sign-out-alt"></i>

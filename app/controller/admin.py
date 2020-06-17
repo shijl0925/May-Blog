@@ -53,6 +53,9 @@ class MyAdminIndexView(AdminIndexView):
         if not current_user.is_authenticated:
             return flask.redirect(flask.url_for('security.login', next=flask.request.url))
 
+        if not current_user.is_admin:
+            flask.abort(403)
+
         return self.render('myadmin3/my_index.html')
 
 
@@ -70,6 +73,9 @@ class ProfileView(BaseView):
 
         if not current_user.is_authenticated:
             return flask.redirect(flask.url_for('security.login', next=flask.request.url))
+
+        if not current_user.is_admin:
+            flask.abort(403)
 
         if flask.request.method == "GET":
             return self.render('myadmin3/user_profile.html', upload_form=upload_form, crop_form=crop_form)
@@ -288,7 +294,7 @@ class NotificationBaseModelview(MyBaseModelview):
 
 
 class PostBaseModelview(MyBaseModelview):
-    column_editable_list = ["is_draft"]
+    column_editable_list = ["category", "is_draft"]
     column_exclude_list = ["abstract", "body"]
     form_overrides = {
         'body': CKTextAreaField

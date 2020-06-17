@@ -1,16 +1,20 @@
 from datetime import datetime
 import flask
 from flask_security import login_required, current_user
+from sqlalchemy import or_
 from app.model.models import User, Post, Category, Tag, Archive, Relate
 from app.form.forms import PostForm, OperateForm, CreateForm
 from app.controller.extensions import db
 from app.utils.common import redirect_back
+from app.utils.decorator import permission_required
 
 posts_bp = flask.Blueprint('posts', __name__, url_prefix='/')
 
 
 @posts_bp.route('/', methods=['GET'])
 def posts():
+    today = datetime.today()
+    weekday = today.isoweekday()
     author = User.query.get(1)
 
     page = int(flask.request.args.get('page', 1))
@@ -56,7 +60,8 @@ def posts():
         tags=tags,
         archives=archives,
         latest_posts=latest_posts,
-        older_posts=older_posts
+        older_posts=older_posts,
+        weekday=weekday
     )
 
 
@@ -87,8 +92,27 @@ def post(post_slug):
     )
 
 
+@posts_bp.route('/search', methods=['GET'])
+def search_post():
+    author = User.query.get(1)
+
+    q = flask.request.args.get('q')
+    page = int(flask.request.args.get('page', 1))
+    result = Post.query.filter(or_(Post.title.like(u'%{}%'.format(q)),
+                                   Post.abstract.like(u'%{}%'.format(q)),
+                                   Post.body.like(u'%{}%'.format(q))))
+    pagination = result.paginate(page=page, per_page=6)
+    return flask.render_template(
+        "posts.html",
+        author=author,
+        pagination=pagination,
+        posts=pagination.items
+    )
+
+
 @posts_bp.route('/post/create', methods=['GET', 'POST'])
 @login_required
+@permission_required('ADMINISTER')
 def create_post():
     post_form = PostForm()
     create_category_form = CreateForm()
@@ -126,7 +150,7 @@ def create_post():
             post.publish_time = datetime.now()
         db.session.commit()
         flask.flash("Create A Post Successful!", category="success")
-        return flask.redirect(flask.url_for('posts.posts'))
+        return flask.redirect(flask.url_for('posts.post', post_slug=slug))
     return flask.render_template(
         'create.html',
         form=post_form,
@@ -139,6 +163,7 @@ def create_post():
 
 @posts_bp.route('/post/edit/<post_slug>', methods=['GET', 'POST'])
 @login_required
+@permission_required('ADMINISTER')
 def edit_post(post_slug):
     post_form = PostForm()
     create_category_form = CreateForm()
@@ -147,7 +172,12 @@ def edit_post(post_slug):
     search_post = Post.query.filter_by(slug=post_slug).first_or_404()
 
     post_form.title.data = search_post.title
-    post_form.category.data = search_post.category.name
+
+    if search_post.category:
+        post_form.category.data = search_post.category.name
+    else:
+        post_form.category.data = ""
+
     if search_post.relate:
         post_form.relate.data = search_post.relate.name
     else:
@@ -160,6 +190,7 @@ def edit_post(post_slug):
     if post_form.validate_on_submit():
         title = flask.request.form.get('title')
         category_name = flask.request.form.get('category')
+
         relate_name = flask.request.form.get('relate')
         tag_names = flask.request.form.getlist('tags')
         slug = flask.request.form.get('slug')
@@ -192,7 +223,7 @@ def edit_post(post_slug):
 
         db.session.commit()
         flask.flash("Edit The Post Successful!", category="success")
-        return flask.redirect(flask.url_for('posts.posts'))
+        return flask.redirect(flask.url_for('posts.post', post_slug=search_post.slug))
 
     return flask.render_template(
         'create.html',
@@ -206,6 +237,7 @@ def edit_post(post_slug):
 
 @posts_bp.route('/post/delete/<post_slug>', methods=['POST'])
 @login_required
+@permission_required('ADMINISTER')
 def delete_post(post_slug):
     if flask.request.method == "POST":
         search_post = Post.query.filter_by(slug=post_slug).first_or_404()
@@ -216,6 +248,7 @@ def delete_post(post_slug):
 
 @posts_bp.route('/post/category/new', methods=['POST'])
 @login_required
+@permission_required('ADMINISTER')
 def create_category():
     if flask.request.method == "POST":
         category_name = flask.request.form.get('name')
@@ -231,6 +264,7 @@ def create_category():
 
 @posts_bp.route('/post/relate/new', methods=['POST'])
 @login_required
+@permission_required('ADMINISTER')
 def create_relate():
     if flask.request.method == "POST":
         relate_name = flask.request.form.get('name')
@@ -246,6 +280,7 @@ def create_relate():
 
 @posts_bp.route('/post/tag/new', methods=['POST'])
 @login_required
+@permission_required('ADMINISTER')
 def create_tag():
     if flask.request.method == "POST":
         tag_name = flask.request.form.get('name')

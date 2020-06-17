@@ -2,7 +2,7 @@ from datetime import datetime
 import flask
 from flask_security import login_required, current_user
 from sqlalchemy import or_
-from app.model.models import User, Post, Category, Tag, Archive, Relate
+from app.model.models import User, Post, Category, Tag, Archive, Relate, Comment
 from app.form.forms import PostForm, OperateForm, CreateForm
 from app.controller.extensions import db
 from app.utils.common import redirect_back
@@ -291,4 +291,36 @@ def create_tag():
         tag = Tag(name=tag_name)
         db.session.add(tag)
         db.session.commit()
+        return redirect_back()
+
+
+@posts_bp.route('/post/create_comment/<post_slug>', methods=['POST'])
+def create_comment(post_slug):
+    if flask.request.method == "POST":
+        search_post = Post.query.filter_by(slug=post_slug).first_or_404()
+        author = flask.request.form.get("author")
+        email = flask.request.form.get("email")
+        body = flask.request.form.get("body")
+
+        comment = Comment(
+            author=author,
+            email=email,
+            body=body,
+            post=search_post
+        )
+
+        db.session.add(comment)
+        db.session.commit()
+        # flask.flash('Thanks, your comment will be published after reviewed.', 'info')
+        return redirect_back()
+
+
+@posts_bp.route('/post/delete-comment/<comment_id>', methods=['POST'])
+@login_required
+@permission_required('ADMINISTER')
+def delete_comment(comment_id):
+    if flask.request.method == "POST":
+        search_comment = Comment.query.get(comment_id)
+        db.session.delete(search_comment)
+        flask.flash("Delete The Comment Successful!", category="success")
         return redirect_back()

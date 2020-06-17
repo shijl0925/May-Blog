@@ -27,7 +27,11 @@
                 </p>
 
                 <p>
-                    by <strong>{{ post.author.full_name }}</strong>, {{ post.publish_time.strftime('%d/%m/%Y') }}
+                    by <strong>{{ post.author.full_name }}</strong>
+                    {{ post.publish_time.strftime('%d/%m/%Y') }}
+                    {% if post.comments|length %}
+                        <i class="far fa-comments pr-2 pl-3"></i> {{ post.comments|length }}
+                    {% endif %}
                 </p>
               </div>
 

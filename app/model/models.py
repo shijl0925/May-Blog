@@ -250,8 +250,28 @@ class Post(db.Model):
 
     tags = db.relationship('Tag', secondary='post_tag', back_populates='posts')
 
+    can_comment = db.Column(db.Boolean, default=True)
+    comments = db.relationship('Comment', back_populates='post', cascade='all, delete-orphan')
+
     def __repr__(self):
         return '<Post %r>' % self.slug
+
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    author = db.Column(db.String(30))
+    email = db.Column(db.String(254))
+    body = db.Column(db.Text)
+
+    # reviewed = db.Column(db.Boolean, default=False)
+    timestamp = db.Column(db.DateTime, default=datetime.now, index=True)
+
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    post = db.relationship('Post', back_populates='comments')
+
+    # replied_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
+    # replies = db.relationship('Comment', back_populates='replied', cascade='all, delete-orphan')
+    # replied = db.relationship('Comment', back_populates='replies', remote_side=[id])
 
 
 @db.event.listens_for(Post.publish_time, 'set', named=True)

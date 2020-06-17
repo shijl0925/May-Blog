@@ -11,7 +11,7 @@ from flask_admin.menu import MenuLink
 from flask_admin.helpers import get_form_data
 from flask_security import current_user
 from flask_security.utils import encrypt_password
-from app.model.models import User, Role, Permission, Settings, Post, Category, Archive, Tag, Relate
+from app.model.models import User, Role, Permission, Settings, Post, Category, Archive, Tag, Relate, Comment
 from app.controller.extensions import db, avatars
 from app.form.auth import CropAvatarForm, UploadAvatarForm
 from app.config import BaseConfig
@@ -294,12 +294,17 @@ class NotificationBaseModelview(MyBaseModelview):
 
 
 class PostBaseModelview(MyBaseModelview):
-    column_editable_list = ["category", "is_draft"]
-    column_exclude_list = ["abstract", "body"]
+    column_editable_list = ["category", "is_draft", "can_comment"]
+    column_exclude_list = ["abstract", "body", "slug", "relate", "archive", "author"]
     form_overrides = {
         'body': CKTextAreaField
     }
     create_template = edit_template = 'myadmin3/ckeditor.html'
+
+
+class CommentBaseModelview(MyBaseModelview):
+    # column_editable_list = ['reviewed']
+    pass
 
 
 class CategoryBaseModelview(MyBaseModelview):
@@ -361,6 +366,12 @@ admin.add_view(PostBaseModelview(Post,
                                  name='Posts',
                                  endpoint='post'))
 
+admin.add_view(CommentBaseModelview(Comment,
+                                    db.session,
+                                    menu_icon_type='fas',
+                                    menu_icon_value='fa-comments',
+                                    name='Comment',
+                                    endpoint='comment'))
 
 admin.add_view(CategoryBaseModelview(Category,
                                      db.session,

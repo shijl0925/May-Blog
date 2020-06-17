@@ -6,7 +6,7 @@
                 <p>
                     {% for tag in post.tags %}
                         <span class="badge badge-info mx-1">
-                            <a class="dark-grey-text">{{ tag.name }}</a>
+                            {{ tag.name }}
                         </span>
                     {% endfor %}
                 </p>
@@ -27,7 +27,7 @@
                 </p>
 
                 <p>
-                    by <a><strong>{{ post.author.full_name }}</strong></a>, {{ post.publish_time.strftime('%d/%m/%Y') }}
+                    by <strong>{{ post.author.full_name }}</strong>, {{ post.publish_time.strftime('%d/%m/%Y') }}
                 </p>
               </div>
 

@@ -5,10 +5,8 @@
 
       <!-- Card image -->
       <div class="view overlay">
-        <img src="{{ url_for('auth.get_avatar', filename=author.avatar_l) }}" class="card-img-top" alt="">
-        <a>
+          <img src="{{ url_for('auth.get_avatar', filename=author.avatar_l) }}" class="card-img-top" alt="">
           <div class="mask rgba-white-slight waves-effect waves-light"></div>
-        </a>
       </div>
       <!-- Card image -->
 
@@ -51,9 +49,11 @@
               <!-- Excerpt -->
               <div class="col-12">
                   {% for tag in tags %}
-                  <span class="badge badge-info mr-1">
-                      <a href="{{ url_for('posts.posts', tag=tag.name) }}" class="dark-grey-text">{{ tag.name }}</a>
-                  </span>
+                      <a href="{{ url_for('posts.posts', tag=tag.name) }}">
+                          <span class="badge badge-info mr-1">
+                              {{ tag.name }}
+                          </span>
+                      </a>
                   {% endfor %}
               </div>
               <!--  Excerpt -->
@@ -80,7 +80,7 @@
               <!-- Excerpt -->
               <div class="col-12">
                 <h6 class="mt-0">
-                  <a>
+                  <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="dark-grey-text">
                     <strong>{{ post.title }}</strong>
                   </a>
                 </h6>

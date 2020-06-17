@@ -26,17 +26,15 @@
                     <div class="card-body">
                         <div class="text-center">
                           <h3 class="card-title">
-                              <a>
-                                  <strong>
-                                      {% if post.category %}
-                                          [{{ post.category.name }}]
-                                      {% endif %}
-                                      {{ post.title }}
-                                  </strong>
-                              </a>
+                              <strong>
+                                  {% if post.category %}
+                                      [{{ post.category.name }}]
+                                  {% endif %}
+                                  {{ post.title }}
+                              </strong>
                           </h3>
                           <p class="dark-grey-text">
-                              Written by <a><strong>{{ post.author.full_name }}</strong></a>, {{ post.publish_time.strftime('%d/%m/%Y') }}
+                              Written by <strong>{{ post.author.full_name }}</strong>, {{ post.publish_time.strftime('%d/%m/%Y') }}
                           </p>
                           {% if current_user.is_admin %}
                           <div class="btn-group" role="group">

@@ -1,6 +1,7 @@
 <div class="col-lg-3 col-12 px-4 mt-1">
 
     <!-- Author -->
+    {% if author %}
     <div class="card mb-5">
 
       <!-- Card image -->
@@ -19,24 +20,26 @@
 
         <!-- Description -->
         <p class="mt-3 dark-grey-text font-small text-center">
-          <em>Welcome to my blog!. {{ author.bio }}, currently living in {{ author.location }}. Thank you for visiting!</em>
+          <em>Welcome to my blog!. {% if author.bio %}{{ author.bio }},{% endif %} {% if author.location %}currently living in {{ author.location }}.{% endif %} Thank you for visiting!</em>
         </p>
         <ul class="list-unstyled list-inline-item list-unstyled flex-center">
             <!-- Github -->
+            {% if author.website %}
             <li>
                 <a href="{{ author.website }}" style="color: #171c2b!important;">
                     <span class="badge badge-pill pink"><i class="fab fa-github" aria-hidden="true"></i></span>
                 </a>
             </li>
-
+            {% endif %}
         </ul>
       </div>
       <!-- Card content -->
-
     </div>
+    {% endif %}
     <!-- Author -->
 
     <!-- Tags -->
+    {% if tags %}
     <section class="section widget-content mb-5">
         <!--  Card -->
         <div class="card card-body pb-0">
@@ -62,6 +65,7 @@
           </div>
         </div>
     </section>
+    {% endif %}
     <!-- Tags -->
 
     <!-- RELATED POSTS -->
@@ -101,6 +105,7 @@
     <!-- RELATED POSTS -->
 
     <!-- ARCHIVE -->
+    {% if archives %}
     <section class="archive mb-5">
         <!--  Card -->
         <div class="card card-body pb-0">
@@ -144,10 +149,12 @@
         </div>
         <!--  Card -->
 
-      </section>
+    </section>
+    {% endif %}
     <!-- ARCHIVE -->
 
     <!-- Section: Categories -->
+    {% if categories %}
     <section class="category mb-5">
 
       <!--  Card -->
@@ -179,5 +186,6 @@
         </div>
       </div>
     </section>
+    {% endif %}
     <!-- Section: Categories -->
 </div>

@@ -28,6 +28,7 @@
                 <form class="card-body" method="POST"
                       action="{% if post %}{{ url_for('posts.edit_post', post_slug=post.slug) }}{% else %}{{ url_for('posts.create_post') }}{% endif %}">
                     {{ form.csrf_token }}
+{#                    {{ form.errors }}#}
                     <div class="row">
                       <!-- Grid column -->
                       <div class="col-md-9">
@@ -44,39 +45,59 @@
                           <div class="form-group">
                               {{ form.category.label }}
                               <span class="red-text">*</span>
-                              <div style="display: inline-block;vertical-align: top; margin-left: -15px; margin-top: -15px;">
-                                <span data-toggle="modal" data-target="#create_category" style="display: inline-block;">
-                                    <button type="button" class="btn btn-sm btn-link" style="width:40px;padding-left:2px;padding-right:2px;">
-                                        <i class="fas fa-plus-circle" style="color: #3f51b5; font-size: 12px;"></i>
-                                    </button>
-                                </span>
-                              </div>
+                              <span data-toggle="modal" data-target="#create_category" style="display: inline-block;margin-left: 5px;vertical-align: top; margin-top: -5px;">
+                                  <i class="fas fa-plus-circle" style="color: #3f51b5; font-size: 12px;"></i>
+                              </span>
                               {{ form.category }}
+                              {% if form.category.errors %}
+                                  <ul>
+                                  {% for error in form.category.errors %}
+                                    <li>
+                                        <small class="form-text text-muted mb-4">{{ error }}</small>
+                                    </li>
+                                  {% endfor %}
+                                  </ul>
+                              {% endif %}
                           </div>
 
                           <div class="form-group">
                               {{ form.relate.label }}
-                              <div style="display: inline-block;vertical-align: top; margin-left: -15px; margin-top: -15px;">
-                                <span data-toggle="modal" data-target="#create_relate" style="display: inline-block;">
-                                    <button type="button" class="btn btn-sm btn-link" style="width:40px;padding-left:2px;padding-right:2px;">
-                                        <i class="fas fa-plus-circle" style="color: #3f51b5; font-size: 12px;"></i>
-                                    </button>
-                                </span>
-                              </div>
+                              <span data-toggle="modal" data-target="#create_relate" style="display: inline-block;margin-left: 5px;vertical-align: top; margin-top: -5px;">
+                                  <i class="fas fa-plus-circle" style="color: #3f51b5; font-size: 12px;"></i>
+                              </span>
                               {{ form.relate }}
+                              {% if form.relate.errors %}
+                                  <ul>
+                                  {% for error in form.relate.errors %}
+                                    <li>
+                                        <small class="form-text text-muted mb-4">{{ error }}</small>
+                                    </li>
+                                  {% endfor %}
+                                  </ul>
+                              {% endif %}
                           </div>
 
                           <div class="form-group">
                             {{ form.tags.label }}
                             <span class="red-text">*</span>
-                            <div style="display: inline-block;vertical-align: top; margin-left: -15px; margin-top: -15px;">
-                                <span data-toggle="modal" data-target="#create_tag" style="display: inline-block;">
-                                    <button type="button" class="btn btn-sm btn-link" style="width:40px;padding-left:2px;padding-right:2px;">
-                                        <i class="fas fa-plus-circle" style="color: #3f51b5; font-size: 12px;"></i>
-                                    </button>
-                                </span>
-                            </div>
+                            <span data-toggle="modal" data-target="#create_tag" style="display: inline-block;margin-left: 5px;vertical-align: top; margin-top: -5px;">
+                                <i class="fas fa-plus-circle" style="color: #3f51b5; font-size: 12px;"></i>
+                            </span>
                             {{ form.tags }}
+                            {% if form.tags.errors %}
+                                <ul>
+                                  {% for error in form.tags.errors %}
+                                    <li>
+                                        <small class="form-text text-muted mb-4">{{ error }}</small>
+                                    </li>
+                                  {% endfor %}
+                                </ul>
+                            {% endif %}
+                          </div>
+
+                          <div class="form-group">
+                              {{ form.deny_comment }}
+                              {{ form.deny_comment.label }}
                           </div>
                       </div>
                       <!-- Grid column -->
@@ -93,7 +114,7 @@
                 </form>
                 <div class="modal fade" style="z-index: 11112;" id="create_category" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
                      aria-hidden="true">
-                    <div class="modal-dialog modal-notify modal-info">
+                    <div class="modal-dialog modal-frame modal-bottom modal-notify modal-info">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h6 class="modal-title" id="exampleModalLabel">Creat a new category</h6>
@@ -118,7 +139,7 @@
 
                 <div class="modal fade" style="z-index: 11112;" id="create_tag" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
                      aria-hidden="true">
-                    <div class="modal-dialog modal-notify modal-info">
+                    <div class="modal-dialog modal-frame modal-bottom modal-notify modal-info">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h6 class="modal-title" id="exampleModalLabel">Creat a new tag</h6>
@@ -143,7 +164,7 @@
 
                 <div class="modal fade" style="z-index: 11112;" id="create_relate" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
                      aria-hidden="true">
-                    <div class="modal-dialog modal-notify modal-info">
+                    <div class="modal-dialog modal-frame modal-bottom modal-notify modal-info">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h6 class="modal-title" id="exampleModalLabel">Creat a new relate</h6>

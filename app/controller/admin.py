@@ -294,7 +294,7 @@ class NotificationBaseModelview(MyBaseModelview):
 
 
 class PostBaseModelview(MyBaseModelview):
-    column_editable_list = ["category", "is_draft", "can_comment"]
+    column_editable_list = ["category", "is_draft", "deny_comment"]
     column_exclude_list = ["abstract", "body", "slug", "relate", "archive", "author"]
     form_overrides = {
         'body': CKTextAreaField

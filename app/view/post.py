@@ -125,6 +125,7 @@ def create_post():
         tag_names = post_form.tags.data
         slug = post_form.slug.data
         abstract = post_form.abstract.data
+        deny_comment = post_form.deny_comment.data
         body = post_form.body.data
 
         if Post.query.filter_by(slug=slug).first():
@@ -138,8 +139,10 @@ def create_post():
             tags=[Tag.query.filter_by(name=item).first() for item in tag_names],
             slug=slug,
             abstract=abstract,
+            deny_comment=deny_comment,
             body=body,
-            author=current_user)
+            author=current_user
+        )
 
         db.session.add(post)
         db.session.commit()
@@ -169,6 +172,7 @@ def edit_post(post_slug):
     create_category_form = CreateForm()
     create_relate_form = CreateForm()
     create_tag_form = CreateForm()
+
     search_post = Post.query.filter_by(slug=post_slug).first_or_404()
 
     post_form.title.data = search_post.title
@@ -176,15 +180,23 @@ def edit_post(post_slug):
     if search_post.category:
         post_form.category.data = search_post.category.name
     else:
-        post_form.category.data = ""
+        if Category.query.first():
+            post_form.category.data = Category.query.first().name
 
     if search_post.relate:
         post_form.relate.data = search_post.relate.name
     else:
         post_form.relate.data = ""
-    post_form.tags.data = [item.name for item in search_post.tags]
+
+    if search_post.tags:
+        post_form.tags.data = [item.name for item in search_post.tags]
+    else:
+        if Tag.query.first():
+            post_form.tags.data = [Tag.query.first().name]
+
     post_form.slug.data = search_post.slug
     post_form.abstract.data = search_post.abstract
+    post_form.deny_comment.data = search_post.deny_comment
     post_form.body.data = search_post.body
 
     if post_form.validate_on_submit():
@@ -195,6 +207,7 @@ def edit_post(post_slug):
         tag_names = flask.request.form.getlist('tags')
         slug = flask.request.form.get('slug')
         abstract = flask.request.form.get('abstract')
+        deny_comment = True if flask.request.form.get('deny_comment') else False
         body = flask.request.form.get('body')
 
         if slug != search_post.slug and Post.query.filter_by(slug=slug).first():
@@ -214,6 +227,7 @@ def edit_post(post_slug):
         search_post.tags = [Tag.query.filter_by(name=item).first() for item in tag_names]
         search_post.slug = slug
         search_post.abstract = abstract
+        search_post.deny_comment = deny_comment
         search_post.body = body
 
         if post_form.save_submit.data:

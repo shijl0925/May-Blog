@@ -250,7 +250,7 @@ class Post(db.Model):
 
     tags = db.relationship('Tag', secondary='post_tag', back_populates='posts')
 
-    can_comment = db.Column(db.Boolean, default=True)
+    deny_comment = db.Column(db.Boolean)
     comments = db.relationship('Comment', back_populates='post', cascade='all, delete-orphan')
 
     def __repr__(self):

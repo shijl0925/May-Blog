@@ -4,7 +4,7 @@
 from flask_wtf import FlaskForm
 from flask_ckeditor import CKEditorField
 from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
-from wtforms import widgets, StringField, TextAreaField, validators, SubmitField, ValidationError
+from wtforms import widgets, StringField, TextAreaField, validators, SubmitField, ValidationError, BooleanField
 from app.controller.extensions import db
 from app.model.models import Post, Category, Tag, Relate
 
@@ -106,6 +106,8 @@ class PostForm(FlaskForm):
         validators=[validators.DataRequired()]
     )
 
+    deny_comment = BooleanField('Deny Comment')
+
     save_submit = SubmitField(
         'Save As Draft',
         render_kw={'class': 'btn btn-blue-grey shadow-none'}
@@ -126,3 +128,4 @@ class CreateForm(FlaskForm):
         ],
         render_kw={'class': 'form-control'}
     )
+

@@ -114,54 +114,55 @@
                         <section class="sectionmb-4 fadeIn">
                             <h3 class="font-weight-bold text-center my-5">Leave a reply</h3>
                             <form class="card-body" method="POST" action="{{ url_for('posts.create_comment', post_slug=post.slug) }}">
-                            <!-- Grid row -->
-                            <div class="row">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                <!-- Grid row -->
+                                <div class="row">
 
-                              <!-- Grid column -->
-                              <div class="col-lg-6 col-md-12 mb-4">
+                                  <!-- Grid column -->
+                                  <div class="col-lg-6 col-md-12 mb-4">
 
-                                <div class="input-group md-form form-sm form-3 pl-0">
-                                  <div class="input-group-prepend">
-                                    <span class="input-group-text white black-text" id="basic-addon8">1</span>
+                                    <div class="input-group md-form form-sm form-3 pl-0">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text white black-text" id="basic-addon8">1</span>
+                                      </div>
+                                      <input type="text" name="author" class="form-control mt-0 black-border rgba-white-strong" placeholder="Name" aria-describedby="basic-addon9">
+                                    </div>
+
                                   </div>
-                                  <input type="text" name="author" class="form-control mt-0 black-border rgba-white-strong" placeholder="Name" aria-describedby="basic-addon9">
-                                </div>
+                                  <!-- Grid column -->
 
-                              </div>
-                              <!-- Grid column -->
+                                  <!-- Grid column -->
+                                  <div class="col-lg-6 col-md-6 mb-4">
 
-                              <!-- Grid column -->
-                              <div class="col-lg-6 col-md-6 mb-4">
+                                    <div class="input-group md-form form-sm form-3 pl-0">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text white black-text" id="basic-addon9">2</span>
+                                      </div>
+                                      <input type="text" name="email" class="form-control mt-0 black-border rgba-white-strong" placeholder="Email" aria-describedby="basic-addon9">
+                                    </div>
 
-                                <div class="input-group md-form form-sm form-3 pl-0">
-                                  <div class="input-group-prepend">
-                                    <span class="input-group-text white black-text" id="basic-addon9">2</span>
                                   </div>
-                                  <input type="text" name="email" class="form-control mt-0 black-border rgba-white-strong" placeholder="Email" aria-describedby="basic-addon9">
+                                  <!-- Grid column -->
+
                                 </div>
+                                <!-- Grid row -->
 
-                              </div>
-                              <!-- Grid column -->
+                                <!-- Grid row -->
+                                <div class="row">
 
-                            </div>
-                            <!-- Grid row -->
+                                  <div class="col-12 mt-1">
+                                    <div class="form-group basic-textarea">
 
-                            <!-- Grid row -->
-                            <div class="row">
+                                      <textarea name="body" class="form-control" id="exampleFormControlTextarea6" rows="5" placeholder="Write something here..."></textarea>
+                                    </div>
 
-                              <div class="col-12 mt-1">
-                                <div class="form-group basic-textarea">
+                                    <div class="text-right">
+                                      <button class="btn btn-primary btn-sm waves-effect waves-light">Submit</button>
+                                    </div>
+                                  </div>
 
-                                  <textarea name="body" class="form-control" id="exampleFormControlTextarea6" rows="5" placeholder="Write something here..."></textarea>
                                 </div>
-
-                                <div class="text-right">
-                                  <button class="btn btn-primary btn-sm waves-effect waves-light">Submit</button>
-                                </div>
-                              </div>
-
-                            </div>
-                            <!-- Grid row -->
+                                <!-- Grid row -->
                             </form>
                         </section>
                         {% endif %}

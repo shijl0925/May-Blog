@@ -7,7 +7,7 @@
         html,
         body,
         .post_content {
-          height: 100vh;
+          height: auto;
           min-height: 100vh;
         }
         .navbar {
@@ -28,7 +28,6 @@
                 <form class="card-body" method="POST"
                       action="{% if post %}{{ url_for('posts.edit_post', post_slug=post.slug) }}{% else %}{{ url_for('posts.create_post') }}{% endif %}">
                     {{ form.csrf_token }}
-{#                    {{ form.errors }}#}
                     <div class="row">
                       <!-- Grid column -->
                       <div class="col-md-9">

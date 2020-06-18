@@ -3,7 +3,7 @@ import flask
 from flask_wtf.csrf import CSRFError
 from app.utils import config_log, get_abs_dir
 from app.config import config
-from app.controller.extensions import mail, toolbar, db, moment, babel, avatars, adminlte, mdb, boostrap, ckeditor
+from app.controller.extensions import mail, toolbar, db, moment, babel, avatars, adminlte, mdb, boostrap, ckeditor, csrf
 from app.controller.admin import admin
 from app.view import init_blue_print
 from app.controller.security import create_security
@@ -35,7 +35,7 @@ def register_errorhandlers(app):
 
     @app.errorhandler(CSRFError)
     def handle_csrf_error(e):
-        return flask.render_template('errors/400.html', description=e.description), 500
+        return flask.render_template('errors/400.html', description=e.description), 400
 
 
 def create_app(env=None):
@@ -60,6 +60,7 @@ def create_app(env=None):
     babel.init_app(app_)
     avatars.init_app(app_)
     ckeditor.init_app(app_)
+    csrf.init_app(app_)
 
     app_.jinja_env.trim_blocks = True
     app_.jinja_env.lstrip_blocks = True

@@ -35,6 +35,7 @@
 
               <!-- Card content -->
               <form class="card-body" method="POST" action="{{ url_for('profile.index') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <!-- Grid row -->
                 <div class="row mb-3">
                   <!-- Grid column -->
@@ -86,7 +87,7 @@
                   <div class="col-md-12">
                     <div class="md-form form-sm mb-0">
                         <label for="location">Address</label>
-                        <input type="text" name="location" class="form-control form-control-sm" id="location" value="{{ current_user.location }}">
+                        <input type="text" name="location" class="form-control form-control-sm" id="location" value="{% if current_user.location %}{{ current_user.location }}{% endif %}">
                     </div>
                   </div>
                   <!-- Grid column -->
@@ -99,7 +100,7 @@
                   <div class="col-md-12">
                     <div class="md-form form-sm mb-0">
                         <label for="website">Website</label>
-                        <input type="text" name="website" class="form-control form-control-sm" id="website" value="{{ current_user.website }}">
+                        <input type="text" name="website" class="form-control form-control-sm" id="website" value="{% if current_user.website %}{{ current_user.website }}{% endif %}">
                     </div>
                   </div>
                   <!-- Grid column -->
@@ -113,7 +114,7 @@
                     <h4 class="text-muted text-left">About me</h4>
                     <!-- Basic textarea -->
                     <div class="md-form mb-0">
-                        <textarea name="bio" class="form-control md-textarea" id="bio" placeholder="Basic textarea">{{ current_user.bio }}</textarea>
+                        <textarea name="bio" class="form-control md-textarea" id="bio" placeholder="Basic textarea">{% if current_user.bio %}{{ current_user.bio }}{% endif %}</textarea>
                     </div>
                   </div>
                   <!-- Grid column -->
@@ -187,6 +188,7 @@
                         </div>
                         <div class="modal-body">
                             <form method="POST" action="{{ url_for('profile.set_password') }}" role="form" oninput='password2.setCustomValidity(password.value != password2.value ? "Passwords do not match." : "")'>
+                              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                               <div class="modal-body">
                                 <div class="form-group">
                                   <label for="currentPassword">Old Password</label>

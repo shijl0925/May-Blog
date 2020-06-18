@@ -14,8 +14,8 @@ posts_bp = flask.Blueprint('posts', __name__, url_prefix='/')
 
 @posts_bp.route('/', methods=['GET'])
 def posts():
-    today = datetime.today()
-    weekday = today.isoweekday()
+    now = datetime.now()
+    weekday = now.isoweekday()
     author = User.query.get(1)
 
     page = int(flask.request.args.get('page', 1))

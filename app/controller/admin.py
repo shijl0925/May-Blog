@@ -2,8 +2,10 @@
 # -*- coding:utf-8 -*-
 # @Author: Jialiang Shi
 import os
+from datetime import datetime, timedelta
 import flask
 from redis import Redis
+from sqlalchemy import func
 from flask_admin import Admin, expose, AdminIndexView, BaseView
 from flask_admin.contrib.sqla import ModelView
 from flask_admin.contrib.fileadmin import FileAdmin
@@ -56,7 +58,22 @@ class MyAdminIndexView(AdminIndexView):
         if not current_user.is_admin:
             flask.abort(403)
 
-        return self.render('myadmin3/my_index.html')
+        post_nums = db.session.query(func.count(Post.id)).scalar()
+        comment_nums = db.session.query(func.count(Comment.id)).scalar()
+        tracker_nums = db.session.query(func.count(Tracker.id)).scalar()
+
+        now = datetime.now()
+        this_week_start = now - timedelta(days=now.weekday())
+
+        this_week_tracker_nums = db.session.query(func.count(Tracker.id)).filter(Tracker.timestamp >= this_week_start).scalar()
+
+        return self.render(
+            'myadmin3/my_index.html',
+            post_nums=post_nums,
+            comment_nums=comment_nums,
+            tracker_nums=tracker_nums,
+            this_week_tracker_nums=this_week_tracker_nums
+        )
 
 
 # Only show the Logout link if the user is logged in.

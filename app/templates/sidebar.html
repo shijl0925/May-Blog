@@ -206,7 +206,7 @@
             <!-- Excerpt -->
             <div class="col-12">
               <h6 class="mt-0 font-small">
-                <a>
+                <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="dark-grey-text">
                   <strong>{{ post.title }}</strong>
                 </a>
               </h6>

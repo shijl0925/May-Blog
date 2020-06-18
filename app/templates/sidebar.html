@@ -188,4 +188,43 @@
     </section>
     {% endif %}
     <!-- Section: Categories -->
+
+    <!-- POPULAR POSTS -->
+    {% if popular_posts %}
+    <section class="section widget-content mb-5">
+
+      <!--  Card -->
+      <div class="card card-body pb-0">
+        <p class="font-weight-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
+            <strong>POPULAR POSTS</strong>
+        </p>
+
+        {% for post in popular_posts %}
+        <div class="single-post">
+          <!-- Grid row -->
+          <div class="row mb-4">
+            <!-- Excerpt -->
+            <div class="col-12">
+              <h6 class="mt-0 font-small">
+                <a>
+                  <strong>{{ post.title }}</strong>
+                </a>
+              </h6>
+
+              <div class="post-data">
+                <p class="font-small grey-text mb-0">
+                    <i class="fas fa-clock"></i> {{ post.publish_time.strftime('%d/%m/%Y') }}
+                </p>
+              </div>
+            </div>
+            <!--  Excerpt -->
+          </div>
+          <!--  Grid row -->
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+    <!-- POPULAR POSTS -->
+
 </div>

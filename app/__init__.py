@@ -73,7 +73,3 @@ def create_app(env=None):
 
 
 app = create_app()
-
-
-
-

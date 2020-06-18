@@ -29,6 +29,7 @@ roles_users = db.Table('roles_users',
 
 class Permission(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+
     name = db.Column(db.String(30), unique=True)
     roles = db.relationship('Role', secondary=roles_permissions, back_populates='permissions')
 
@@ -38,10 +39,9 @@ class Permission(db.Model):
 
 class Role(db.Model, RoleMixin):
     id = db.Column(db.Integer(), primary_key=True)
+
     name = db.Column(db.String(32), unique=True)
-
     permissions = db.relationship('Permission', secondary=roles_permissions, back_populates='roles')
-
     users = db.relationship('User', secondary=roles_users, back_populates='roles')
 
     def __repr__(self):
@@ -69,6 +69,7 @@ class Role(db.Model, RoleMixin):
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
+
     email = db.Column(db.String(64), unique=True)
     password = db.Column(db.String(256))
     active = db.Column(db.Boolean())
@@ -188,8 +189,8 @@ def delete_avatars(**kwargs):
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), unique=True)
 
+    name = db.Column(db.String(30), unique=True)
     posts = db.relationship('Post', back_populates='category')
 
     def __repr__(self):
@@ -198,8 +199,8 @@ class Category(db.Model):
 
 class Relate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(256), unique=True)
 
+    name = db.Column(db.String(256), unique=True)
     posts = db.relationship('Post', back_populates='relate')
 
     def __repr__(self):
@@ -215,8 +216,8 @@ post_tag = db.Table(
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), unique=True)
 
+    name = db.Column(db.String(30), unique=True)
     posts = db.relationship('Post', secondary=post_tag, back_populates='tags')
 
     def __repr__(self):
@@ -253,12 +254,16 @@ class Post(db.Model):
     deny_comment = db.Column(db.Boolean)
     comments = db.relationship('Comment', back_populates='post', cascade='all, delete-orphan')
 
+    trackers = db.relationship('Tracker', back_populates='post')
+    visit_count = db.Column(db.Integer, default=0)
+
     def __repr__(self):
         return '<Post %r>' % self.slug
 
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+
     author = db.Column(db.String(30))
     email = db.Column(db.String(254))
     body = db.Column(db.Text)
@@ -286,8 +291,8 @@ def update_post_archive(target, value, oldvalue, initiator):
 
 class Archive(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    label = db.Column(db.String(32), nullable=False)
 
+    label = db.Column(db.String(32), nullable=False)
     posts = db.relationship('Post', back_populates='archive')
 
     def __repr__(self):
@@ -301,3 +306,17 @@ class Settings(db.Model):
 
     name = db.Column(db.String(64), unique=True)
     value = db.Column(db.String(128), nullable=True)
+
+
+class Tracker(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    user_agent = db.Column(db.String(256))
+    ip = db.Column(db.String(32))
+    timestamp = db.Column(db.DateTime, default=datetime.now)
+
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    post = db.relationship('Post', back_populates='trackers')
+
+    __mapper_args__ = {"order_by": timestamp.desc()}
+

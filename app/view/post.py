@@ -7,6 +7,7 @@ from app.form.forms import PostForm, OperateForm, CreateForm
 from app.controller.extensions import db
 from app.utils.common import redirect_back
 from app.utils.decorator import permission_required
+from app.controller.signals import post_visited
 
 posts_bp = flask.Blueprint('posts', __name__, url_prefix='/')
 
@@ -49,6 +50,7 @@ def posts():
 
     latest_posts = Post.query.filter_by(is_draft=False).order_by(Post.publish_time.desc()).limit(3).all()
     older_posts = Post.query.filter_by(is_draft=False).order_by(Post.publish_time).limit(3).all()
+    popular_posts = Post.query.filter_by(is_draft=False).order_by(Post.visit_count.desc()).limit(6).all()
 
     return flask.render_template(
         posts_template,
@@ -61,6 +63,7 @@ def posts():
         archives=archives,
         latest_posts=latest_posts,
         older_posts=older_posts,
+        popular_posts=popular_posts,
         weekday=weekday
     )
 
@@ -72,12 +75,15 @@ def post(post_slug):
 
     post = Post.query.filter_by(slug=post_slug).first_or_404()
 
+    post_visited.send(flask.current_app._get_current_object(), post=post)
+
     categories = Category.query.all()
     archives = Archive.query.all()
     tags = Tag.query.all()
 
     latest_posts = Post.query.filter_by(is_draft=False).order_by(Post.publish_time.desc()).limit(3).all()
     older_posts = Post.query.filter_by(is_draft=False).order_by(Post.publish_time).limit(3).all()
+    popular_posts = Post.query.filter_by(is_draft=False).order_by(Post.visit_count.desc()).limit(6).all()
 
     return flask.render_template(
         'post.html',
@@ -88,6 +94,7 @@ def post(post_slug):
         archives=archives,
         latest_posts=latest_posts,
         older_posts=older_posts,
+        popular_posts=popular_posts,
         operate_form=operate_form
     )
 

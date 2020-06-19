@@ -4,7 +4,7 @@
 import os
 from datetime import datetime, timedelta
 import flask
-from redis import Redis
+# from redis import Redis
 from sqlalchemy import func
 from flask_admin import Admin, expose, AdminIndexView, BaseView
 from flask_admin.contrib.sqla import ModelView

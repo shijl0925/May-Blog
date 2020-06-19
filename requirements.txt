@@ -10,8 +10,15 @@ flask-migrate
 flask-debugtoolbar
 SQLAlchemy>=1.2.15
 Flask-SQLAlchemy>=2.3.2
-gevent>=1.4.0
+gevent==1.4.0
 gunicorn>=19.9.0
 Flask_AdminLTE3
 Flask-MDBootstrap
 python-slugify
+email_validator
+werkzeug==0.15.4
+flask-moment
+flask-ckeditor
+redis
+markdown
+html2text

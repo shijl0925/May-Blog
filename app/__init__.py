@@ -58,7 +58,7 @@ def create_app(env=None):
     mdb.init_app(app_)
     mail.init_app(app_)
     db.init_app(app_)
-    toolbar.init_app(app_)
+    # toolbar.init_app(app_)
     moment.init_app(app_)
     admin.init_app(app_)
     adminlte.init_app(app_)

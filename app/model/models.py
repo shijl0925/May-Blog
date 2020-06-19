@@ -308,9 +308,9 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     post = db.relationship('Post', back_populates='comments')
 
-    # replied_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
-    # replies = db.relationship('Comment', back_populates='replied', cascade='all, delete-orphan')
-    # replied = db.relationship('Comment', back_populates='replies', remote_side=[id])
+    replied_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
+    replies = db.relationship('Comment', back_populates='replied', cascade='all, delete-orphan')
+    replied = db.relationship('Comment', back_populates='replies', remote_side=[id])
 
 
 @db.event.listens_for(Post.publish_time, 'set', named=True)

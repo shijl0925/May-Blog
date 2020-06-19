@@ -267,6 +267,7 @@ class Post(db.Model):
     slug = db.Column(db.String(256), nullable=False)
 
     is_draft = db.Column(db.Boolean, default=False)
+    is_markdown = db.Column(db.Boolean, default=False)
 
     create_time = db.Column(db.DateTime, default=datetime.now)
     publish_time = db.Column(db.DateTime)

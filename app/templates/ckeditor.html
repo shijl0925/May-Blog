@@ -1,0 +1,18 @@
+<div class="form-group" id="ckeditor-body">
+    {{ form.body.label }}
+    <span class="red-text">*</span>
+    {% if request.endpoint == "posts.create_post" %}
+        <a href="{{ url_for('posts.create_post', editor="markdown") }}" class="ml-md-3">Markdown Editor</a>
+    {% endif %}
+    {{form.body}}
+
+    {% if form.body.errors %}
+      <ul>
+      {% for error in form.body.errors %}
+        <li>
+            <small class="form-text text-muted mb-4">{{ error }}</small>
+        </li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+</div>

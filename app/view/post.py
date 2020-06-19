@@ -1,5 +1,7 @@
 from datetime import datetime
 import flask
+import markdown
+import html2text
 from flask_security import login_required, current_user
 from sqlalchemy import or_
 from flask_babelex import gettext as _
@@ -119,10 +121,10 @@ def search_post():
     )
 
 
-@posts_bp.route('/post/create', methods=['GET', 'POST'])
+@posts_bp.route('/post/create/<editor>', methods=['GET', 'POST'])
 @login_required
 @permission_required('ADMINISTER')
-def create_post():
+def create_post(editor):
     post_form = PostForm()
     create_category_form = CreateForm()
     create_relate_form = CreateForm()
@@ -134,7 +136,15 @@ def create_post():
         tag_names = post_form.tags.data
         abstract = post_form.abstract.data
         deny_comment = post_form.deny_comment.data
-        body = post_form.body.data
+
+        if editor == "markdown":
+            body_md = post_form.body.data
+            md = markdown.Markdown()
+            body = md.convert(body_md)
+            is_markdown = True
+        else:
+            body = post_form.body.data
+            is_markdown = False
 
         slug = slugify(title, max_length=100)
         post = Post(
@@ -145,6 +155,7 @@ def create_post():
             slug=slug,
             abstract=abstract,
             deny_comment=deny_comment,
+            is_markdown=is_markdown,
             body=body,
             author=current_user
         )
@@ -161,6 +172,7 @@ def create_post():
         return flask.redirect(flask.url_for('posts.post', post_slug=slug))
     return flask.render_template(
         'create.html',
+        editor=editor,
         form=post_form,
         post=None,
         create_category_form=create_category_form,
@@ -179,6 +191,8 @@ def edit_post(post_slug):
     create_tag_form = CreateForm()
 
     search_post = Post.query.filter_by(slug=post_slug).first_or_404()
+
+    is_markdown = search_post.is_markdown
 
     post_form.title.data = search_post.title
 
@@ -201,7 +215,11 @@ def edit_post(post_slug):
 
     post_form.abstract.data = search_post.abstract
     post_form.deny_comment.data = search_post.deny_comment
-    post_form.body.data = search_post.body
+
+    if is_markdown:
+        post_form.body.data = html2text.html2text(search_post.body)
+    else:
+        post_form.body.data = search_post.body
 
     if post_form.validate_on_submit():
         title = flask.request.form.get('title')
@@ -211,7 +229,13 @@ def edit_post(post_slug):
         tag_names = flask.request.form.getlist('tags')
         abstract = flask.request.form.get('abstract')
         deny_comment = True if flask.request.form.get('deny_comment') else False
-        body = flask.request.form.get('body')
+
+        if is_markdown:
+            body_md = flask.request.form.get('body')
+            md = markdown.Markdown()
+            body = md.convert(body_md)
+        else:
+            body = flask.request.form.get('body')
 
         search_post.title = title
 

@@ -5,10 +5,6 @@
     {{ super() }}
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/signin.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/error.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/progress.css') }}">
-
     <style>
         .archive ul li:first-of-type {
             border-top: none;
@@ -72,7 +68,7 @@
                         </ul>
                         <form class="search-form" style="margin-top: -15px;" role="search" method="GET" action="{{ url_for('posts.search_post') }}">
                           <div class="form-group md-form my-0 waves-light waves-effect waves-light">
-                            <input type="text" name=q class="form-control" placeholder="Search">
+                            <input type="text" style="font-size: 13px;" name=q class="form-control" placeholder="{{ _("Search") }}">
                           </div>
                         </form>
                         <ul class="navbar-nav">
@@ -89,7 +85,7 @@
                                         {% if current_user.is_admin %}
                                         <a class="dropdown-item" href="{{ url_for('posts.create_post') }}">
                                             <i class="fas fa-file-alt"></i>
-                                            <span class="ml-1">Create A Post</span>
+                                            <span class="ml-1">{{ _("Create Post") }}</span>
                                         </a>
                                         <a class="dropdown-item" href="{{ url_for('admin.index') }}">
                                             <i class="fas fa-toolbox"></i>

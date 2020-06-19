@@ -1,0 +1,211 @@
+# Chinese translations for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-06-19 14:25+0800\n"
+"PO-Revision-Date: 2020-06-19 14:25+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh\n"
+"Language-Team: zh <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.7.0\n"
+
+#: form/forms.py:55
+msgid "Title"
+msgstr "标题"
+
+#: form/forms.py:64
+msgid "Abstract"
+msgstr "摘要"
+
+#: form/forms.py:73
+msgid "Category"
+msgstr "分类"
+
+#: form/forms.py:81
+msgid "Relate"
+msgstr "相关文章"
+
+#: form/forms.py:88
+msgid "Tags"
+msgstr "标签"
+
+#: form/forms.py:97
+msgid "Body"
+msgstr "内容"
+
+#: form/forms.py:101
+msgid "Deny Comment"
+msgstr "禁止评论"
+
+#: form/forms.py:104
+msgid "Save As Draft"
+msgstr "保存草稿"
+
+#: form/forms.py:109
+msgid "Publish"
+msgstr "发表文章"
+
+#: form/forms.py:116 templates/post.html:128
+msgid "Name"
+msgstr "名字"
+
+#: templates/base.html:71
+msgid "Search"
+msgstr "搜索..."
+
+#: templates/base.html:88
+msgid "Create Post"
+msgstr "写文章"
+
+#: templates/base.html:92
+msgid "Admin Dashboard"
+msgstr "管理后台"
+
+#: templates/base.html:99
+msgid "Logout"
+msgstr "退出"
+
+#: templates/base.html:107 templates/security/_menu.html:4
+#: templates/security/login_user.html:9
+msgid "Login"
+msgstr "登录"
+
+#: templates/create.html:120
+msgid "Creat a new category"
+msgstr "创建新的类别"
+
+#: templates/create.html:131 templates/create.html:156
+#: templates/create.html:181
+msgid "Close"
+msgstr "关闭"
+
+#: templates/create.html:132 templates/create.html:157
+#: templates/create.html:182
+msgid "Save"
+msgstr "保存"
+
+#: templates/create.html:145
+msgid "Creat a new tag"
+msgstr "创建新的标签"
+
+#: templates/create.html:170
+msgid "Creat a new relate"
+msgstr "创建新的相关文章"
+
+#: templates/index.html:98
+msgid "welcome to my blog"
+msgstr "欢迎来到我的博客"
+
+#: templates/index.html:101
+msgid "Stay hungry，Stay foolish"
+msgstr "求知若饥，虚心若愚"
+
+#: templates/list.html:50
+msgid "No Posts."
+msgstr "暂无文章"
+
+#: templates/post.html:42
+msgid "Edit"
+msgstr "编辑"
+
+#: templates/post.html:48 templates/post.html:101
+msgid "Delete"
+msgstr "删除"
+
+#: templates/post.html:78
+msgid "Comments"
+msgstr "评论"
+
+#: templates/post.html:115
+msgid "Leave a reply"
+msgstr "发表评论"
+
+#: templates/post.html:141
+msgid "Email"
+msgstr "邮箱"
+
+#: templates/post.html:156
+msgid "Write something here..."
+msgstr "写下你的评论..."
+
+#: templates/post.html:160
+msgid "Submit"
+msgstr "提交"
+
+#: templates/sidebar.html:56
+msgid "TAGS"
+msgstr "标签"
+
+#: templates/sidebar.html:86
+msgid "RELATED POSTS"
+msgstr "相关文章"
+
+#: templates/sidebar.html:124
+msgid "ARCHIVE"
+msgstr "存档"
+
+#: templates/sidebar.html:174
+msgid "CATEGORIES"
+msgstr "类别"
+
+#: templates/sidebar.html:208
+msgid "POPULAR POSTS"
+msgstr "热门文章"
+
+#: templates/tail.html:10
+msgid "LATESTS POSTS"
+msgstr "最新的文章"
+
+#: templates/tail.html:41
+msgid "OLDER POSTS"
+msgstr "以前的文章"
+
+#: templates/security/_menu.html:9 templates/security/register_user.html:9
+msgid "Register"
+msgstr "注册"
+
+#: templates/security/_menu.html:15
+msgid "Forget Password?"
+msgstr "忘记密码？"
+
+#: templates/security/_menu.html:21
+msgid "Confirm account"
+msgstr "确认账户"
+
+#: view/post.py:160
+msgid "Create A New Post Successful!"
+msgstr "新的文章创建成功！"
+
+#: view/post.py:237
+msgid "Update The Post Successful!"
+msgstr "文章已更新成功！"
+
+#: view/post.py:257
+msgid "Delete The Post Successful!"
+msgstr "文章已删除成功！"
+
+#: view/post.py:268
+msgid "This Category already exists!"
+msgstr "此类别已存在！"
+
+#: view/post.py:284
+msgid "This Relate already exists!"
+msgstr "此相关文章已存在！"
+
+#: view/post.py:300
+msgid "This Tag already exists!"
+msgstr "此标签已存在！"
+
+#: view/post.py:337
+msgid "Delete The Comment Successful!"
+msgstr "评论已删除成功！"
+

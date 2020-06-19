@@ -39,7 +39,8 @@ class BaseConfig:
 
     DEBUG_TB_INTERCEPT_REDIRECTS = False
 
-    # BABEL_DEFAULT_LOCALE = 'zh_CN'
+    BABEL_DEFAULT_LOCALE = 'en'
+    BABEL_DEFAULT_TIMEZONE = 'UTC'
 
 
 class DevelopmentConfig(BaseConfig):

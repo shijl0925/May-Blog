@@ -38,6 +38,11 @@ def register_errorhandlers(app):
         return flask.render_template('errors/400.html', description=e.description), 400
 
 
+@babel.localeselector
+def get_locale():
+    return flask.request.accept_languages.best_match(['zh', 'en'])
+
+
 def create_app(env=None):
     config_log()
     app_ = flask.Flask(

@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 # @Author: Jialiang Shi
 from flask_wtf import FlaskForm
+from flask_babelex import lazy_gettext as _
 from flask_ckeditor import CKEditorField
 from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms import widgets, StringField, TextAreaField, validators, SubmitField, ValidationError, BooleanField
@@ -51,7 +52,7 @@ class PostForm(FlaskForm):
         return obj
 
     title = StringField(
-        'Title',
+        _('Title'),
         validators=[
             validators.DataRequired(),
             validators.Length(1, 256)
@@ -60,7 +61,7 @@ class PostForm(FlaskForm):
     )
 
     abstract = StringField(
-        'Abstract',
+        _('Abstract'),
         validators=[
             validators.DataRequired(),
             validators.Length(1, 256)
@@ -69,7 +70,7 @@ class PostForm(FlaskForm):
     )
 
     category = QuerySelectField(
-        'Category',
+        _('Category'),
         validators=[validators.DataRequired()],
         render_kw={'class': 'browser-default custom-select'},
         query_factory=query_category_factory,
@@ -77,42 +78,42 @@ class PostForm(FlaskForm):
     )
 
     relate = QuerySelectField(
-        'Relate',
+        _('Relate'),
         render_kw={'class': 'browser-default custom-select'},
         query_factory=query_relate_factory,
         get_pk=get_pk
     )
 
     tags = QuerySelectMultipleField(
-        'Tags',
+        _('Tags'),
         validators=[validators.DataRequired()],
-        render_kw={'class': 'custom-select'},
+        render_kw={'class': 'selectpicker'},
         query_factory=tag_choices,
         allow_blank=True,
         get_pk=get_pk
     )
 
     body = CKEditorField(
-        'Body',
+        _('Body'),
         validators=[validators.DataRequired()]
     )
 
-    deny_comment = BooleanField('Deny Comment')
+    deny_comment = BooleanField(_('Deny Comment'))
 
     save_submit = SubmitField(
-        'Save As Draft',
+        _('Save As Draft'),
         render_kw={'class': 'btn btn-blue-grey shadow-none'}
     )
 
     publish_submit = SubmitField(
-        'Publish',
+        _('Publish'),
         render_kw={'class': 'btn btn-primary shadow-none'}
     )
 
 
 class CreateForm(FlaskForm):
     name = StringField(
-        'Name',
+        _('Name'),
         validators=[
             validators.DataRequired(),
             validators.Length(1, 30)

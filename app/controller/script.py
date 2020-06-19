@@ -19,6 +19,6 @@ class InitDB(Command):
     def run(self, **kwargs):
         db.create_all()
         Role.init_role()
-        # Category.init_category()
-        # Tag.init_tag()
+        Category.init_category()
+        Tag.init_tag()
         print('OK: database is initialed.')

@@ -2,6 +2,7 @@ from datetime import datetime
 import flask
 from flask_security import login_required, current_user
 from sqlalchemy import or_
+from flask_babelex import gettext as _
 from slugify import slugify
 from app.model.models import User, Post, Category, Tag, Archive, Relate, Comment
 from app.form.forms import PostForm, OperateForm, CreateForm
@@ -156,7 +157,7 @@ def create_post():
         elif post_form.publish_submit.data:
             post.publish_time = datetime.now()
         db.session.commit()
-        flask.flash("Create A Post Successful!", category="success")
+        flask.flash(_("Create A New Post Successful!"), category="success")
         return flask.redirect(flask.url_for('posts.post', post_slug=slug))
     return flask.render_template(
         'create.html',
@@ -233,7 +234,7 @@ def edit_post(post_slug):
             search_post.publish_time = datetime.now()
 
         db.session.commit()
-        flask.flash("Edit The Post Successful!", category="success")
+        flask.flash(_("Update The Post Successful!"), category="success")
         return flask.redirect(flask.url_for('posts.post', post_slug=search_post.slug))
 
     return flask.render_template(
@@ -253,7 +254,7 @@ def delete_post(post_slug):
     if flask.request.method == "POST":
         search_post = Post.query.filter_by(slug=post_slug).first_or_404()
         db.session.delete(search_post)
-        flask.flash("Delete The Post Successful!", category="success")
+        flask.flash(_("Delete The Post Successful!"), category="success")
         return flask.redirect(flask.url_for('posts.posts'))
 
 
@@ -264,7 +265,7 @@ def create_category():
     if flask.request.method == "POST":
         category_name = flask.request.form.get('name')
         if Category.query.filter_by(name=category_name).first():
-            flask.flash("This Category is already existed!", category="warning")
+            flask.flash(_("This Category already exists!"), category="warning")
             return redirect_back()
 
         category = Category(name=category_name)
@@ -280,7 +281,7 @@ def create_relate():
     if flask.request.method == "POST":
         relate_name = flask.request.form.get('name')
         if Relate.query.filter_by(name=relate_name).first():
-            flask.flash("This Relate is already existed!", category="warning")
+            flask.flash(_("This Relate already exists!"), category="warning")
             return redirect_back()
 
         relate = Relate(name=relate_name)
@@ -296,7 +297,7 @@ def create_tag():
     if flask.request.method == "POST":
         tag_name = flask.request.form.get('name')
         if Tag.query.filter_by(name=tag_name).first():
-            flask.flash("This Tag is already existed!", category="warning")
+            flask.flash(_("This Tag already exists!"), category="warning")
             return redirect_back()
 
         tag = Tag(name=tag_name)
@@ -333,5 +334,5 @@ def delete_comment(comment_id):
     if flask.request.method == "POST":
         search_comment = Comment.query.get(comment_id)
         db.session.delete(search_comment)
-        flask.flash("Delete The Comment Successful!", category="success")
+        flask.flash(_("Delete The Comment Successful!"), category="success")
         return redirect_back()

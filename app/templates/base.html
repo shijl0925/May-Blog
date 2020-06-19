@@ -70,7 +70,7 @@
                         <ul class="navbar-nav mr-auto">
                             {{ nav_active_item(['posts.posts'], 'Home', 'fas fa-home') }}
                         </ul>
-                        <form class="search-form" role="search" method="GET" action="{{ url_for('posts.search_post') }}">
+                        <form class="search-form" style="margin-top: -15px;" role="search" method="GET" action="{{ url_for('posts.search_post') }}">
                           <div class="form-group md-form my-0 waves-light waves-effect waves-light">
                             <input type="text" name=q class="form-control" placeholder="Search">
                           </div>

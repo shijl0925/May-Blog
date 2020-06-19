@@ -13,7 +13,7 @@ from flask_admin.menu import MenuLink
 from flask_admin.helpers import get_form_data
 from flask_security import current_user
 from flask_security.utils import encrypt_password
-from app.model.models import User, Role, Permission, Settings, Post, Category, Archive, Tag, Relate, Comment, Tracker
+from app.model.models import User, Role, Permission, Settings, Post, Category, Archive, Tag, Relate, Comment, Tracker, Request
 from app.controller.extensions import db, avatars
 from app.form.auth import CropAvatarForm, UploadAvatarForm
 from app.config import BaseConfig
@@ -311,6 +311,7 @@ class NotificationBaseModelview(MyBaseModelview):
 
 
 class PostBaseModelview(MyBaseModelview):
+    column_searchable_list = ["title", "body"]
     column_editable_list = ["category", "is_draft", "deny_comment"]
     column_exclude_list = ["abstract", "body", "slug", "relate", "archive", "author"]
     form_overrides = {
@@ -320,12 +321,15 @@ class PostBaseModelview(MyBaseModelview):
 
 
 class CommentBaseModelview(MyBaseModelview):
-    # column_editable_list = ['reviewed']
-    pass
+    column_searchable_list = ["author", "email", "body"]
 
 
 class TrackerBaseModelview(MyBaseModelview):
-    pass
+    column_searchable_list = ["url", "ip"]
+
+
+class RequestBaseModelview(MyBaseModelview):
+    column_searchable_list = ["module", "status_code", "ip"]
 
 
 class CategoryBaseModelview(MyBaseModelview):
@@ -432,12 +436,19 @@ admin.add_view(TrackerBaseModelview(Tracker,
                                     name='Tracker',
                                     endpoint='tracker'))
 
-admin.add_view(MyBaseModelview(Settings,
-                               db.session,
-                               menu_icon_type='fas',
-                               menu_icon_value='fa-cogs',
-                               name='Settings',
-                               endpoint='settings'))
+# admin.add_view(MyBaseModelview(Settings,
+#                                db.session,
+#                                menu_icon_type='fas',
+#                                menu_icon_value='fa-cogs',
+#                                name='Settings',
+#                                endpoint='settings'))
+
+# admin.add_view(RequestBaseModelview(Request,
+#                                     db.session,
+#                                     menu_icon_type='fas',
+#                                     menu_icon_value='fa-suitcase-rolling',
+#                                     name='Request',
+#                                     endpoint='request'))
 
 
 class MyFileAdmin(MyBaseView, AdminLTEFileAdmin):

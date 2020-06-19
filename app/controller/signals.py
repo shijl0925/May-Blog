@@ -2,7 +2,6 @@
 # -*- coding:utf-8 -*-
 # @Author: Jialiang Shi
 
-from __future__ import print_function
 import flask
 from blinker import Namespace
 from app.model.models import Tracker
@@ -18,7 +17,7 @@ def on_post_visited(sender, post, **extra):
     ip = (flask.request.headers[nginx_remote] if nginx_remote in flask.request.headers else flask.request.remote_addr)
 
     tracker = Tracker(
-        user_agent=flask.request.headers.get('User-Agent'),
+        url=flask.request.path,
         ip=ip,
         post=post
     )

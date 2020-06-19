@@ -3,7 +3,7 @@
 # @Author: Jialiang Shi
 from flask_script import Command
 from app.controller.extensions import db
-from app.model.models import Role
+from app.model.models import Role, Category, Tag
 
 
 class ResetDB(Command):
@@ -18,12 +18,7 @@ class InitDB(Command):
     """Fills in predefined data to DB"""
     def run(self, **kwargs):
         db.create_all()
-        create_roles()
+        Role.init_role()
+        # Category.init_category()
+        # Tag.init_tag()
         print('OK: database is initialed.')
-
-
-def create_roles():
-    Role.init_role()
-
-
-

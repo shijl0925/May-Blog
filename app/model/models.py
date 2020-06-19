@@ -3,6 +3,7 @@
 # @Author: Jialiang Shi
 import os
 from datetime import datetime
+from sqlalchemy.ext.mutable import MutableDict
 from flask_avatars import Identicon
 from flask import current_app
 from werkzeug.local import LocalProxy
@@ -193,6 +194,21 @@ class Category(db.Model):
     name = db.Column(db.String(30), unique=True)
     posts = db.relationship('Post', back_populates='category')
 
+    @staticmethod
+    def init_category():
+        categories = [
+            '原创',
+            '转载',
+            '翻译',
+            '笔记'
+        ]
+        for item in categories:
+            search_category = Category.query.filter_by(name=item).first()
+            if search_category is None:
+                category = Category(name=item)
+                db.session.add(category)
+        db.session.commit()
+
     def __repr__(self):
         return '<Category %r>' % self.name
 
@@ -219,6 +235,24 @@ class Tag(db.Model):
 
     name = db.Column(db.String(30), unique=True)
     posts = db.relationship('Post', secondary=post_tag, back_populates='tags')
+
+    @staticmethod
+    def init_tag():
+        tags = [
+            'Python',
+            'Flask',
+            'Django',
+            'CI/CD',
+            'Jenkins',
+            'Docker',
+            'K8S'
+        ]
+        for item in tags:
+            search_tag = Tag.query.filter_by(name=item).first()
+            if search_tag is None:
+                tag = Tag(name=item)
+                db.session.add(tag)
+        db.session.commit()
 
     def __repr__(self):
         return '<Tag %r>' % self.name
@@ -254,18 +288,18 @@ class Post(db.Model):
     deny_comment = db.Column(db.Boolean)
     comments = db.relationship('Comment', back_populates='post', cascade='all, delete-orphan')
 
-    trackers = db.relationship('Tracker', back_populates='post')
+    trackers = db.relationship('Tracker', back_populates='post', cascade='all')
     visit_count = db.Column(db.Integer, default=0)
 
     def __repr__(self):
-        return '<Post %r>' % self.slug
+        return '<Post %r>' % self.id
 
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     author = db.Column(db.String(30))
-    email = db.Column(db.String(254))
+    email = db.Column(db.String(64))
     body = db.Column(db.Text)
 
     # reviewed = db.Column(db.Boolean, default=False)
@@ -311,8 +345,8 @@ class Settings(db.Model):
 class Tracker(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
-    user_agent = db.Column(db.String(256))
-    ip = db.Column(db.String(32))
+    url = db.Column(db.String(128))
+    ip = db.Column(db.String(64))
     timestamp = db.Column(db.DateTime, default=datetime.now)
 
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
@@ -320,3 +354,17 @@ class Tracker(db.Model):
 
     __mapper_args__ = {"order_by": timestamp.desc()}
 
+
+class Request(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    method = db.Column(db.String(8))
+    module = db.Column(db.String(32))
+
+    url = db.Column(db.String(256))
+    ip = db.Column(db.String(64))
+    timestamp = db.Column(db.DateTime, default=datetime.now)
+
+    status_code = db.Column(db.Integer)
+    arguments = db.Column(MutableDict.as_mutable(db.PickleType), default=dict())
+    __mapper_args__ = {"order_by": timestamp.desc()}

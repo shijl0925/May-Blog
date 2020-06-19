@@ -7,7 +7,7 @@ from app.controller.extensions import mail, toolbar, db, moment, babel, avatars,
 from app.controller.admin import admin
 from app.view import init_blue_print
 from app.controller.security import create_security
-from app.controller.script import create_roles
+from app.controller.request import save_request
 
 apps_abs_dir = get_abs_dir(__file__)
 
@@ -62,11 +62,14 @@ def create_app(env=None):
     ckeditor.init_app(app_)
     csrf.init_app(app_)
 
+    # app_.after_request(save_request)
+
     app_.jinja_env.trim_blocks = True
     app_.jinja_env.lstrip_blocks = True
 
     init_blue_print(app_)
     register_errorhandlers(app_)
+
     security = create_security(app_)
 
     return app_

@@ -92,15 +92,6 @@ class PostForm(FlaskForm):
         get_pk=get_pk
     )
 
-    slug = StringField(
-        'Slug',
-        validators=[
-            validators.DataRequired(),
-            validators.Length(1, 256)
-        ],
-        render_kw={'class': 'form-control'}
-    )
-
     body = CKEditorField(
         'Body',
         validators=[validators.DataRequired()]

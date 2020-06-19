@@ -2,6 +2,7 @@ from datetime import datetime
 import flask
 from flask_security import login_required, current_user
 from sqlalchemy import or_
+from slugify import slugify
 from app.model.models import User, Post, Category, Tag, Archive, Relate, Comment
 from app.form.forms import PostForm, OperateForm, CreateForm
 from app.controller.extensions import db
@@ -130,15 +131,11 @@ def create_post():
         category = post_form.category.data
         relate = post_form.relate.data
         tag_names = post_form.tags.data
-        slug = post_form.slug.data
         abstract = post_form.abstract.data
         deny_comment = post_form.deny_comment.data
         body = post_form.body.data
 
-        if Post.query.filter_by(slug=slug).first():
-            flask.flash("This Slug is already in use!", category="warning")
-            return flask.redirect(flask.url_for('posts.create_post'))
-
+        slug = slugify(title, max_length=100)
         post = Post(
             title=title,
             category=Category.query.filter_by(name=category).first(),
@@ -201,7 +198,6 @@ def edit_post(post_slug):
         if Tag.query.first():
             post_form.tags.data = [Tag.query.first().name]
 
-    post_form.slug.data = search_post.slug
     post_form.abstract.data = search_post.abstract
     post_form.deny_comment.data = search_post.deny_comment
     post_form.body.data = search_post.body
@@ -212,14 +208,9 @@ def edit_post(post_slug):
 
         relate_name = flask.request.form.get('relate')
         tag_names = flask.request.form.getlist('tags')
-        slug = flask.request.form.get('slug')
         abstract = flask.request.form.get('abstract')
         deny_comment = True if flask.request.form.get('deny_comment') else False
         body = flask.request.form.get('body')
-
-        if slug != search_post.slug and Post.query.filter_by(slug=slug).first():
-            flask.flash("This Slug is already in use!", category="warning")
-            return flask.redirect(flask.url_for('posts.edit_post', post_slug=search_post.slug))
 
         search_post.title = title
 
@@ -232,7 +223,6 @@ def edit_post(post_slug):
             search_post.relate = relate
 
         search_post.tags = [Tag.query.filter_by(name=item).first() for item in tag_names]
-        search_post.slug = slug
         search_post.abstract = abstract
         search_post.deny_comment = deny_comment
         search_post.body = body

@@ -2,7 +2,7 @@
     {{ form.body.label }}
     <span class="red-text">*</span>
     {% if request.endpoint == "posts.create_post" %}
-        <a href="{{ url_for('posts.create_post', editor="markdown") }}" class="ml-md-3">Markdown Editor</a>
+        <a href="{{ url_for('posts.create_post', editor='markdown') }}" class="ml-md-3">Markdown Editor</a>
     {% endif %}
     {{form.body}}
 

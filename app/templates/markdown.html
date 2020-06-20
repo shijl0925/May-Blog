@@ -2,7 +2,7 @@
     {{ form.body.label }}
     <span class="red-text">*</span>
     {% if request.endpoint == "posts.create_post" %}
-        <a href="{{ url_for('posts.create_post', editor="ckeditor") }}" class="ml-md-3">Html Editor</a>
+        <a href="{{ url_for('posts.create_post', editor='ckeditor') }}" class="ml-md-3">Html Editor</a>
     {% endif %}
     {{form.body(placeholder="Blog text", required="", data_provide="markdown", rows="15")}}
     {% if form.body.errors %}

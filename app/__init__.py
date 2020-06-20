@@ -8,6 +8,7 @@ from app.controller.admin import admin
 from app.view import init_blue_print
 from app.controller.security import create_security
 from app.controller.request import save_request
+from app.model.models import User, Post, Category, Tag, Archive
 
 apps_abs_dir = get_abs_dir(__file__)
 
@@ -43,6 +44,26 @@ def get_locale():
     return flask.request.accept_languages.best_match(['zh', 'en'])
 
 
+def inject_context_variables():
+    admin = User.query.get(1)
+    categories = Category.query.all()
+    archives = Archive.query.all()
+    tags = Tag.query.all()
+
+    latest_posts = Post.query.filter_by(is_draft=False).order_by(Post.publish_time.desc()).limit(3).all()
+    older_posts = Post.query.filter_by(is_draft=False).order_by(Post.publish_time).limit(3).all()
+    popular_posts = Post.query.filter_by(is_draft=False).order_by(Post.visit_count.desc()).limit(6).all()
+
+    return dict(
+        admin=admin,
+        categories=categories,
+        tags=tags,
+        archives=archives,
+        latest_posts=latest_posts,
+        older_posts=older_posts,
+        popular_posts=popular_posts
+    )
+
 def create_app(env=None):
     config_log()
     app_ = flask.Flask(
@@ -68,6 +89,8 @@ def create_app(env=None):
     csrf.init_app(app_)
 
     # app_.after_request(save_request)
+
+    app_.context_processor(inject_context_variables)
 
     app_.jinja_env.trim_blocks = True
     app_.jinja_env.lstrip_blocks = True

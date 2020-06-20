@@ -20,7 +20,6 @@ posts_bp = flask.Blueprint('posts', __name__, url_prefix='/')
 def posts():
     now = datetime.now()
     weekday = now.isoweekday()
-    author = User.query.get(1)
 
     page = int(flask.request.args.get('page', 1))
     category = flask.request.args.get('category', '')
@@ -43,31 +42,16 @@ def posts():
 
     pagination = posts.order_by(Post.publish_time.desc()).paginate(page=page, per_page=6)
 
-    categories = Category.query.all()
-    archives = Archive.query.all()
-    tags = Tag.query.all()
-
     if pagination.page == 1:
         posts_template = "index.html"
     else:
         posts_template = "posts.html"
 
-    latest_posts = Post.query.filter_by(is_draft=False).order_by(Post.publish_time.desc()).limit(3).all()
-    older_posts = Post.query.filter_by(is_draft=False).order_by(Post.publish_time).limit(3).all()
-    popular_posts = Post.query.filter_by(is_draft=False).order_by(Post.visit_count.desc()).limit(6).all()
-
     return flask.render_template(
         posts_template,
-        author=author,
         pagination=pagination,
         posts=pagination.items,
         post=None,
-        categories=categories,
-        tags=tags,
-        archives=archives,
-        latest_posts=latest_posts,
-        older_posts=older_posts,
-        popular_posts=popular_posts,
         weekday=weekday
     )
 
@@ -75,38 +59,18 @@ def posts():
 @posts_bp.route('/post/<post_slug>', methods=['GET'])
 def post(post_slug):
     operate_form = OperateForm()
-    author = User.query.get(1)
-
     post = Post.query.filter_by(slug=post_slug).first_or_404()
-
     post_visited.send(flask.current_app._get_current_object(), post=post)
-
-    categories = Category.query.all()
-    archives = Archive.query.all()
-    tags = Tag.query.all()
-
-    latest_posts = Post.query.filter_by(is_draft=False).order_by(Post.publish_time.desc()).limit(3).all()
-    older_posts = Post.query.filter_by(is_draft=False).order_by(Post.publish_time).limit(3).all()
-    popular_posts = Post.query.filter_by(is_draft=False).order_by(Post.visit_count.desc()).limit(6).all()
 
     return flask.render_template(
         'post.html',
-        author=author,
         post=post,
-        categories=categories,
-        tags=tags,
-        archives=archives,
-        latest_posts=latest_posts,
-        older_posts=older_posts,
-        popular_posts=popular_posts,
         operate_form=operate_form
     )
 
 
 @posts_bp.route('/search', methods=['GET'])
 def search_post():
-    author = User.query.get(1)
-
     q = flask.request.args.get('q')
     page = int(flask.request.args.get('page', 1))
     result = Post.query.filter(or_(Post.title.like(u'%{}%'.format(q)),
@@ -115,7 +79,6 @@ def search_post():
     pagination = result.paginate(page=page, per_page=6)
     return flask.render_template(
         "posts.html",
-        author=author,
         pagination=pagination,
         posts=pagination.items
     )

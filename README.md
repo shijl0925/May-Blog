@@ -23,7 +23,7 @@ How to run:
 $ python3 manage.py reset_db
 $ python3 manage.py init_db
 $ python3 manage.py runserver
-* Running on http://127.0.0.1:5000/
+* Running on http://127.0.0.1:8080/
 ```
 
 

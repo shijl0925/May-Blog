@@ -5,7 +5,7 @@ gevent.monkey.patch_all()
 import multiprocessing
 
 # debug = True
-bind = "0.0.0.0:5000"
+bind = "0.0.0.0:8080"
 pidfile = "app/logs/gunicorn.pid"
 accesslog = "app/logs/gaccess.log"
 errorlog = "app/logs/gdebug.log"

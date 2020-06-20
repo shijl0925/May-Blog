@@ -38,7 +38,7 @@ manager.add_command('activate_user', ActivateUserCommand())
 @manager.command
 def runserver():
     def run():
-        http_server = WSGIServer(('0.0.0.0', 5000), app)
+        http_server = WSGIServer(('0.0.0.0', 8080), app)
         http_server.serve_forever()
 
     run()

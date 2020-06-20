@@ -57,7 +57,7 @@ class TestingConfig(DevelopmentConfig):
 
 
 class ProductionConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = 'postgresql://deploy:deploy@****@localhost/analysis'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://deploy:deploy@deploy@localhost/analysis'
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False

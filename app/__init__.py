@@ -80,4 +80,4 @@ def create_app(env=None):
     return app_
 
 
-app = create_app()
+app = create_app("development")

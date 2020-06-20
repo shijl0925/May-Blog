@@ -68,7 +68,7 @@
                         </ul>
                         <form class="search-form" style="margin-top: -15px;" role="search" method="GET" action="{{ url_for('posts.search_post') }}">
                           <div class="form-group md-form my-0 waves-light waves-effect waves-light">
-                            <input type="text" style="font-size: 13px;" name=q class="form-control" placeholder="{{ _("Search") }}">
+                            <input type="text" style="font-size: 13px;" name=q class="form-control" placeholder="{{ _('Search') }}">
                           </div>
                         </form>
                         <ul class="navbar-nav">
@@ -83,7 +83,7 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                         {% if current_user.is_admin %}
-                                        <a class="dropdown-item" href="{{ url_for('posts.create_post', editor="ckeditor") }}">
+                                        <a class="dropdown-item" href="{{ url_for('posts.create_post', editor='ckeditor') }}">
                                             <i class="fas fa-file-alt"></i>
                                             <span class="ml-1">{{ _("Create Post") }}</span>
                                         </a>

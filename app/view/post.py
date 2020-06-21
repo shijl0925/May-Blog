@@ -137,7 +137,6 @@ def create_post(editor):
         'create.html',
         editor=editor,
         form=post_form,
-        post=None,
         create_category_form=create_category_form,
         create_relate_form=create_relate_form,
         create_tag_form=create_tag_form
@@ -225,7 +224,7 @@ def edit_post(post_slug):
         return flask.redirect(flask.url_for('posts.post', post_slug=search_post.slug))
 
     return flask.render_template(
-        'create.html',
+        'edit.html',
         form=post_form,
         post=search_post,
         create_category_form=create_category_form,

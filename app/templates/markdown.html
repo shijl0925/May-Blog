@@ -4,6 +4,11 @@
     {% if request.endpoint == "posts.create_post" %}
         <a href="{{ url_for('posts.create_post', editor='ckeditor') }}" class="ml-md-3">Html Editor</a>
     {% endif %}
+    <p>
+        <a target="_blank" href="{{ url_for('flask_fileupload.upload') }}">
+            {{ _("Upload new File") }}
+        </a>
+    </p>
     {{form.body(placeholder="Blog text", required="", data_provide="markdown", rows="15")}}
     {% if form.body.errors %}
       <ul>

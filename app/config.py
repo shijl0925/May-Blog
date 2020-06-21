@@ -49,6 +49,10 @@ class BaseConfig:
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
 
+    FILEUPLOAD_LOCALSTORAGE_IMG_FOLDER = "uploads"
+    FILEUPLOAD_PREFIX = "/file"
+    FILEUPLOAD_ALLOWED_EXTENSIONS = ['jpg', 'gif', 'png', 'jpeg']
+
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True

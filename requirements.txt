@@ -22,3 +22,4 @@ flask-ckeditor==0.4.3
 redis
 markdown
 html2text
+Flask-FileUpload

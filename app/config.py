@@ -39,6 +39,13 @@ class BaseConfig:
 
     DEBUG_TB_INTERCEPT_REDIRECTS = False
 
+    CKEDITOR_HEIGHT = 400
+    CKEDITOR_ENABLE_CODESNIPPET = True
+    CKEDITOR_CODE_THEME = "monokai_sublime"
+
+    UPLOADED_PATH = os.path.join(basedir, 'uploads')
+    CKEDITOR_FILE_UPLOADER = "posts.upload"
+
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
 

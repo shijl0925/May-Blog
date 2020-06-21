@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 import flask
 import markdown
@@ -6,12 +7,14 @@ from flask_security import login_required, current_user
 from sqlalchemy import or_
 from flask_babelex import gettext as _
 from slugify import slugify
+from flask_ckeditor import upload_success, upload_fail
 from app.model.models import User, Post, Category, Tag, Archive, Relate, Comment
 from app.form.forms import PostForm, OperateForm, CreateForm
-from app.controller.extensions import db
+from app.controller.extensions import db, csrf
 from app.utils.common import redirect_back
 from app.utils.decorator import permission_required
 from app.controller.signals import post_visited
+
 
 posts_bp = flask.Blueprint('posts', __name__, url_prefix='/')
 
@@ -322,3 +325,21 @@ def delete_comment(comment_id):
         db.session.delete(search_comment)
         flask.flash(_("Delete The Comment Successful!"), category="success")
         return redirect_back()
+
+
+@posts_bp.route('/files/<path:filename>')
+def uploaded_files(filename):
+    return flask.send_from_directory(flask.current_app.config['UPLOADED_PATH'], filename)
+
+
+@csrf.exempt
+@posts_bp.route('/upload', methods=['POST'])
+def upload():
+    f = flask.request.files.get('upload')
+    # Add more validations here
+    extension = f.filename.split('.')[-1].lower()
+    if extension not in ['jpg', 'gif', 'png', 'jpeg']:
+        return upload_fail(message='Image only!')
+    f.save(os.path.join(flask.current_app.config['UPLOADED_PATH'], f.filename))
+    url = flask.url_for('posts.uploaded_files', filename=f.filename)
+    return upload_success(url=url)

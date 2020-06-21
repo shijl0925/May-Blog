@@ -216,7 +216,7 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.5.1/marked.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.10.0/js/bootstrap-markdown.min.js"></script>
     {% else %}
-        {{ ckeditor.load() }}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.11.4/ckeditor.js"></script>
         {{ ckeditor.config(name='body') }}
     {% endif %}
 {% endblock %}

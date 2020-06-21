@@ -103,14 +103,49 @@
                                   <a class="float-left" href="{{ url_for('posts.posts') }}">
                                       <i class="fas fa-arrow-circle-left"></i>
                                   </a>
-                                  <a class="float-right">
+                                  <span class="float-right">
+                                      <i class="fas fa-tags mr-1"></i>
                                       {% for tag in post.tags %}
                                         <span class="badge badge-info">{{ tag.name }}</span>
                                       {% endfor %}
-                                  </a>
+                                  </span>
                               </div>
                             </div>
                         </section>
+
+                        {% if post and post.relate %}
+                        <hr>
+                        <section class="section pb-3 fadeIn">
+                            <!--  Card -->
+                            <div class="dark-grey-text mb-5 mt-4 mx-4">
+                              <div class="text-center mb-4">
+                                  <h3 class="font-weight-bold pt-3 mb-5">
+                                      {{ _("RELATED POSTS") }} <span class="badge pink">{{ post.relate.posts|length }}</span>
+                                  </h3>
+                              </div>
+
+                              {% for post in post.relate.posts %}
+                                <div class="row mb-4">
+                                  <!-- Excerpt -->
+                                  <div class="col-12">
+                                    <h6 class="mt-0">
+                                      <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="dark-grey-text">
+                                        <strong>{{ post.title }}</strong>
+                                      </a>
+                                    </h6>
+
+                                    <div class="post-data">
+                                      <p class="font-small grey-text mb-0">
+                                        <i class="fas fa-clock"></i> {{ post.publish_time.strftime('%d/%m/%Y') }}</p>
+                                    </div>
+                                  </div>
+                                  <!--  Excerpt -->
+                                </div>
+
+                              {% endfor %}
+                            </div>
+                        </section>
+                        {% endif %}
 
                         {% if not post.deny_comment %}
                            {% if post.comments|length %}

@@ -54,7 +54,6 @@ def posts():
         posts_template,
         pagination=pagination,
         posts=pagination.items,
-        post=None,
         weekday=weekday
     )
 

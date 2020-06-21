@@ -40,6 +40,10 @@
                               </h3>
                               <p class="dark-grey-text">
                                   Written by <strong>{{ post.author.full_name }}</strong>, {{ post.publish_time.strftime('%d/%m/%Y') }}
+                                  {% if post.visit_count %}
+                                    <img src="{{ url_for('static', filename='img/post-read.png') }}" width="25" height="25">
+                                    {{ post.visit_count }}
+                                  {% endif %}
                               </p>
                               {% if current_user.is_admin %}
                               <div class="btn-group" role="group">

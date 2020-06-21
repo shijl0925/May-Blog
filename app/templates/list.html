@@ -26,7 +26,7 @@
                     {{ post.abstract|truncate(225) }}
                 </p>
 
-                <p>
+                <p class="dark-grey-text">
                     by <strong>{{ post.author.full_name }}</strong>
                     {{ post.publish_time.strftime('%d/%m/%Y') }}
                     {% if post.visit_count %}

@@ -2,6 +2,8 @@
 
 {% block styles %}
     {{ super() }}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+
     <style>
     .navbar {
         background-color: #6f7782;
@@ -194,7 +196,9 @@
 
 {% block scripts %}
     {{ super() }}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
     <script type="text/javascript">
+        hljs.initHighlightingOnLoad();
         function del(){
             if(!confirm("Are you Sure delete this post?")){
                 window.event.returnValue = false;

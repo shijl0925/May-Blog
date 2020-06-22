@@ -9,7 +9,6 @@ from flask_adminlte3 import AdminLTE3
 from flask_mdbootstrap import MDBootstrap
 from flask_ckeditor import CKEditor
 from flask_wtf.csrf import CSRFProtect
-from flask_fileupload import FlaskFileUpload
 
 boostrap = Bootstrap()
 mail = Mail()
@@ -22,4 +21,3 @@ adminlte = AdminLTE3()
 mdb = MDBootstrap()
 ckeditor = CKEditor()
 csrf = CSRFProtect()
-ffu = FlaskFileUpload()

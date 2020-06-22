@@ -15,7 +15,7 @@ from flask_security import current_user
 from flask_security.utils import encrypt_password
 from app.model.models import User, Role, Permission, Settings, Post, Category, Archive, Tag, Relate, Comment, Tracker, Request
 from app.controller.extensions import db, avatars
-from app.form.auth import CropAvatarForm, UploadAvatarForm
+from app.form.auth import CropAvatarForm, UploadForm
 from app.config import BaseConfig
 from app.utils.common import remove_preview_avatar
 from flask_security.confirmable import generate_confirmation_link
@@ -85,7 +85,7 @@ class LogoutMenuLink(MenuLink):
 class ProfileView(BaseView):
     @expose('/', methods=["GET", "POST"])
     def index(self):
-        upload_form = UploadAvatarForm()
+        upload_form = UploadForm()
         crop_form = CropAvatarForm()
 
         if not current_user.is_authenticated:
@@ -118,7 +118,7 @@ class ProfileView(BaseView):
 
     @expose('/avatar', methods=['GET', 'POST'])
     def change_avatar(self):
-        upload_form = UploadAvatarForm()
+        upload_form = UploadForm()
         crop_form = CropAvatarForm()
         return self.render('myadmin3/change_avatar.html', upload_form=upload_form, crop_form=crop_form)
 

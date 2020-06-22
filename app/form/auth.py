@@ -115,9 +115,13 @@ class EditProfileForm(FlaskForm):
     submit = SubmitField('Submit', render_kw={'class': 'btn btn-primary btn-block'})
 
 
-class UploadAvatarForm(FlaskForm):
+class UploadForm(FlaskForm):
     image = FileField('Upload your file',
-                      validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'The file format should be .jpg or .png.')])
+                      validators=[
+                          FileRequired(),
+                          FileAllowed(
+                              ['jpg', 'png', 'jpeg'], 'The file format should be .jpg or .png or jpeg.')]
+                      )
     submit = SubmitField('Upload', render_kw={'class': 'btn btn-primary btn-md'})
 
 

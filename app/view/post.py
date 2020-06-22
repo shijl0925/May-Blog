@@ -59,6 +59,8 @@ def posts():
 
 
 @posts_bp.route('/drafts', methods=['GET'])
+@login_required
+@permission_required('ADMINISTER')
 def draft():
     operate_form = OperateForm()
     page = int(flask.request.args.get('page', 1))

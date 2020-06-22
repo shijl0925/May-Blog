@@ -3,12 +3,13 @@ import flask
 from flask_wtf.csrf import CSRFError
 from app.utils import config_log, get_abs_dir
 from app.config import config
-from app.controller.extensions import mail, toolbar, db, moment, babel, avatars, adminlte, mdb, boostrap, ckeditor, csrf, ffu
+from app.controller.extensions import mail, toolbar, db, moment, babel, avatars, adminlte, mdb, boostrap, ckeditor, csrf
 from app.controller.admin import admin
 from app.view import init_blue_print
 from app.controller.security import create_security
 from app.controller.request import save_request
 from app.model.models import User, Post, Category, Tag, Archive
+from app.view.file import get_abs_existing_files, get_filename
 
 apps_abs_dir = get_abs_dir(__file__)
 
@@ -88,11 +89,12 @@ def create_app(env=None):
     avatars.init_app(app_)
     ckeditor.init_app(app_)
     csrf.init_app(app_)
-    ffu.init_app(app_)
 
     # app_.after_request(save_request)
 
     app_.context_processor(inject_context_variables)
+    app_.add_template_global(get_abs_existing_files, "get_abs_existing_files")
+    app_.add_template_filter(get_filename, "get_filename")
 
     app_.jinja_env.trim_blocks = True
     app_.jinja_env.lstrip_blocks = True

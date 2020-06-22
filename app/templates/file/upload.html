@@ -9,70 +9,77 @@
         footer.page-footer {
             background-color: #6f7782;
         }
+        html,
+        body,
+        .post_content {
+          height: auto;
+          min-height: 100vh;
+        }
     </style>
 {% endblock styles %}
 
 {% block page_content %}
-    <div class="mt-3 pt-3">
+    <div class="mt-3 pt-3 post_content">
         <div class="row">
             <div class="col-md-12">
                 <h1>Upload Images</h1>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <form method="post" enctype=multipart/form-data class="col-md-12">
-            {{ form.csrf_token }}
-            <div class="mb-3">
-                {{ form.upload_name(required=True) }}
-                {{ form.upload_img }}
-            </div>
 
-            <div class="form-group float-right">
-                <button type="submit" class="btn btn-primary">Upload</button>
-            </div>
-        </form>
-        <div class="col-md-12" style="height:30px;"></div>
-    </div>
+        <div class="row">
+            <form method="post" enctype=multipart/form-data class="col-md-12">
+                {{ form.csrf_token }}
+                <div class="mb-3">
+                    {{ form.upload_name(required=True) }}
+                    {{ form.upload_img }}
+                </div>
 
-    <hr>
-    <div class="row">
-        <table id="imges" class="table table-sm table-striped">
-            <thead>
-                <tr>
-                    <th style="width: 40%">Nam</th>
-                    <th style="width: 40%">Path</th>
-                    <th style="width: 10%">Preview</th>
-                    <th style="width: 10%">Del</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for file_abs in get_abs_existing_files() %}
-                    {% set filename = file_abs|get_filename %}
+                <div class="form-group float-right">
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </div>
+            </form>
+            <div class="col-md-12" style="height:30px;"></div>
+        </div>
+
+        <hr>
+        <div class="row">
+            <table id="imges" class="table table-sm table-striped">
+                <thead>
                     <tr>
-                        <td>
-                            <a href="{{ file_abs }}">
-                                {{ file_abs|get_filename }}
-                            </a>
-                        </td>
-                        <td class="path-input-col">
-                            <input class="path-input" title="path" style="width: 100%;" type="text" readonly value="{{file_abs}}">
-                        </td>
-                        <td>
-                            <img class="thumbnail zoom" style="height: 30px; width: auto; max-width:30px;" src="{{file_abs}}">
-                        </td>
-                        <td>
-                            <form method="POST" action="{{ url_for('files.upload_delete', filename=filename) }}" onclick="return del()">
-                                {{ delete_form.csrf_token }}
-                                <button type="submit" class="btn btn-sm btn-outline-danger shadow-none ml-0">
-                                    <i class="far fa-trash-alt"></i>
-                                </button>
-                            </form>
-                        </td>
+                        <th style="width: 40%">Nam</th>
+                        <th style="width: 40%">Path</th>
+                        <th style="width: 10%">Preview</th>
+                        <th style="width: 10%">Del</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for file_abs in get_abs_existing_files() %}
+                        {% set filename = file_abs|get_filename %}
+                        <tr>
+                            <td>
+                                <a href="{{ file_abs }}">
+                                    {{ file_abs|get_filename }}
+                                </a>
+                            </td>
+                            <td class="path-input-col">
+                                <input class="path-input" title="path" style="width: 100%;" type="text" readonly value="{{file_abs}}">
+                            </td>
+                            <td>
+                                <img class="thumbnail zoom" style="height: 30px; width: auto; max-width:30px;" src="{{file_abs}}">
+                            </td>
+                            <td>
+                                <form method="POST" action="{{ url_for('files.upload_delete', filename=filename) }}" onclick="return del()">
+                                    {{ delete_form.csrf_token }}
+                                    <button type="submit" class="btn btn-sm btn-outline-danger shadow-none ml-0">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock page_content %}
 

@@ -126,7 +126,7 @@
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}" style="position: fixed;top: 0;left: 0; right: 0;width: 100%;z-index: 11111;">
+                    <div id="alert_div" class="alert alert-{{ category }}" style="position: fixed;top: 0;left: 0; right: 0;width: 100%;z-index: 11111;">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <h5>{{ message }}</h5>
                     </div>
@@ -159,4 +159,14 @@
     </footer>
 {% endblock %}
 
+{% block scripts %}
+    {{ super() }}
+    <script>
+        $(document).ready(function(){
+            $("#alert_div").fadeTo(2000, 500).slideUp(500, function(){
+                $("#alert_div").slideUp(500);
+            });
+        });
+    </script>
+{% endblock %}
 

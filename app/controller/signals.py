@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 # @Author: Jialiang Shi
-
+from datetime import datetime
 import flask
 from blinker import Namespace
 from app.model.models import Tracker
@@ -28,4 +28,7 @@ def on_post_visited(sender, post, **extra):
         db.session.commit()
 
         post.visit_count += 1
+        db.session.commit()
+    else:
+        search_tracker.timestamp = datetime.now()
         db.session.commit()

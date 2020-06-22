@@ -61,7 +61,7 @@
               <div class="col-12">
                   {% for tag in tags %}
                       <a href="{{ url_for('posts.posts', tag=tag.name) }}">
-                          <span class="badge badge-info mr-1">
+                          <span class="badge badge-info mr-1 hvr-sweep-to-right">
                               {{ tag.name }}
                           </span>
                       </a>
@@ -97,12 +97,12 @@
                 <ul class="list-unstyled">
                   {% for archive in archives %}
                   <li class="d-flex justify-content-between align-items-center">
-                      <a href="{{ url_for('posts.posts', archive=archive.label) }}" class="dark-grey-text">
+                      <a href="{{ url_for('posts.posts', archive=archive.label) }}" class="dark-grey-text hvr-sweep-to-right">
                           <p class="mb-1">{{ archive.label }}</p>
                       </a>
                       {% with post_nums = archive.posts|length  %}
                         {% if post_nums %}
-                          <span class="badge badge-pill badge-primary font-small">{{ post_nums }}</span>
+                          <span class="badge badge-pill badge-primary font-small hvr-buzz-out">{{ post_nums }}</span>
                         {% endif %}
                       {% endwith %}
                   </li>
@@ -142,12 +142,12 @@
                   <ul class="list-unstyled">
                     {% for category in categories %}
                     <li class="d-flex justify-content-between align-items-center">
-                      <a href="{{ url_for('posts.posts', category=category.name) }}" class="dark-grey-text">
+                      <a href="{{ url_for('posts.posts', category=category.name) }}" class="dark-grey-text hvr-sweep-to-right">
                         <p class="mb-1">{{ category.name }}</p>
                       </a>
                       {% with post_nums = category.posts|length  %}
                         {% if post_nums %}
-                          <span class="badge badge-pill badge-primary font-small">{{ post_nums }}</span>
+                          <span class="badge badge-pill badge-primary font-small hvr-buzz-out">{{ post_nums }}</span>
                         {% endif %}
                       {% endwith %}
                     </li>

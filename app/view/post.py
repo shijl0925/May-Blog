@@ -58,10 +58,24 @@ def posts():
     )
 
 
+@posts_bp.route('/drafts', methods=['GET'])
+def draft():
+    operate_form = OperateForm()
+    page = int(flask.request.args.get('page', 1))
+    pagination = Post.query.filter_by(is_draft=True).order_by(Post.create_time.desc()).paginate(page=page, per_page=6)
+
+    return flask.render_template(
+        "drafts.html",
+        pagination=pagination,
+        drafts=pagination.items,
+        operate_form=operate_form
+    )
+
+
 @posts_bp.route('/post/<post_slug>', methods=['GET'])
 def post(post_slug):
     operate_form = OperateForm()
-    post = Post.query.filter_by(slug=post_slug).first_or_404()
+    post = Post.query.filter_by(slug=post_slug, is_draft=False).first_or_404()
     post_visited.send(flask.current_app._get_current_object(), post=post)
 
     return flask.render_template(
@@ -130,11 +144,16 @@ def create_post(editor):
 
         if post_form.save_submit.data:
             post.is_draft = True
+            db.session.commit()
+            flask.flash(_("The Post Has Been Saved as Draft Successful!"), category="success")
+
         elif post_form.publish_submit.data:
             post.publish_time = datetime.now()
-        db.session.commit()
-        flask.flash(_("Create A New Post Successful!"), category="success")
-        return flask.redirect(flask.url_for('posts.post', post_slug=slug))
+            db.session.commit()
+            flask.flash(_("Create A New Post Successful!"), category="success")
+
+        return flask.redirect(flask.url_for('posts.posts'))
+
     return flask.render_template(
         'create.html',
         editor=editor,
@@ -218,12 +237,16 @@ def edit_post(post_slug):
 
         if post_form.save_submit.data:
             search_post.is_draft = True
+            search_post.create_time = datetime.now()
+            db.session.commit()
+            flask.flash(_("Update The Draft Post Successful!"), category="success")
         elif post_form.publish_submit.data:
+            search_post.is_draft = False
             search_post.publish_time = datetime.now()
+            db.session.commit()
+            flask.flash(_("Update and Publish The Post Successful!"), category="success")
 
-        db.session.commit()
-        flask.flash(_("Update The Post Successful!"), category="success")
-        return flask.redirect(flask.url_for('posts.post', post_slug=search_post.slug))
+        return flask.redirect(flask.url_for('posts.posts'))
 
     return flask.render_template(
         'edit.html',
@@ -243,7 +266,7 @@ def delete_post(post_slug):
         search_post = Post.query.filter_by(slug=post_slug).first_or_404()
         db.session.delete(search_post)
         flask.flash(_("Delete The Post Successful!"), category="success")
-        return flask.redirect(flask.url_for('posts.posts'))
+        return redirect_back()
 
 
 @posts_bp.route('/post/category/new', methods=['POST'])

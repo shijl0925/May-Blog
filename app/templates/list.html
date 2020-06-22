@@ -27,7 +27,7 @@
                 </p>
 
                 <p class="dark-grey-text">
-                    by <strong>{{ post.author.full_name }}</strong>
+                    by <strong>{{ post.author.full_name }}</strong>,
                     {{ post.publish_time.strftime('%d/%m/%Y') }}
                     {% if post.visit_count %}
                         <img src="{{ url_for('static', filename='img/post-read.png') }}" width="25" height="25">

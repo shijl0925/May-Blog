@@ -84,10 +84,6 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                         {% if current_user.is_admin %}
-                                        <a class="dropdown-item" href="{{ url_for('posts.create_post', editor='ckeditor') }}">
-                                            <i class="fas fa-file-alt"></i>
-                                            <span class="ml-1">{{ _("Create Post") }}</span>
-                                        </a>
                                         <a class="dropdown-item" href="{{ url_for('admin.index') }}">
                                             <i class="fas fa-toolbox"></i>
                                             <span class="ml-1">{{ _("Admin Dashboard") }}</span>

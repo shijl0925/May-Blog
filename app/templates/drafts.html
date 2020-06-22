@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+    .navbar {
+        background-color: #6f7782;
+    }
+    footer.page-footer {
+        background-color: #6f7782;
+    }
+    </style>
+{% endblock styles %}
+
+{% block page_content %}
+    <div class="row mt-3 pt-3">
+        <!-- Main List -->
+        <div class="col-lg-9 col-12 mt-1">
+            {% if drafts %}
+                <div class="text-center mb-4">
+                    <h3 class="font-weight-bold pt-3 mb-5">
+                        {{ _("Draft Posts") }} <span class="badge pink">{{ drafts|length }}</span>
+                    </h3>
+                </div>
+                <hr>
+                <section class="pb-3 text-center text-lg-left">
+                    {% for post in drafts %}
+                      <div class="mb-5">
+                        <p>
+                            {% for tag in post.tags %}
+                                <span class="badge badge-info mx-1">
+                                    {{ tag.name }}
+                                </span>
+                            {% endfor %}
+                        </p>
+
+                        <h4 class="mb-3 mt-0">
+                          <strong>
+                            {% if post.category %}
+                              [{{ post.category.name }}]
+                            {% endif %}
+                            {{ post.title }}
+                          </strong>
+                        </h4>
+
+                        <p>
+                            {{ post.abstract|truncate(225) }}
+                        </p>
+
+                        <p class="dark-grey-text">
+                            {% if post.create_time %}
+                                {{ post.create_time.strftime('%d/%m/%Y') }}
+                            {% endif %}
+                        </p>
+                        <div class="btn-group" role="group">
+                            <a href="{{ url_for('posts.edit_post', post_slug=post.slug) }}">
+                                <button type="submit" class="btn btn-sm btn-outline-primary shadow-none">
+                                    {{ _("Edit") }}
+                                </button>
+                            </a>
+                            <form method="POST" action="{{ url_for('posts.delete_post', post_slug=post.slug) }}" onclick="return del()">
+                              {{ operate_form.csrf_token }}
+                              <button type="submit" class="btn btn-sm btn-outline-danger shadow-none ml-0">
+                                  {{ _("Delete") }}
+                              </button>
+                            </form>
+                        </div>
+                      </div>
+
+                      <hr class="mb-5">
+                    {% endfor %}
+                </section>
+                <nav class="mb-5 pb-2">
+                  {% from "mdbootstrap/pagination.html" import render_pagination %}
+                  {{ render_pagination(pagination,
+                  prev=('<span aria-hidden="true">&larr;</span> Pre')|safe,
+                  next=('Next <span aria-hidden="true">&rarr;</span>')|safe,
+                  align="center") }}
+                </nav>
+            {% else %}
+                <div class="text-center mt-sm-2">
+                    <h6>{{ _("No Draft Posts.") }}</h6>
+                </div>
+            {% endif %}
+        </div>
+        <!-- Main List -->
+
+        <!-- Sidebar -->
+        {% include "sidebar.html" %}
+        <!-- Sidebar -->
+    </div>
+    {% include "tail.html" %}
+{% endblock page_content %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript">
+        function del(){
+            if(!confirm("Are you Sure delete this post?")){
+                window.event.returnValue = false;
+            }
+        }
+    </script>
+{% endblock %}

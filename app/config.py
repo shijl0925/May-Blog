@@ -46,8 +46,8 @@ class BaseConfig:
     UPLOADED_PATH = os.path.join(basedir, 'uploads')
     CKEDITOR_FILE_UPLOADER = "posts.upload"
 
-    BABEL_DEFAULT_LOCALE = 'en'
-    BABEL_DEFAULT_TIMEZONE = 'UTC'
+    BABEL_DEFAULT_LOCALE = 'zh'
+    BABEL_DEFAULT_TIMEZONE = 'Asia/Shanghai'
 
     FILEUPLOAD_LOCALSTORAGE_IMG_FOLDER = "uploads"
     FILEUPLOAD_PREFIX = "/file"

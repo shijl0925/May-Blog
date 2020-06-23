@@ -7,6 +7,35 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Hover/css/hover.css') }}">
 
     <style>
+        .btn-floating {
+            -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+            box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+            width: 47px;
+            height: 47px;
+            position: relative;
+            z-index: 1;
+            vertical-align: middle;
+            display: inline-block;
+            overflow: hidden;
+            -webkit-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+            margin: 10px;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+            padding: 0;
+            cursor: pointer;
+        }
+        #go-to-top {
+            position: fixed;
+            right: 10px;
+            bottom: 50px;
+            z-index: 11111;
+            margin-top: -2px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 32px;
+        }
         .archive ul li:first-of-type {
             border-top: none;
         }
@@ -136,6 +165,12 @@
                 {% endblock %}
             </div>
         </div>
+
+        <div id="go-to-top">
+            <span class="btn-floating btn-sm btn-primary text-center shadow-none">
+                <i class="fas fa-arrow-up" style="padding-top: 12px;font-size: 20px;"></i>
+            </span>
+        </div>
     </main>
 {% endblock content %}
 
@@ -161,6 +196,45 @@
     {{ moment.include_moment() }}
     {{ moment.locale('zh-cn') }}
     <script>
+        window.onscroll = function() {
+            var toTop = document.getElementById('go-to-top');
+            var oldTop = document.documentElement.scrollTop || document.body.scrollTop;
+            var timer;
+            toTop.onclick = function() {
+                var speed = 5;
+                timer = setInterval(function() {
+                    var top = document.documentElement.scrollTop || document.body.scrollTop;
+                    var goSpeed = top/100;
+                    if (goSpeed > speed) {
+                        goSpeed = speed;
+                    } else if (goSpeed < 3) {
+                        goSpeed = 3;
+                    }
+
+                    if (top > speed) {
+                        if(document.documentElement.scrollTop){
+                            top = document.documentElement.scrollTop-=speed;
+                        }else{
+                            top = document.body.scrollTop-=speed;
+                        }
+                    } else {
+                        clearInterval(timer);
+                    }
+                }, 0);
+            };
+
+            var newTop = document.documentElement.scrollTop || document.body.scrollTop;
+            if (newTop > 100) {
+                toTop.style.display = 'block';
+            } else {
+                toTop.style.display = 'none';
+            }
+            if (newTop > oldTop) {
+                clearInterval(timer);
+            }
+            oldTop = newTop;
+        };
+
         $(document).ready(function(){
             $("#alert_div").fadeTo(2000, 500).slideUp(500, function(){
                 $("#alert_div").slideUp(500);

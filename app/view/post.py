@@ -7,7 +7,6 @@ from flask_security import login_required, current_user
 from sqlalchemy import or_
 from flask_babelex import gettext as _
 from slugify import slugify
-from flask_ckeditor import upload_success, upload_fail
 from app.model.models import User, Post, Category, Tag, Archive, Relate, Comment
 from app.form.forms import PostForm, OperateForm, CreateForm
 from app.controller.extensions import db, csrf
@@ -268,7 +267,7 @@ def delete_post(post_slug):
         search_post = Post.query.filter_by(slug=post_slug).first_or_404()
         db.session.delete(search_post)
         flask.flash(_("Delete The Post Successful!"), category="success")
-        return redirect_back()
+        return flask.redirect(flask.url_for('posts.posts'))
 
 
 @posts_bp.route('/post/category/new', methods=['POST'])
@@ -336,8 +335,7 @@ def create_comment(post_slug):
 
         db.session.add(comment)
         db.session.commit()
-        # flask.flash('Thanks, your comment will be published after reviewed.', 'info')
-        return redirect_back()
+        return flask.redirect(flask.url_for('posts.post', post_slug=search_post.slug))
 
 
 @posts_bp.route('/post/delete-comment/<comment_id>', methods=['POST'])
@@ -346,24 +344,8 @@ def create_comment(post_slug):
 def delete_comment(comment_id):
     if flask.request.method == "POST":
         search_comment = Comment.query.get(comment_id)
+        post_slug = search_comment.post.slug
         db.session.delete(search_comment)
         flask.flash(_("Delete The Comment Successful!"), category="success")
-        return redirect_back()
+        return flask.redirect(flask.url_for('posts.post', post_slug=post_slug))
 
-
-@posts_bp.route('/files/<path:filename>')
-def uploaded_files(filename):
-    return flask.send_from_directory(flask.current_app.config['UPLOADED_PATH'], filename)
-
-
-@csrf.exempt
-@posts_bp.route('/upload', methods=['POST'])
-def upload():
-    f = flask.request.files.get('upload')
-    # Add more validations here
-    extension = f.filename.split('.')[-1].lower()
-    if extension not in ['jpg', 'gif', 'png', 'jpeg']:
-        return upload_fail(message='Image only!')
-    f.save(os.path.join(flask.current_app.config['UPLOADED_PATH'], f.filename))
-    url = flask.url_for('posts.uploaded_files', filename=f.filename)
-    return upload_success(url=url)

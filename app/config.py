@@ -43,14 +43,13 @@ class BaseConfig:
     CKEDITOR_ENABLE_CODESNIPPET = True
     CKEDITOR_CODE_THEME = "monokai_sublime"
 
-    UPLOADED_PATH = os.path.join(basedir, 'uploads')
-    CKEDITOR_FILE_UPLOADER = "posts.upload"
+    CKEDITOR_FILE_UPLOADER = "files.ckeditor_upload"
 
     BABEL_DEFAULT_LOCALE = 'zh'
     BABEL_DEFAULT_TIMEZONE = 'Asia/Shanghai'
 
-    FILEUPLOAD_IMG_FOLDER = "uploads"
-    FILEUPLOAD_ALLOWED_EXTENSIONS = ['jpg', 'png', 'jpeg']
+    FILEUPLOAD_IMG_FOLDER = os.path.join(basedir, 'uploads')
+    FILEUPLOAD_ALLOWED_EXTENSIONS = ['gif', 'jpg', 'png', 'jpeg']
 
 
 class DevelopmentConfig(BaseConfig):

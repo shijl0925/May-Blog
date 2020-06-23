@@ -50,7 +50,7 @@
                         <p class="dark-grey-text">
                             <span data-toggle="tooltip" data-placement="top"
                                   title="{{ post.create_time.strftime('%Y-%m-%d %H:%M:%S') }}">
-                                {{ moment(post.create_time).fromNow() }}
+                                {{ moment(post.create_time, local=True).fromNow() }}
                             </span>
                         </p>
                         <div class="btn-group" role="group">

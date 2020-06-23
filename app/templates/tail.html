@@ -23,7 +23,7 @@
                   <p class="font-small grey-text">
                     <span data-toggle="tooltip" data-placement="top"
                           title="{{ post.publish_time.strftime('%Y-%m-%d %H:%M:%S') }}">
-                        {{ moment(post.publish_time).format('YYYY-MM-DD') }}
+                        {{ moment(post.publish_time, local=True).format('YYYY-MM-DD') }}
                     </span>
                   </p>
                 </div>
@@ -57,7 +57,7 @@
                   <p class="font-small grey-text">
                     <span data-toggle="tooltip" data-placement="top"
                           title="{{ post.publish_time.strftime('%Y-%m-%d %H:%M:%S') }}">
-                        {{ moment(post.publish_time).format('YYYY-MM-DD') }}
+                        {{ moment(post.publish_time, local=True).format('YYYY-MM-DD') }}
                     </span>
                   </p>
 

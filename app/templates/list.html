@@ -30,7 +30,7 @@
                     by <strong>{{ post.author.full_name }}</strong>,
                     <span data-toggle="tooltip" data-placement="top"
                           title="{{ post.publish_time.strftime('%Y-%m-%d %H:%M:%S') }}">
-                        {{ moment(post.publish_time).fromNow() }}
+                        {{ moment(post.publish_time, local=True).fromNow() }}
                     </span>
 
                     {% if post.visit_count %}

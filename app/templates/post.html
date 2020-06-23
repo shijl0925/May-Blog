@@ -74,36 +74,42 @@
                                   </strong>
                               </h3>
                               <p class="dark-grey-text">
-                                  Written by <strong>{{ post.author.full_name }}</strong>,
-                                  <span data-toggle="tooltip" data-placement="top"
+                                  <strong>{{ post.author.full_name }}</strong>
+                                  <span class="ml-1" data-toggle="tooltip" data-placement="top"
                                         title="{{ post.publish_time.strftime('%Y-%m-%d %H:%M:%S') }}">
                                       {{ moment(post.publish_time).fromNow() }}
                                   </span>
                                   {% if post.visit_count %}
-                                    <img src="{{ url_for('static', filename='img/post-read.png') }}" width="25" height="25">
+                                    <img class="ml-1" src="{{ url_for('static', filename='img/post-read.png') }}" width="25" height="25">
                                     {{ post.visit_count }}
                                   {% endif %}
                               </p>
-                              {% if current_user.is_admin %}
-                              <div class="btn-group" role="group">
-                                  <a href="{{ url_for('posts.edit_post', post_slug=post.slug) }}">
-                                      <button type="submit" class="btn btn-sm btn-outline-primary shadow-none">
-                                          {{ _("Edit") }}
-                                      </button>
-                                  </a>
-                                  <form method="POST" action="{{ url_for('posts.delete_post', post_slug=post.slug) }}" onclick="return del()">
-                                      {{ operate_form.csrf_token }}
-                                      <button type="submit" class="btn btn-sm btn-outline-danger shadow-none ml-0">
-                                          {{ _("Delete") }}
-                                      </button>
-                                  </form>
-                              </div>
-                              {% endif %}
                             </div>
 
-                            <div class="dark-grey-text mb-5 mt-4 mx-4">
+                            <div class="dark-grey-text mb-3 mt-4 mx-4">
                               {{ post.body|safe }}
-                              <div class="mt-4 justify-content-end">
+
+                              <div class="row mb-3">
+                                  <div class="col-12">
+                                      {% if current_user.is_admin %}
+                                      <div class="btn-group float-right" role="group">
+                                          <a href="{{ url_for('posts.edit_post', post_slug=post.slug) }}">
+                                              <button type="submit" class="btn btn-sm btn-outline-primary shadow-none">
+                                                  {{ _("Edit") }}
+                                              </button>
+                                          </a>
+                                          <form method="POST" action="{{ url_for('posts.delete_post', post_slug=post.slug) }}" onclick="return del()">
+                                              {{ operate_form.csrf_token }}
+                                              <button type="submit" class="btn btn-sm btn-outline-danger shadow-none ml-0">
+                                                  {{ _("Delete") }}
+                                              </button>
+                                          </form>
+                                      </div>
+                                      {% endif %}
+                                  </div>
+                              </div>
+
+                              <div class="mb-5 justify-content-end">
                                   <a class="float-left" href="{{ url_for('posts.posts') }}">
                                       <i class="fas fa-arrow-circle-left"></i>
                                   </a>

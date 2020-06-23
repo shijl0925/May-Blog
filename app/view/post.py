@@ -7,9 +7,9 @@ from flask_security import login_required, current_user
 from sqlalchemy import or_
 from flask_babelex import gettext as _
 from slugify import slugify
-from app.model.models import User, Post, Category, Tag, Archive, Relate, Comment
+from app.model.models import Post, Category, Tag, Archive, Relate, Comment
 from app.form.forms import PostForm, OperateForm, CreateForm
-from app.controller.extensions import db, csrf
+from app.controller.extensions import db
 from app.utils.common import redirect_back
 from app.utils.decorator import permission_required
 from app.controller.signals import post_visited
@@ -146,7 +146,7 @@ def create_post(editor):
         if post_form.save_submit.data:
             post.is_draft = True
             db.session.commit()
-            flask.flash(_("The Post Has Been Saved as Draft Successful!"), category="success")
+            flask.flash(_("The Post has been saved as a Draft Successful!!"), category="success")
 
         elif post_form.publish_submit.data:
             post.publish_time = datetime.now()
@@ -240,7 +240,7 @@ def edit_post(post_slug):
             search_post.is_draft = True
             search_post.create_time = datetime.now()
             db.session.commit()
-            flask.flash(_("The Post has been Saved as a Draft Successful!"), category="success")
+            flask.flash(_("The Post has been saved as a Draft Successful!"), category="success")
         elif post_form.publish_submit.data:
             search_post.is_draft = False
             search_post.publish_time = datetime.now()

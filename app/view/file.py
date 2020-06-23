@@ -4,6 +4,7 @@
 import os
 import flask
 from flask_security import login_required
+from flask_babelex import gettext as _
 from flask_ckeditor import upload_success, upload_fail
 from app.utils.decorator import permission_required
 from app.form.file import UploadForm
@@ -39,16 +40,16 @@ def upload():
 
         extension = filename.split('.')[-1].lower()
         if extension not in flask.current_app.config['FILEUPLOAD_ALLOWED_EXTENSIONS']:
-            flask.flash("This file extension is not allowed.", category="warning")
+            flask.flash(_("This file extension is not allowed."), category="warning")
             return flask.redirect(flask.url_for("files.upload"))
 
         if filename in get_existing_files():
-            flask.flash("File already exists, choose an other name.", category="warning")
+            flask.flash(_("File already exists, choose an other name."), category="warning")
             return flask.redirect(flask.url_for("files.upload"))
 
         file_data.save(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], filename))
 
-        flask.flash("Image saved: " + filename, category="info")
+        flask.flash(_("Image saved: ") + filename, category="info")
         return flask.redirect(flask.url_for("files.upload"))
 
     return flask.render_template("file/upload.html", form=upload_form, delete_form=delete_form)
@@ -65,11 +66,11 @@ def uploaded_files(filename):
 def upload_delete(filename):
     if flask.request.method == "POST":
         if filename not in get_existing_files():
-            flask.flash("File does not exist!", category="warning")
+            flask.flash(_("File does not exist!"), category="warning")
             return flask.redirect(flask.url_for("files.upload"))
         else:
             os.remove(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], filename))
-            flask.flash("Delete Image " + filename, category="info")
+            flask.flash(_("Delete Image: ") + filename, category="info")
 
     return flask.redirect(flask.url_for("files.upload"))
 

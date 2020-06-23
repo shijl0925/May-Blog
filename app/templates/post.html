@@ -79,10 +79,13 @@
                                         title="{{ post.publish_time.strftime('%Y-%m-%d %H:%M:%S') }}">
                                       {{ moment(post.publish_time, local=True).fromNow() }}
                                   </span>
-                                  {% if post.visit_count %}
-                                    <img class="ml-1" src="{{ url_for('static', filename='img/post-read.png') }}" width="25" height="25">
-                                    {{ post.visit_count }}
-                                  {% endif %}
+                                  <span class="ml-1">
+                                      <i class="fas fa-eye"></i> {{ post.visit_count }}
+                                  </span>
+
+                                  <a href="#comments" class="dark-grey-text ml-1">
+                                    <i class="far fa-comments pr-2 pl-3"></i> {{ post.comments|length }}
+                                  </a>
                               </p>
                             </div>
 
@@ -162,51 +165,48 @@
                         </section>
                         {% endif %}
 
-                        {% if not post.deny_comment %}
-                           {% if post.comments|length %}
-                            <hr>
-
-                            <section class="section pb-3 fadeIn">
-                                <div class="comments-list text-center text-md-left mb-3 mt-5 mx-4">
-                                  <div class="text-center mb-4">
-                                    <h3 class="font-weight-bold pt-3 mb-5">
-                                        {{ _("Comments") }} <span class="badge pink">{{ post.comments|length }}</span>
-                                    </h3>
-                                  </div>
-
-                                  {% for comment in post.comments %}
-                                      <div class="row mb-4">
-                                        <!--Content column-->
-                                        <div class="col-md-10 col-12">
-                                          <h5 class="user-name font-weight-bold">{{ comment.author }}</h5>
-                                          <div class="mt-2">
-                                            <ul class="list-unstyled">
-                                              <li class="comment-date font-small"><i class="fas fa-clock"></i> {{ comment.timestamp.strftime('%d/%m/%Y') }}</li>
-                                            </ul>
-                                          </div>
-                                          <p class="dark-grey-text article">
-                                              {{ comment.body }}
-                                          </p>
-                                        </div>
-                                        {% if current_user.is_admin %}
-                                        <div class="col-md-2">
-                                            <form class="float-right" method="POST" action="{{ url_for('posts.delete_comment', comment_id=comment.id) }}" onclick="return del()">
-                                              {{ operate_form.csrf_token }}
-                                              <button type="submit" class="btn btn-sm btn-outline-danger shadow-none ml-0">
-                                                  {{ _("Delete") }}
-                                              </button>
-                                            </form>
-                                        </div>
-                                        {% endif %}
-                                        <!--/.Content column-->
-                                      </div>
-                                  {% endfor %}
-                                </div>
-                            </section>
-                            {% endif %}
                         <hr>
+                        <section id="comments" class="section pb-3 fadeIn">
+                            <div class="comments-list text-center text-md-left mb-3 mt-5 mx-4">
+                              <div class="text-center mb-4">
+                                <h3 class="font-weight-bold pt-3 mb-5">
+                                    {{ _("Comments") }} <span class="badge pink">{{ post.comments|length }}</span>
+                                </h3>
+                              </div>
 
-                        <section class="sectionmb-4 fadeIn">
+                              {% for comment in post.comments %}
+                                  <div class="row mb-4">
+                                    <!--Content column-->
+                                    <div class="col-md-10 col-12">
+                                      <h5 class="user-name font-weight-bold">{{ comment.author }}</h5>
+                                      <div class="mt-2">
+                                        <ul class="list-unstyled">
+                                          <li class="comment-date font-small"><i class="fas fa-clock"></i> {{ comment.timestamp.strftime('%d/%m/%Y') }}</li>
+                                        </ul>
+                                      </div>
+                                      <p class="dark-grey-text article">
+                                          {{ comment.body }}
+                                      </p>
+                                    </div>
+                                    {% if current_user.is_admin %}
+                                    <div class="col-md-2">
+                                        <form class="float-right" method="POST" action="{{ url_for('posts.delete_comment', comment_id=comment.id) }}" onclick="return del()">
+                                          {{ operate_form.csrf_token }}
+                                          <button type="submit" class="btn btn-sm btn-outline-danger shadow-none ml-0">
+                                              {{ _("Delete") }}
+                                          </button>
+                                        </form>
+                                    </div>
+                                    {% endif %}
+                                    <!--/.Content column-->
+                                  </div>
+                              {% endfor %}
+                            </div>
+                        </section>
+
+                        {% if not post.deny_comment %}
+                        <hr>
+                        <section class="section mb-4 fadeIn">
                             <h3 class="font-weight-bold text-center my-5">{{ _("Leave a reply") }}</h3>
                             <form class="card-body" method="POST" action="{{ url_for('posts.create_comment', post_slug=post.slug) }}">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>

@@ -19,16 +19,13 @@ def on_post_visited(sender, post, **extra):
     search_tracker = Tracker.query.filter_by(ip=ip, post=post).first()
 
     if search_tracker is None:
-        tracker = Tracker(
-            url=flask.request.path,
-            ip=ip,
-            post=post
-        )
-        db.session.add(tracker)
-        db.session.commit()
-
         post.visit_count += 1
         db.session.commit()
-    else:
-        search_tracker.timestamp = datetime.now()
-        db.session.commit()
+
+    tracker = Tracker(
+        url=flask.request.path,
+        ip=ip,
+        post=post
+    )
+    db.session.add(tracker)
+    db.session.commit()

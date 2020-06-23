@@ -200,7 +200,11 @@
 
               <div class="post-data">
                 <p class="font-small grey-text mb-0">
-                    <i class="fas fa-clock"></i> {{ post.publish_time.strftime('%d/%m/%Y') }}
+                    <i class="fas fa-clock"></i>
+                    <span data-toggle="tooltip" data-placement="top"
+                          title="{{ post.publish_time.strftime('%Y-%m-%d %H:%M:%S') }}">
+                        {{ moment(post.publish_time).format('YYYY-MM-DD') }}
+                    </span>
                 </p>
               </div>
             </div>

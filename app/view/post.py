@@ -240,7 +240,7 @@ def edit_post(post_slug):
             search_post.is_draft = True
             search_post.create_time = datetime.now()
             db.session.commit()
-            flask.flash(_("Update The Draft Post Successful!"), category="success")
+            flask.flash(_("The Post has been Saved as a Draft Successful!"), category="success")
         elif post_form.publish_submit.data:
             search_post.is_draft = False
             search_post.publish_time = datetime.now()

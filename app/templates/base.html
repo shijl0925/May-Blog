@@ -158,12 +158,17 @@
 
 {% block scripts %}
     {{ super() }}
+    {{ moment.include_moment() }}
+    {{ moment.locale('zh-cn') }}
     <script>
         $(document).ready(function(){
             $("#alert_div").fadeTo(2000, 500).slideUp(500, function(){
                 $("#alert_div").slideUp(500);
             });
         });
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
 {% endblock %}
 

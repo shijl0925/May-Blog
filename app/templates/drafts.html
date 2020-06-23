@@ -48,9 +48,10 @@
                         </p>
 
                         <p class="dark-grey-text">
-                            {% if post.create_time %}
-                                {{ post.create_time.strftime('%d/%m/%Y') }}
-                            {% endif %}
+                            <span data-toggle="tooltip" data-placement="top"
+                                  title="{{ post.create_time.strftime('%Y-%m-%d %H:%M:%S') }}">
+                                {{ moment(post.create_time).fromNow() }}
+                            </span>
                         </p>
                         <div class="btn-group" role="group">
                             <a href="{{ url_for('posts.edit_post', post_slug=post.slug) }}">

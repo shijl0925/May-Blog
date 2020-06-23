@@ -21,7 +21,10 @@
                     <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="text-hover font-weight-bold">{{ post.title }}</a>
                   </p>
                   <p class="font-small grey-text">
-                    <em>{{ post.publish_time.strftime('%d/%m/%Y') }}</em>
+                    <span data-toggle="tooltip" data-placement="top"
+                          title="{{ post.publish_time.strftime('%Y-%m-%d %H:%M:%S') }}">
+                        {{ moment(post.publish_time).format('YYYY-MM-DD') }}
+                    </span>
                   </p>
                 </div>
 
@@ -52,7 +55,10 @@
                     <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="text-hover font-weight-bold">{{ post.title }}</a>
                   </p>
                   <p class="font-small grey-text">
-                    <em>{{ post.publish_time.strftime('%d/%m/%Y') }}</em>
+                    <span data-toggle="tooltip" data-placement="top"
+                          title="{{ post.publish_time.strftime('%Y-%m-%d %H:%M:%S') }}">
+                        {{ moment(post.publish_time).format('YYYY-MM-DD') }}
+                    </span>
                   </p>
 
                 </div>

@@ -28,7 +28,11 @@
 
                 <p class="dark-grey-text">
                     by <strong>{{ post.author.full_name }}</strong>,
-                    {{ post.publish_time.strftime('%d/%m/%Y') }}
+                    <span data-toggle="tooltip" data-placement="top"
+                          title="{{ post.publish_time.strftime('%Y-%m-%d %H:%M:%S') }}">
+                        {{ moment(post.publish_time).fromNow() }}
+                    </span>
+
                     {% if post.visit_count %}
                         <img src="{{ url_for('static', filename='img/post-read.png') }}" width="25" height="25">
                         {{ post.visit_count }}

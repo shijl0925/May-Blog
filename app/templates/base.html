@@ -20,7 +20,12 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
-                            {{ nav_active_item(['posts.posts'], _("Home"), 'fas fa-home') }}
+                            <li class="nav-item mb-0">
+                                <a class="nav-link waves-effect waves-light font-weight-bold" href="/">
+                                    <i class="fas fa-home"></i>
+                                    {{ _("Home")}}
+                                </a>
+                            </li>
                         </ul>
                         <form class="search-form" style="margin-top: -15px;" role="search" method="GET" action="{{ url_for('posts.search_post') }}">
                           <div class="form-group md-form my-0 waves-light waves-effect waves-light">

@@ -19,11 +19,17 @@
                 <div>
                   <p class="mb-1" style="font-size: .87rem;line-height: 1.5rem;">
                     <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="text-hover font-weight-bold">{{ post.title }}</a>
+                    {% if post.is_privacy %}
+                      <span class="Label Label--outline v-align-middle ml-1 mb-1">
+                        Private
+                      </span>
+                    {% endif %}
                   </p>
                   <p class="font-small grey-text">
+                    <i class="far fa-clock"></i>
                     <span data-toggle="tooltip" data-placement="top"
-                          title="{{ post.publish_time.strftime('%Y-%m-%d %H:%M:%S') }}">
-                        {{ moment(post.publish_time, local=True).format('YYYY-MM-DD') }}
+                          title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
+                        {{ moment(post.timestamp, local=True).format('YYYY-MM-DD') }}
                     </span>
                   </p>
                 </div>
@@ -53,11 +59,17 @@
                 <div>
                   <p class="mb-1" style="font-size: .87rem;line-height: 1.5rem;">
                     <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="text-hover font-weight-bold">{{ post.title }}</a>
+                    {% if post.is_privacy %}
+                      <span class="Label Label--outline v-align-middle ml-1 mb-1">
+                        Private
+                      </span>
+                    {% endif %}
                   </p>
                   <p class="font-small grey-text">
+                    <i class="far fa-clock"></i>
                     <span data-toggle="tooltip" data-placement="top"
-                          title="{{ post.publish_time.strftime('%Y-%m-%d %H:%M:%S') }}">
-                        {{ moment(post.publish_time, local=True).format('YYYY-MM-DD') }}
+                          title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
+                        {{ moment(post.timestamp, local=True).format('YYYY-MM-DD') }}
                     </span>
                   </p>
 

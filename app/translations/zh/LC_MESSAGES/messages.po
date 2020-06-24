@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-06-23 15:10+0800\n"
-"PO-Revision-Date: 2020-06-23 15:10+0800\n"
+"POT-Creation-Date: 2020-06-24 17:00+0800\n"
+"PO-Revision-Date: 2020-06-24 17:01+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -31,8 +31,8 @@ msgid "Category"
 msgstr "分类"
 
 #: form/forms.py:81
-msgid "Relate"
-msgstr "相关文章"
+msgid "Collection"
+msgstr "合集"
 
 #: form/forms.py:88
 msgid "Tags"
@@ -46,77 +46,81 @@ msgstr "内容"
 msgid "Deny Comment"
 msgstr "禁止评论"
 
-#: form/forms.py:104
+#: form/forms.py:102
+msgid "Set Private"
+msgstr "仅自己可见"
+
+#: form/forms.py:105
 msgid "Save As Draft"
 msgstr "保存草稿"
 
-#: form/forms.py:109
+#: form/forms.py:110
 msgid "Publish"
 msgstr "发表文章"
 
-#: form/forms.py:116 templates/file/upload.html:50 templates/post.html:223
+#: form/forms.py:117 templates/file/upload.html:50 templates/post.html:228
 msgid "Name"
 msgstr "名字"
 
-#: templates/base.html:68
+#: templates/base.html:23
 msgid "Home"
 msgstr "主页"
 
-#: templates/base.html:72
+#: templates/base.html:27
 msgid "Search"
 msgstr "搜索..."
 
-#: templates/base.html:89
+#: templates/base.html:44
 msgid "Admin Dashboard"
 msgstr "管理后台"
 
-#: templates/base.html:96
+#: templates/base.html:51
 msgid "Logout"
 msgstr "退出"
 
-#: templates/base.html:104 templates/security/_menu.html:4
+#: templates/base.html:59 templates/security/_menu.html:4
 #: templates/security/login_user.html:9
 msgid "Login"
 msgstr "登录"
 
-#: templates/create.html:136 templates/edit.html:130
+#: templates/create.html:140 templates/edit.html:134
 msgid "Creat a new category"
-msgstr "创建新的类别"
+msgstr "创建新的分类"
 
-#: templates/create.html:147 templates/create.html:172
-#: templates/create.html:197 templates/edit.html:141 templates/edit.html:166
-#: templates/edit.html:191
+#: templates/create.html:151 templates/create.html:176
+#: templates/create.html:201 templates/edit.html:145 templates/edit.html:170
+#: templates/edit.html:195
 msgid "Close"
 msgstr "关闭"
 
-#: templates/create.html:148 templates/create.html:173
-#: templates/create.html:198 templates/edit.html:142 templates/edit.html:167
-#: templates/edit.html:192
+#: templates/create.html:152 templates/create.html:177
+#: templates/create.html:202 templates/edit.html:146 templates/edit.html:171
+#: templates/edit.html:196
 msgid "Save"
 msgstr "保存"
 
-#: templates/create.html:161 templates/edit.html:155
+#: templates/create.html:165 templates/edit.html:159
 msgid "Creat a new tag"
 msgstr "创建新的标签"
 
-#: templates/create.html:186 templates/edit.html:180
-msgid "Creat a new relate"
-msgstr "创建新的相关文章"
+#: templates/create.html:190 templates/edit.html:184
+msgid "Creat a new collection"
+msgstr "创建新的合集"
 
 #: templates/drafts.html:22
 msgid "Draft Posts"
 msgstr "草稿箱"
 
-#: templates/drafts.html:59 templates/post.html:98
+#: templates/drafts.html:64 templates/post.html:105
 msgid "Edit"
 msgstr "编辑"
 
-#: templates/drafts.html:65 templates/file/upload.html:53
-#: templates/post.html:104 templates/post.html:196
+#: templates/drafts.html:70 templates/file/upload.html:53
+#: templates/post.html:111 templates/post.html:201
 msgid "Delete"
 msgstr "删除"
 
-#: templates/drafts.html:83
+#: templates/drafts.html:88
 msgid "No Draft Posts."
 msgstr "暂无草稿"
 
@@ -128,7 +132,7 @@ msgstr "欢迎来到我的博客"
 msgid "Stay hungry，Stay foolish"
 msgstr "求知若饥，虚心若愚"
 
-#: templates/list.html:58
+#: templates/list.html:64
 msgid "No Posts."
 msgstr "暂无文章"
 
@@ -136,51 +140,55 @@ msgstr "暂无文章"
 msgid "Upload new File"
 msgstr "上传新的文件"
 
-#: templates/post.html:133
+#: templates/post.html:141
 msgid "RELATED POSTS"
 msgstr "相关文章"
 
-#: templates/post.html:173
+#: templates/post.html:178
 msgid "Comments"
 msgstr "评论"
 
-#: templates/post.html:210
+#: templates/post.html:215
 msgid "Leave a reply"
 msgstr "发表评论"
 
-#: templates/post.html:236
+#: templates/post.html:241
 msgid "Email"
 msgstr "邮箱"
 
-#: templates/post.html:251
+#: templates/post.html:256
 msgid "Write something here..."
 msgstr "写下你的评论..."
 
-#: templates/post.html:255
+#: templates/post.html:260
 msgid "Submit"
 msgstr "提交"
 
-#: templates/sidebar.html:24
+#: templates/sidebar.html:26
 msgid "Create"
 msgstr "写文章"
 
-#: templates/sidebar.html:29
+#: templates/sidebar.html:31
 msgid "Draft"
 msgstr "草稿箱"
 
-#: templates/sidebar.html:70
+#: templates/sidebar.html:49
+msgid "POSTS"
+msgstr "文章"
+
+#: templates/sidebar.html:60 templates/sidebar.html:110
 msgid "TAGS"
 msgstr "标签"
 
-#: templates/sidebar.html:102
+#: templates/sidebar.html:71 templates/sidebar.html:184
+msgid "CATEGORIES"
+msgstr "分类"
+
+#: templates/sidebar.html:141
 msgid "ARCHIVE"
 msgstr "存档"
 
-#: templates/sidebar.html:152
-msgid "CATEGORIES"
-msgstr "类别"
-
-#: templates/sidebar.html:186
+#: templates/sidebar.html:218
 msgid "POPULAR POSTS"
 msgstr "热门文章"
 
@@ -188,7 +196,7 @@ msgstr "热门文章"
 msgid "LATESTS POSTS"
 msgstr "最新的文章"
 
-#: templates/tail.html:44
+#: templates/tail.html:50
 msgid "OLDER POSTS"
 msgstr "以前的文章"
 
@@ -220,59 +228,59 @@ msgstr "忘记密码？"
 msgid "Confirm account"
 msgstr "确认账户"
 
-#: view/file.py:43
+#: view/file.py:44
 msgid "This file extension is not allowed."
 msgstr "此文件类型不允许上传。"
 
-#: view/file.py:47
+#: view/file.py:48
 msgid "File already exists, choose an other name."
 msgstr "文件已存在，请选择新的名字。"
 
-#: view/file.py:52
+#: view/file.py:53
 msgid "Image saved: "
 msgstr "保存图片："
 
-#: view/file.py:69
+#: view/file.py:72
 msgid "File does not exist!"
 msgstr "文件不存在！"
 
-#: view/file.py:73
+#: view/file.py:76
 msgid "Delete Image: "
 msgstr "删除图片："
 
-#: view/post.py:149
+#: view/post.py:161
 msgid "The Post has been saved as a Draft Successful!!"
 msgstr "文章已成功保存成草稿！"
 
-#: view/post.py:154
+#: view/post.py:166
 msgid "Create A New Post Successful!"
 msgstr "新的文章创建成功！"
 
-#: view/post.py:243
+#: view/post.py:256
 msgid "The Post has been saved as a Draft Successful!"
 msgstr ""
 
-#: view/post.py:248
+#: view/post.py:261
 msgid "Update and Publish The Post Successful!"
 msgstr "文章已更新并发布成功"
 
-#: view/post.py:269
+#: view/post.py:282
 msgid "Delete The Post Successful!"
 msgstr "文章已删除成功！"
 
-#: view/post.py:280
+#: view/post.py:293
 msgid "This Category already exists!"
-msgstr "此类别已存在！"
+msgstr "此分类已存在！"
 
-#: view/post.py:296
-msgid "This Relate already exists!"
-msgstr "此相关文章已存在！"
+#: view/post.py:309
+msgid "This Collection already exists!"
+msgstr "此合集已存在"
 
-#: view/post.py:312
+#: view/post.py:325
 msgid "This Tag already exists!"
 msgstr "此标签已存在！"
 
-#: view/post.py:349
+#: view/post.py:362
 msgid "Delete The Comment Successful!"
 msgstr "评论已删除成功！"
 

@@ -22,12 +22,14 @@ def save_request(resp):
     module = flask.request.endpoint
     method = flask.request.method
     url = flask.request.path
+    user_agent = flask.request.headers.get('User-Agent')
 
     request = Request(
         method=method,
         module=module,
         url=url,
         ip=ip,
+        user_agent=user_agent,
         arguments=args,
         status_code=resp.status_code
     )

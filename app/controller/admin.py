@@ -13,7 +13,7 @@ from flask_admin.menu import MenuLink
 from flask_admin.helpers import get_form_data
 from flask_security import current_user
 from flask_security.utils import encrypt_password
-from app.model.models import User, Role, Permission, Settings, Post, Category, Archive, Tag, Relate, Comment, Tracker, Request
+from app.model.models import User, Role, Permission, Settings, Post, Category, Archive, Tag, Collection, Comment, Tracker, Request
 from app.controller.extensions import db, avatars
 from app.form.auth import CropAvatarForm, UploadForm
 from app.config import BaseConfig
@@ -100,6 +100,7 @@ class ProfileView(BaseView):
             data = flask.request.form
             current_user.first_name = data.get('first_name')
             current_user.last_name = data.get('last_name')
+            current_user.nick_name = data.get('nick_name')
             current_user.location = data.get('location')
             current_user.website = data.get('website')
             current_user.bio = data.get('bio')
@@ -313,7 +314,7 @@ class NotificationBaseModelview(MyBaseModelview):
 class PostBaseModelview(MyBaseModelview):
     column_searchable_list = ["title", "body"]
     column_editable_list = ["category", "is_draft", "deny_comment"]
-    column_exclude_list = ["abstract", "body", "slug", "relate", "archive", "author"]
+    column_exclude_list = ["abstract", "body", "slug", "collection", "archive", "author"]
     form_overrides = {
         'body': CKTextAreaField
     }
@@ -336,7 +337,7 @@ class CategoryBaseModelview(MyBaseModelview):
     form_columns = ["name"]
 
 
-class RelateBaseModelview(MyBaseModelview):
+class CollectionBaseModelview(MyBaseModelview):
     form_columns = ["name"]
 
 
@@ -406,12 +407,12 @@ admin.add_view(CategoryBaseModelview(Category,
                                      endpoint='category'))
 
 
-admin.add_view(RelateBaseModelview(Relate,
-                                   db.session,
-                                   menu_icon_type='fas',
-                                   menu_icon_value='fa-network-wired',
-                                   name='Relate',
-                                   endpoint='relate'))
+admin.add_view(CollectionBaseModelview(Collection,
+                                       db.session,
+                                       menu_icon_type='fas',
+                                       menu_icon_value='fa-network-wired',
+                                       name='Collection',
+                                       endpoint='collection'))
 
 
 admin.add_view(TagBaseModelview(Tag,

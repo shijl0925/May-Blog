@@ -13,9 +13,11 @@
       <!-- Card content -->
       <div class="card-body">
         <!-- Title -->
+        {% if admin.nick_name %}
         <h5 class="card-title dark-grey-text text-center grey lighten-4 py-2">
-          <strong>{{ admin.full_name }}</strong>
+          <strong>{{ admin.nick_name }}</strong>
         </h5>
+        {% endif %}
 
         {% if current_user.is_admin %}
           <div style="text-align: center;">
@@ -27,25 +29,63 @@
               <a href="{{ url_for('posts.draft') }}" class="white-text">
                   <button type="submit" class="btn btn-sm grey" style="width:85px;padding-left:2px;padding-right:2px;margin-left: 0;border-top-left-radius: 0;border-bottom-left-radius: 0;">
                       <i class="far fa-folder"></i> {{ _("Draft") }}
+                      {% if draft_nums %}
+                          <span class="badge badge-warning">
+                               {{ draft_nums }}
+                          </span>
+                      {% endif %}
                   </button>
               </a>
           </div>
         {% endif %}
 
+        <div class="post-card-measures mt-3">
+            <div class="post-card-measure">
+                <div class="post-card-measure-inner">
+                    <div class="post-number dark-grey-text">
+                        {{ post_nums }}
+                    </div>
+                    <div class="dark-grey-text text-center py-1 mb-3">
+                        {{ _("POSTS") }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-card-measure">
+                <div class="post-card-measure-inner">
+                    <div class="post-number dark-grey-text">
+                        {{ tag_nums }}
+                    </div>
+                    <div class="dark-grey-text text-center py-1 mb-3">
+                        {{ _("TAGS") }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-card-measure">
+                <div class="post-card-measure-inner">
+                    <div class="post-number dark-grey-text">
+                        {{ category_nums }}
+                    </div>
+                    <div class="dark-grey-text text-center py-1 mb-3">
+                        {{ _("CATEGORIES") }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Description -->
-        <p class="mt-3 dark-grey-text font-small text-center">
+        <p class="mt-1 dark-grey-text font-small text-center">
             {% if admin.bio %}{{ admin.bio }}{% endif %}
         </p>
-        <p class="mt-3 dark-grey-text font-small text-center">
+        <p class="mt-1 dark-grey-text font-small text-center">
             {% if admin.location %}
                 <svg class="octicon octicon-location" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M11.536 3.464a5 5 0 010 7.072L8 14.07l-3.536-3.535a5 5 0 117.072-7.072v.001zm1.06 8.132a6.5 6.5 0 10-9.192 0l3.535 3.536a1.5 1.5 0 002.122 0l3.535-3.536zM8 9a2 2 0 100-4 2 2 0 000 4z"></path></svg>
                 {{ admin.location }}
             {% endif %}
         </p>
-        <p class="mt-3 dark-grey-text font-small"></p>
-        <p class="mt-3 dark-grey-text font-small"></p>
 
-        <ul class="list-unstyled list-inline-item list-unstyled flex-center">
+        <ul class="mt-1 list-unstyled list-inline-item list-unstyled flex-center">
             <!-- Github -->
             {% if admin.website %}
             <li>
@@ -75,10 +115,9 @@
               <!-- Excerpt -->
               <div class="col-12">
                   {% for tag in tags %}
-                      <a href="{{ url_for('posts.posts', tag=tag.name) }}">
-                          <span class="badge badge-info mr-1 hvr-sweep-to-right">
-                              {{ tag.name }}
-                          </span>
+                      <a class="tags has-addons mr-3 hvr-buzz-out" href="{{ url_for('posts.posts', tag=tag.name) }}">
+                        <span class="tag">{{ tag.name }}</span>
+                        <span class="tag is-grey ml-n3">{{ tag|count_post_nums_with_tag }}</span>
                       </a>
                   {% endfor %}
               </div>
@@ -104,10 +143,8 @@
 
             <!-- Grid row -->
             <div class="row mb-4">
-
               <!-- Grid column -->
               <div class="col-md-12 text-center">
-
                 <!-- List -->
                 <ul class="list-unstyled">
                   {% for archive in archives %}
@@ -115,7 +152,7 @@
                       <a href="{{ url_for('posts.posts', archive=archive.label) }}" class="dark-grey-text hvr-sweep-to-right">
                           <p class="mb-1">{{ archive.label }}</p>
                       </a>
-                      {% with post_nums = archive.posts|length  %}
+                      {% with post_nums = archive|count_post_nums_with_archive  %}
                         {% if post_nums %}
                           <span class="badge badge-pill badge-primary font-small hvr-buzz-out">{{ post_nums }}</span>
                         {% endif %}
@@ -124,18 +161,13 @@
                   {% endfor %}
                 </ul>
                 <!-- List -->
-
               </div>
               <!-- Grid column -->
-
             </div>
             <!-- Grid row -->
-
           </div>
-
         </div>
         <!--  Card -->
-
     </section>
     {% endif %}
     <!-- ARCHIVE -->
@@ -160,7 +192,7 @@
                       <a href="{{ url_for('posts.posts', category=category.name) }}" class="dark-grey-text hvr-sweep-to-right">
                         <p class="mb-1">{{ category.name }}</p>
                       </a>
-                      {% with post_nums = category.posts|length  %}
+                      {% with post_nums = category|count_post_nums_with_category  %}
                         {% if post_nums %}
                           <span class="badge badge-pill badge-primary font-small hvr-buzz-out">{{ post_nums }}</span>
                         {% endif %}
@@ -196,14 +228,19 @@
                 <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="dark-grey-text">
                   <strong>{{ post.title }}</strong>
                 </a>
+                {% if post.is_privacy %}
+                  <span class="Label Label--outline v-align-middle ml-1 mb-1">
+                    Private
+                  </span>
+                {% endif %}
               </h6>
 
               <div class="post-data">
                 <p class="font-small grey-text mb-0">
-                    <i class="fas fa-clock"></i>
+                    <i class="far fa-clock"></i>
                     <span data-toggle="tooltip" data-placement="top"
-                          title="{{ post.publish_time.strftime('%Y-%m-%d %H:%M:%S') }}">
-                        {{ moment(post.publish_time, local=True).format('YYYY-MM-DD') }}
+                          title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
+                        {{ moment(post.timestamp, local=True).format('YYYY-MM-DD') }}
                     </span>
                 </p>
               </div>

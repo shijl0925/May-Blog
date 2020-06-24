@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-06-23 15:10+0800\n"
+"POT-Creation-Date: 2020-06-24 17:00+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgid "Category"
 msgstr ""
 
 #: form/forms.py:81
-msgid "Relate"
+msgid "Collection"
 msgstr ""
 
 #: form/forms.py:88
@@ -45,77 +45,81 @@ msgstr ""
 msgid "Deny Comment"
 msgstr ""
 
-#: form/forms.py:104
+#: form/forms.py:102
+msgid "Set Private"
+msgstr ""
+
+#: form/forms.py:105
 msgid "Save As Draft"
 msgstr ""
 
-#: form/forms.py:109
+#: form/forms.py:110
 msgid "Publish"
 msgstr ""
 
-#: form/forms.py:116 templates/file/upload.html:50 templates/post.html:223
+#: form/forms.py:117 templates/file/upload.html:50 templates/post.html:228
 msgid "Name"
 msgstr ""
 
-#: templates/base.html:68
+#: templates/base.html:23
 msgid "Home"
 msgstr ""
 
-#: templates/base.html:72
+#: templates/base.html:27
 msgid "Search"
 msgstr ""
 
-#: templates/base.html:89
+#: templates/base.html:44
 msgid "Admin Dashboard"
 msgstr ""
 
-#: templates/base.html:96
+#: templates/base.html:51
 msgid "Logout"
 msgstr ""
 
-#: templates/base.html:104 templates/security/_menu.html:4
+#: templates/base.html:59 templates/security/_menu.html:4
 #: templates/security/login_user.html:9
 msgid "Login"
 msgstr ""
 
-#: templates/create.html:136 templates/edit.html:130
+#: templates/create.html:140 templates/edit.html:134
 msgid "Creat a new category"
 msgstr ""
 
-#: templates/create.html:147 templates/create.html:172
-#: templates/create.html:197 templates/edit.html:141 templates/edit.html:166
-#: templates/edit.html:191
+#: templates/create.html:151 templates/create.html:176
+#: templates/create.html:201 templates/edit.html:145 templates/edit.html:170
+#: templates/edit.html:195
 msgid "Close"
 msgstr ""
 
-#: templates/create.html:148 templates/create.html:173
-#: templates/create.html:198 templates/edit.html:142 templates/edit.html:167
-#: templates/edit.html:192
+#: templates/create.html:152 templates/create.html:177
+#: templates/create.html:202 templates/edit.html:146 templates/edit.html:171
+#: templates/edit.html:196
 msgid "Save"
 msgstr ""
 
-#: templates/create.html:161 templates/edit.html:155
+#: templates/create.html:165 templates/edit.html:159
 msgid "Creat a new tag"
 msgstr ""
 
-#: templates/create.html:186 templates/edit.html:180
-msgid "Creat a new relate"
+#: templates/create.html:190 templates/edit.html:184
+msgid "Creat a new collection"
 msgstr ""
 
 #: templates/drafts.html:22
 msgid "Draft Posts"
 msgstr ""
 
-#: templates/drafts.html:59 templates/post.html:98
+#: templates/drafts.html:64 templates/post.html:105
 msgid "Edit"
 msgstr ""
 
-#: templates/drafts.html:65 templates/file/upload.html:53
-#: templates/post.html:104 templates/post.html:196
+#: templates/drafts.html:70 templates/file/upload.html:53
+#: templates/post.html:111 templates/post.html:201
 msgid "Delete"
 msgstr ""
 
-#: templates/drafts.html:83
+#: templates/drafts.html:88
 msgid "No Draft Posts."
 msgstr ""
 
@@ -127,7 +131,7 @@ msgstr ""
 msgid "Stay hungry，Stay foolish"
 msgstr ""
 
-#: templates/list.html:58
+#: templates/list.html:64
 msgid "No Posts."
 msgstr ""
 
@@ -135,51 +139,55 @@ msgstr ""
 msgid "Upload new File"
 msgstr ""
 
-#: templates/post.html:133
+#: templates/post.html:141
 msgid "RELATED POSTS"
 msgstr ""
 
-#: templates/post.html:173
+#: templates/post.html:178
 msgid "Comments"
 msgstr ""
 
-#: templates/post.html:210
+#: templates/post.html:215
 msgid "Leave a reply"
 msgstr ""
 
-#: templates/post.html:236
+#: templates/post.html:241
 msgid "Email"
 msgstr ""
 
-#: templates/post.html:251
+#: templates/post.html:256
 msgid "Write something here..."
 msgstr ""
 
-#: templates/post.html:255
+#: templates/post.html:260
 msgid "Submit"
 msgstr ""
 
-#: templates/sidebar.html:24
+#: templates/sidebar.html:26
 msgid "Create"
 msgstr ""
 
-#: templates/sidebar.html:29
+#: templates/sidebar.html:31
 msgid "Draft"
 msgstr ""
 
-#: templates/sidebar.html:70
+#: templates/sidebar.html:49
+msgid "POSTS"
+msgstr ""
+
+#: templates/sidebar.html:60 templates/sidebar.html:110
 msgid "TAGS"
 msgstr ""
 
-#: templates/sidebar.html:102
-msgid "ARCHIVE"
-msgstr ""
-
-#: templates/sidebar.html:152
+#: templates/sidebar.html:71 templates/sidebar.html:184
 msgid "CATEGORIES"
 msgstr ""
 
-#: templates/sidebar.html:186
+#: templates/sidebar.html:141
+msgid "ARCHIVE"
+msgstr ""
+
+#: templates/sidebar.html:218
 msgid "POPULAR POSTS"
 msgstr ""
 
@@ -187,7 +195,7 @@ msgstr ""
 msgid "LATESTS POSTS"
 msgstr ""
 
-#: templates/tail.html:44
+#: templates/tail.html:50
 msgid "OLDER POSTS"
 msgstr ""
 
@@ -219,59 +227,59 @@ msgstr ""
 msgid "Confirm account"
 msgstr ""
 
-#: view/file.py:43
+#: view/file.py:44
 msgid "This file extension is not allowed."
 msgstr ""
 
-#: view/file.py:47
+#: view/file.py:48
 msgid "File already exists, choose an other name."
 msgstr ""
 
-#: view/file.py:52
+#: view/file.py:53
 msgid "Image saved: "
 msgstr ""
 
-#: view/file.py:69
+#: view/file.py:72
 msgid "File does not exist!"
 msgstr ""
 
-#: view/file.py:73
+#: view/file.py:76
 msgid "Delete Image: "
 msgstr ""
 
-#: view/post.py:149
+#: view/post.py:161
 msgid "The Post has been saved as a Draft Successful!!"
 msgstr ""
 
-#: view/post.py:154
+#: view/post.py:166
 msgid "Create A New Post Successful!"
 msgstr ""
 
-#: view/post.py:243
+#: view/post.py:256
 msgid "The Post has been saved as a Draft Successful!"
 msgstr ""
 
-#: view/post.py:248
+#: view/post.py:261
 msgid "Update and Publish The Post Successful!"
 msgstr ""
 
-#: view/post.py:269
+#: view/post.py:282
 msgid "Delete The Post Successful!"
 msgstr ""
 
-#: view/post.py:280
+#: view/post.py:293
 msgid "This Category already exists!"
 msgstr ""
 
-#: view/post.py:296
-msgid "This Relate already exists!"
+#: view/post.py:309
+msgid "This Collection already exists!"
 msgstr ""
 
-#: view/post.py:312
+#: view/post.py:325
 msgid "This Tag already exists!"
 msgstr ""
 
-#: view/post.py:349
+#: view/post.py:362
 msgid "Delete The Comment Successful!"
 msgstr ""
 

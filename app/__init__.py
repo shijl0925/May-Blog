@@ -1,6 +1,8 @@
 import os
 import flask
+from sqlalchemy import func
 from flask_wtf.csrf import CSRFError
+from flask_security import current_user
 from app.utils import config_log, get_abs_dir
 from app.config import config
 from app.controller.extensions import mail, toolbar, db, moment, babel, avatars, adminlte, mdb, boostrap, ckeditor, csrf
@@ -51,19 +53,47 @@ def inject_context_variables():
     archives = Archive.query.all()
     tags = Tag.query.all()
 
-    latest_posts = Post.query.filter_by(is_draft=False).order_by(Post.publish_time.desc()).limit(3).all()
-    older_posts = Post.query.filter_by(is_draft=False).order_by(Post.publish_time).limit(3).all()
+    post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).scalar()
+    draft_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=True).scalar()
+
+    category_nums = db.session.query(func.count(Category.id)).scalar()
+    tag_nums = db.session.query(func.count(Tag.id)).scalar()
+
+    latest_posts = Post.query.filter_by(is_draft=False).order_by(Post.timestamp.desc()).limit(3).all()
+    older_posts = Post.query.filter_by(is_draft=False).order_by(Post.timestamp).limit(3).all()
     popular_posts = Post.query.filter_by(is_draft=False).order_by(Post.visit_count.desc()).limit(6).all()
 
     return dict(
         admin=admin,
+        post_nums=post_nums,
+        draft_nums=draft_nums,
         categories=categories,
         tags=tags,
         archives=archives,
+        category_nums=category_nums,
+        tag_nums=tag_nums,
         latest_posts=latest_posts,
         older_posts=older_posts,
         popular_posts=popular_posts
     )
+
+
+def count_post_nums_with_tag(search_tag):
+    post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).filter(
+        Post.tags.contains(search_tag)).scalar()
+    return post_nums
+
+
+def count_post_nums_with_category(search_category):
+    post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).filter_by(
+        category=search_category).scalar()
+    return post_nums
+
+
+def count_post_nums_with_archive(search_archive):
+    post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).filter_by(
+        archive=search_archive).scalar()
+    return post_nums
 
 
 def create_app(env=None):
@@ -95,6 +125,10 @@ def create_app(env=None):
     app_.context_processor(inject_context_variables)
     app_.add_template_global(get_abs_existing_files, "get_abs_existing_files")
     app_.add_template_filter(get_filename, "get_filename")
+
+    app_.add_template_filter(count_post_nums_with_tag, 'count_post_nums_with_tag')
+    app_.add_template_filter(count_post_nums_with_category, 'count_post_nums_with_category')
+    app_.add_template_filter(count_post_nums_with_archive, 'count_post_nums_with_archive')
 
     app_.jinja_env.trim_blocks = True
     app_.jinja_env.lstrip_blocks = True

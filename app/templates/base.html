@@ -6,81 +6,7 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Hover/css/hover.css') }}">
 
-    <style>
-        .btn-floating {
-            -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
-            box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
-            width: 47px;
-            height: 47px;
-            position: relative;
-            z-index: 1;
-            vertical-align: middle;
-            display: inline-block;
-            overflow: hidden;
-            -webkit-transition: all .2s ease-in-out;
-            -o-transition: all .2s ease-in-out;
-            transition: all .2s ease-in-out;
-            margin: 10px;
-            -webkit-border-radius: 50%;
-            border-radius: 50%;
-            padding: 0;
-            cursor: pointer;
-        }
-        #go-to-top {
-            position: fixed;
-            right: 10px;
-            bottom: 50px;
-            z-index: 11111;
-            margin-top: -2px;
-            cursor: pointer;
-            text-align: center;
-            line-height: 32px;
-        }
-        .archive ul li:first-of-type {
-            border-top: none;
-        }
-        .archive ul li {
-            padding-top: .8rem;
-            border-top: 1px solid #eceeef;
-            padding-bottom: .3rem;
-        }
-        .category ul li:first-of-type {
-            border-top: none;
-        }
-        .category ul li {
-            padding-top: .8rem;
-            border-top: 1px solid #eceeef;
-            padding-bottom: .3rem;
-        }
-        .text-hover {
-            color: #424242;
-            transition: .4s;
-        }
-        .dropdown .dropdown-menu {
-            padding: .5rem
-        }
-
-        .dropdown .dropdown-menu .dropdown-item {
-            padding: .5rem;
-            margin-left: 0;
-            font-size: .9rem
-        }
-
-        .dropdown .dropdown-menu .dropdown-item:hover,
-        .dropdown .dropdown-menu .dropdown-item:active {
-            background-color: #4285f4;
-            border-radius: .125rem;
-            -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-            box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-            -webkit-transition: all 0.1s linear;
-            transition: all 0.1s linear
-        }
-        .alert-error {
-            color: #856404;
-            background-color: #ff4444;
-            border-color: #ff4444;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 
 {% endblock %}
 
@@ -201,14 +127,14 @@
             var oldTop = document.documentElement.scrollTop || document.body.scrollTop;
             var timer;
             toTop.onclick = function() {
-                var speed = 5;
+                var speed = 10;
                 timer = setInterval(function() {
                     var top = document.documentElement.scrollTop || document.body.scrollTop;
-                    var goSpeed = top/100;
+                    var goSpeed = top/50;
                     if (goSpeed > speed) {
                         goSpeed = speed;
-                    } else if (goSpeed < 3) {
-                        goSpeed = 3;
+                    } else if (goSpeed < 6) {
+                        goSpeed = 6;
                     }
 
                     if (top > speed) {

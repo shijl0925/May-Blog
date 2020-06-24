@@ -66,26 +66,30 @@
                         <section class="section pb-3 fadeIn">
                             <div class="text-center">
                               <h3 class="card-title">
-                                  <strong>
-                                      {% if post.category %}
-                                          [{{ post.category.name }}]
-                                      {% endif %}
-                                      {{ post.title }}
-                                  </strong>
-                              </h3>
-                              <p class="dark-grey-text">
-                                  <strong>{{ post.author.full_name }}</strong>
-                                  <span class="ml-1" data-toggle="tooltip" data-placement="top"
-                                        title="{{ post.publish_time.strftime('%Y-%m-%d %H:%M:%S') }}">
-                                      {{ moment(post.publish_time, local=True).fromNow() }}
+                                <strong>
+                                  {{ post.title }}
+                                </strong>
+                                {% if post.is_privacy %}
+                                  <span class="Label Label--outline v-align-middle ml-1" style="vertical-align: top; margin-top: 5px;">
+                                    Private
                                   </span>
-                                  <span class="ml-1">
+                                {% endif %}
+                              </h3>
+                              <p class="dark-grey-text" style="font-size: 15px;">
+                                  <span data-toggle="tooltip" data-placement="top"
+                                        title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
+                                      {{ moment(post.timestamp, local=True).fromNow() }}
+                                  </span>
+
+                                  <span class="ml-2">
                                       <i class="fas fa-eye"></i> {{ post.visit_count }}
                                   </span>
 
-                                  <a href="#comments" class="dark-grey-text ml-1">
-                                    <i class="far fa-comments pr-2 pl-3"></i> {{ post.comments|length }}
-                                  </a>
+                                  <span class="ml-2">
+                                      <a href="#comments" class="dark-grey-text">
+                                        <i class="far fa-comments"></i> {{ post.comments|length }}
+                                      </a>
+                                  </span>
                               </p>
                             </div>
 
@@ -116,8 +120,9 @@
                                   <a class="float-left" href="{{ url_for('posts.posts') }}">
                                       <i class="fas fa-arrow-circle-left"></i>
                                   </a>
+
                                   <span class="float-right">
-                                      <i class="fas fa-tags mr-1"></i>
+                                      <span class="badge badge-secondary">{{ post.category.name }}</span>
                                       {% for tag in post.tags %}
                                         <span class="badge badge-info">{{ tag.name }}</span>
                                       {% endfor %}
@@ -126,18 +131,18 @@
                             </div>
                         </section>
 
-                        {% if post and post.relate %}
+                        {% if post and post.collection %}
                         <hr>
                         <section class="section pb-3 fadeIn">
                             <!--  Card -->
                             <div class="dark-grey-text mb-5 mt-4 mx-4">
                               <div class="text-center mb-4">
                                   <h3 class="font-weight-bold pt-3 mb-5">
-                                      {{ _("RELATED POSTS") }} <span class="badge pink">{{ post.relate.posts|length }}</span>
+                                      {{ _("RELATED POSTS") }} <span class="badge pink">{{ post.collection.posts|length }}</span>
                                   </h3>
                               </div>
 
-                              {% for post in post.relate.posts %}
+                              {% for post in post.collection.posts %}
                                 <div class="row mb-4">
                                   <!-- Excerpt -->
                                   <div class="col-12">
@@ -149,10 +154,10 @@
 
                                     <div class="post-data">
                                       <p class="font-small grey-text mb-0">
-                                        <i class="fas fa-clock"></i>
+                                        <i class="far fa-clock"></i>
                                         <span data-toggle="tooltip" data-placement="top"
-                                              title="{{ post.publish_time.strftime('%Y-%m-%d %H:%M:%S') }}">
-                                            {{ moment(post.publish_time, local=True).format('YYYY-MM-DD') }}
+                                              title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
+                                            {{ moment(post.timestamp, local=True).format('YYYY-MM-DD') }}
                                         </span>
                                       </p>
                                     </div>
@@ -181,7 +186,7 @@
                                       <h5 class="user-name font-weight-bold">{{ comment.author }}</h5>
                                       <div class="mt-2">
                                         <ul class="list-unstyled">
-                                          <li class="comment-date font-small"><i class="fas fa-clock"></i> {{ comment.timestamp.strftime('%d/%m/%Y') }}</li>
+                                          <li class="comment-date font-small grey-text"><i class="far fa-clock"></i> {{ comment.timestamp.strftime('%d/%m/%Y') }}</li>
                                         </ul>
                                       </div>
                                       <p class="dark-grey-text article">

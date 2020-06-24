@@ -15,8 +15,8 @@ post_visited = blog_signals.signal('post-visited')
 def on_post_visited(sender, post, **extra):
     nginx_remote = "X-Forwarded-For"
     ip = (flask.request.headers[nginx_remote] if nginx_remote in flask.request.headers else flask.request.remote_addr)
-
-    search_tracker = Tracker.query.filter_by(ip=ip, post=post).first()
+    user_agent = flask.request.headers.get('User-Agent')
+    search_tracker = Tracker.query.filter_by(ip=ip, post=post, user_agent=user_agent).first()
 
     if search_tracker is None:
         post.visit_count += 1
@@ -25,6 +25,7 @@ def on_post_visited(sender, post, **extra):
     tracker = Tracker(
         url=flask.request.path,
         ip=ip,
+        user_agent=user_agent,
         post=post
     )
     db.session.add(tracker)

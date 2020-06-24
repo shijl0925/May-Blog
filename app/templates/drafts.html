@@ -19,28 +19,22 @@
             {% if drafts %}
                 <div class="text-center mb-4">
                     <h3 class="font-weight-bold pt-3 mb-5">
-                        {{ _("Draft Posts") }} <span class="badge pink">{{ drafts|length }}</span>
+                        {{ _("Draft Posts") }} <span class="badge pink">{{ draft_nums }}</span>
                     </h3>
                 </div>
                 <hr>
                 <section class="pb-3 text-center text-lg-left">
                     {% for post in drafts %}
                       <div class="mb-5">
-                        <p>
-                            {% for tag in post.tags %}
-                                <span class="badge badge-info mx-1">
-                                    {{ tag.name }}
-                                </span>
-                            {% endfor %}
-                        </p>
-
                         <h4 class="mb-3 mt-0">
                           <strong>
-                            {% if post.category %}
-                              [{{ post.category.name }}]
-                            {% endif %}
                             {{ post.title }}
                           </strong>
+                          {% if post.is_privacy %}
+                            <span class="Label Label--outline v-align-middle ml-1" style="vertical-align: top; margin-top: 5px;">
+                              Private
+                            </span>
+                          {% endif %}
                         </h4>
 
                         <p>
@@ -49,9 +43,20 @@
 
                         <p class="dark-grey-text">
                             <span data-toggle="tooltip" data-placement="top"
-                                  title="{{ post.create_time.strftime('%Y-%m-%d %H:%M:%S') }}">
-                                {{ moment(post.create_time, local=True).fromNow() }}
+                                  title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
+                                {{ moment(post.timestamp, local=True).fromNow() }}
                             </span>
+                        </p>
+
+                        <p>
+                            <span class="badge badge-secondary mx-1">
+                                {{ post.category.name }}
+                            </span>
+                            {% for tag in post.tags %}
+                                <span class="badge badge-info mx-1">
+                                    {{ tag.name }}
+                                </span>
+                            {% endfor %}
                         </p>
                         <div class="btn-group" role="group">
                             <a href="{{ url_for('posts.edit_post', post_slug=post.slug) }}">

@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 # @Author: Jialiang Shi
 import os
+from urllib.parse import unquote
 import flask
 from flask_security import login_required
 from flask_babelex import gettext as _
@@ -65,6 +66,8 @@ def uploaded_files(filename):
 @permission_required('ADMINISTER')
 def upload_delete(filename):
     if flask.request.method == "POST":
+        filename = unquote(filename)
+
         if filename not in get_existing_files():
             flask.flash(_("File does not exist!"), category="warning")
             return flask.redirect(flask.url_for("files.upload"))

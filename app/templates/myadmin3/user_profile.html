@@ -86,6 +86,19 @@
                   <!-- Grid column -->
                   <div class="col-md-12">
                     <div class="md-form form-sm mb-0">
+                        <label for="location">Nick Name</label>
+                        <input type="text" name="nick_name" class="form-control form-control-sm" id="location" value="{% if current_user.nick_name %}{{ current_user.nick_name }}{% endif %}">
+                    </div>
+                  </div>
+                  <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+
+                <!-- Grid row -->
+                <div class="row mb-3">
+                  <!-- Grid column -->
+                  <div class="col-md-12">
+                    <div class="md-form form-sm mb-0">
                         <label for="location">Address</label>
                         <input type="text" name="location" class="form-control form-control-sm" id="location" value="{% if current_user.location %}{{ current_user.location }}{% endif %}">
                     </div>

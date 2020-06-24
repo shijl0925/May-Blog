@@ -7,7 +7,7 @@ from flask_ckeditor import CKEditorField
 from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms import widgets, StringField, TextAreaField, validators, SubmitField, ValidationError, BooleanField
 from app.controller.extensions import db
-from app.model.models import Post, Category, Tag, Relate
+from app.model.models import Post, Category, Tag, Collection
 
 
 class OperateForm(FlaskForm):
@@ -45,8 +45,8 @@ class PostForm(FlaskForm):
     def query_category_factory(*args):
         return [item.name for item in db.session.query(Category).all()]
 
-    def query_relate_factory(*args):
-        return [""] + [item.name for item in db.session.query(Relate).all()]
+    def query_collection_factory(*args):
+        return [""] + [item.name for item in db.session.query(Collection).all()]
 
     def get_pk(obj):
         return obj
@@ -77,10 +77,10 @@ class PostForm(FlaskForm):
         get_pk=get_pk
     )
 
-    relate = QuerySelectField(
-        _('Relate'),
+    collection = QuerySelectField(
+        _('Collection'),
         render_kw={'class': 'browser-default custom-select'},
-        query_factory=query_relate_factory,
+        query_factory=query_collection_factory,
         get_pk=get_pk
     )
 
@@ -99,6 +99,7 @@ class PostForm(FlaskForm):
     )
 
     deny_comment = BooleanField(_('Deny Comment'))
+    privacy = BooleanField(_('Set Private'))
 
     save_submit = SubmitField(
         _('Save As Draft'),

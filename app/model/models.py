@@ -76,8 +76,9 @@ class User(db.Model, UserMixin):
     active = db.Column(db.Boolean())
     first_name = db.Column(db.String(64))
     last_name = db.Column(db.String(64))
-
     username = db.Column(db.String(64), unique=True)
+
+    nick_name = db.Column(db.String(64), nullable=True)
     bio = db.Column(db.Text, nullable=True)
     website = db.Column(db.String(256), nullable=True)
     location = db.Column(db.String(64), nullable=True)
@@ -175,7 +176,7 @@ class User(db.Model, UserMixin):
 
     @property
     def full_name(self):
-        return self.last_name + ' ' + self.first_name
+        return self.last_name + self.first_name
 
 
 @db.event.listens_for(User, 'after_delete', named=True)
@@ -197,10 +198,10 @@ class Category(db.Model):
     @staticmethod
     def init_category():
         categories = [
-            '原创',
-            '转载',
-            '翻译',
-            '笔记'
+            '技术文章',
+            '思考总结',
+            '生活记录',
+            '读书电影'
         ]
         for item in categories:
             search_category = Category.query.filter_by(name=item).first()
@@ -213,14 +214,14 @@ class Category(db.Model):
         return '<Category %r>' % self.name
 
 
-class Relate(db.Model):
+class Collection(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(256), unique=True)
-    posts = db.relationship('Post', back_populates='relate')
+    posts = db.relationship('Post', back_populates='collection')
 
     def __repr__(self):
-        return '<Relate %r>' % self.name
+        return '<Collection %r>' % self.name
 
 
 post_tag = db.Table(
@@ -265,12 +266,12 @@ class Post(db.Model):
     abstract = db.Column(db.String(256), nullable=False)
     body = db.Column(db.Text, nullable=False)
     slug = db.Column(db.String(256), nullable=False)
+    timestamp = db.Column(db.DateTime)
 
     is_draft = db.Column(db.Boolean, default=False)
+    is_privacy = db.Column(db.Boolean, default=False)
     is_markdown = db.Column(db.Boolean, default=False)
-
-    create_time = db.Column(db.DateTime, default=datetime.now)
-    publish_time = db.Column(db.DateTime)
+    deny_comment = db.Column(db.Boolean)
 
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     author = db.relationship('User', back_populates='posts')
@@ -281,12 +282,11 @@ class Post(db.Model):
     archive_id = db.Column(db.Integer, db.ForeignKey('archive.id'))
     archive = db.relationship('Archive', back_populates='posts')
 
-    relate_id = db.Column(db.Integer, db.ForeignKey('relate.id'))
-    relate = db.relationship('Relate', back_populates='posts')
+    collection_id = db.Column(db.Integer, db.ForeignKey('collection.id'))
+    collection = db.relationship('Collection', back_populates='posts')
 
     tags = db.relationship('Tag', secondary='post_tag', back_populates='posts')
 
-    deny_comment = db.Column(db.Boolean)
     comments = db.relationship('Comment', back_populates='post', cascade='all, delete-orphan')
 
     trackers = db.relationship('Tracker', back_populates='post', cascade='all')
@@ -314,7 +314,7 @@ class Comment(db.Model):
     replied = db.relationship('Comment', back_populates='replies', remote_side=[id])
 
 
-@db.event.listens_for(Post.publish_time, 'set', named=True)
+@db.event.listens_for(Post.timestamp, 'set', named=True)
 def update_post_archive(target, value, oldvalue, initiator):
     label = datetime.strftime(value, "%Y/%m")
     search_archive = Archive.query.filter_by(label=label).first()
@@ -349,6 +349,7 @@ class Tracker(db.Model):
     url = db.Column(db.String(128))
     ip = db.Column(db.String(64))
     timestamp = db.Column(db.DateTime, default=datetime.now)
+    user_agent = db.Column(db.String(256))
 
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     post = db.relationship('Post', back_populates='trackers')
@@ -365,6 +366,7 @@ class Request(db.Model):
     url = db.Column(db.String(256))
     ip = db.Column(db.String(64))
     timestamp = db.Column(db.DateTime, default=datetime.now)
+    user_agent = db.Column(db.String(256))
 
     status_code = db.Column(db.Integer)
     arguments = db.Column(MutableDict.as_mutable(db.PickleType), default=dict())

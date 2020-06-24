@@ -7,7 +7,7 @@ from flask_security import login_required, current_user
 from sqlalchemy import or_
 from flask_babelex import gettext as _
 from slugify import slugify
-from app.model.models import Post, Category, Tag, Archive, Relate, Comment
+from app.model.models import Post, Category, Tag, Archive, Collection, Comment
 from app.form.forms import PostForm, OperateForm, CreateForm
 from app.controller.extensions import db
 from app.utils.common import redirect_back
@@ -42,7 +42,7 @@ def posts():
         search_archive = Archive.query.filter_by(label=archive).first_or_404()
         posts = posts.filter_by(archive=search_archive)
 
-    pagination = posts.order_by(Post.publish_time.desc()).paginate(page=page, per_page=6)
+    pagination = posts.order_by(Post.timestamp.desc()).paginate(page=page, per_page=6)
 
     if pagination.page == 1:
         posts_template = "index.html"
@@ -63,7 +63,7 @@ def posts():
 def draft():
     operate_form = OperateForm()
     page = int(flask.request.args.get('page', 1))
-    pagination = Post.query.filter_by(is_draft=True).order_by(Post.create_time.desc()).paginate(page=page, per_page=6)
+    pagination = Post.query.filter_by(is_draft=True).order_by(Post.timestamp.desc()).paginate(page=page, per_page=6)
 
     return flask.render_template(
         "drafts.html",
@@ -77,6 +77,10 @@ def draft():
 def post(post_slug):
     operate_form = OperateForm()
     post = Post.query.filter_by(slug=post_slug, is_draft=False).first_or_404()
+
+    if not current_user.is_admin and post.is_privacy:
+        flask.abort(403)
+
     post_visited.send(flask.current_app._get_current_object(), post=post)
 
     return flask.render_template(
@@ -107,15 +111,16 @@ def search_post():
 def create_post(editor):
     post_form = PostForm()
     create_category_form = CreateForm()
-    create_relate_form = CreateForm()
+    create_collection_form = CreateForm()
     create_tag_form = CreateForm()
     if post_form.validate_on_submit():
         title = post_form.title.data
         category = post_form.category.data
-        relate = post_form.relate.data
+        collection = post_form.collection.data
         tag_names = post_form.tags.data
         abstract = post_form.abstract.data
         deny_comment = post_form.deny_comment.data
+        privacy = post_form.privacy.data
 
         if editor == "markdown":
             body_md = post_form.body.data
@@ -130,11 +135,12 @@ def create_post(editor):
         post = Post(
             title=title,
             category=Category.query.filter_by(name=category).first(),
-            relate=Relate.query.filter_by(name=relate).first(),
+            collection=Collection.query.filter_by(name=collection).first(),
             tags=[Tag.query.filter_by(name=item).first() for item in tag_names],
             slug=slug,
             abstract=abstract,
             deny_comment=deny_comment,
+            is_privacy=privacy,
             is_markdown=is_markdown,
             body=body,
             author=current_user
@@ -145,11 +151,12 @@ def create_post(editor):
 
         if post_form.save_submit.data:
             post.is_draft = True
+            post.timestamp = datetime.now()
             db.session.commit()
             flask.flash(_("The Post has been saved as a Draft Successful!!"), category="success")
 
         elif post_form.publish_submit.data:
-            post.publish_time = datetime.now()
+            post.timestamp = datetime.now()
             db.session.commit()
             flask.flash(_("Create A New Post Successful!"), category="success")
 
@@ -160,7 +167,7 @@ def create_post(editor):
         editor=editor,
         form=post_form,
         create_category_form=create_category_form,
-        create_relate_form=create_relate_form,
+        create_collection_form=create_collection_form,
         create_tag_form=create_tag_form
     )
 
@@ -171,7 +178,7 @@ def create_post(editor):
 def edit_post(post_slug):
     post_form = PostForm()
     create_category_form = CreateForm()
-    create_relate_form = CreateForm()
+    create_collection_form = CreateForm()
     create_tag_form = CreateForm()
 
     search_post = Post.query.filter_by(slug=post_slug).first_or_404()
@@ -186,10 +193,10 @@ def edit_post(post_slug):
         if Category.query.first():
             post_form.category.data = Category.query.first().name
 
-    if search_post.relate:
-        post_form.relate.data = search_post.relate.name
+    if search_post.collection:
+        post_form.collection.data = search_post.collection.name
     else:
-        post_form.relate.data = ""
+        post_form.collection.data = ""
 
     if search_post.tags:
         post_form.tags.data = [item.name for item in search_post.tags]
@@ -199,6 +206,7 @@ def edit_post(post_slug):
 
     post_form.abstract.data = search_post.abstract
     post_form.deny_comment.data = search_post.deny_comment
+    post_form.privacy.data = search_post.is_privacy
 
     if is_markdown:
         post_form.body.data = html2text.html2text(search_post.body)
@@ -209,10 +217,10 @@ def edit_post(post_slug):
         title = flask.request.form.get('title')
         category_name = flask.request.form.get('category')
 
-        relate_name = flask.request.form.get('relate')
+        collection_name = flask.request.form.get('collection')
         tag_names = flask.request.form.getlist('tags')
         abstract = flask.request.form.get('abstract')
-        deny_comment = True if flask.request.form.get('deny_comment') else False
+        privacy = True if flask.request.form.get('privacy') else False
 
         if is_markdown:
             body_md = flask.request.form.get('body')
@@ -227,23 +235,23 @@ def edit_post(post_slug):
         if category:
             search_post.category = category
 
-        relate = Relate.query.filter_by(name=relate_name).first()
-        if relate:
-            search_post.relate = relate
+        collection = Collection.query.filter_by(name=collection_name).first()
+        if collection:
+            search_post.collection = collection
 
         search_post.tags = [Tag.query.filter_by(name=item).first() for item in tag_names]
         search_post.abstract = abstract
-        search_post.deny_comment = deny_comment
+        search_post.is_privacy = privacy
         search_post.body = body
 
         if post_form.save_submit.data:
             search_post.is_draft = True
-            search_post.create_time = datetime.now()
+            search_post.timestamp = datetime.now()
             db.session.commit()
             flask.flash(_("The Post has been saved as a Draft Successful!"), category="success")
         elif post_form.publish_submit.data:
             search_post.is_draft = False
-            search_post.publish_time = datetime.now()
+            search_post.timestamp = datetime.now()
             db.session.commit()
             flask.flash(_("Update and Publish The Post Successful!"), category="success")
 
@@ -254,7 +262,7 @@ def edit_post(post_slug):
         form=post_form,
         post=search_post,
         create_category_form=create_category_form,
-        create_relate_form=create_relate_form,
+        create_collection_form=create_collection_form,
         create_tag_form=create_tag_form
     )
 
@@ -286,18 +294,18 @@ def create_category():
         return redirect_back()
 
 
-@posts_bp.route('/post/relate/new', methods=['POST'])
+@posts_bp.route('/post/collection/new', methods=['POST'])
 @login_required
 @permission_required('ADMINISTER')
-def create_relate():
+def create_collection():
     if flask.request.method == "POST":
-        relate_name = flask.request.form.get('name')
-        if Relate.query.filter_by(name=relate_name).first():
-            flask.flash(_("This Relate already exists!"), category="warning")
+        collection_name = flask.request.form.get('name')
+        if Collection.query.filter_by(name=collection_name).first():
+            flask.flash(_("This Collection already exists!"), category="warning")
             return redirect_back()
 
-        relate = Relate(name=relate_name)
-        db.session.add(relate)
+        collection = Collection(name=collection_name)
+        db.session.add(collection)
         db.session.commit()
         return redirect_back()
 

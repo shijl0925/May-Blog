@@ -26,11 +26,11 @@
                         {{ moment(post.timestamp, local=True).fromNow() }}
                     </span>
 
-                    <span class="ml-2">
+                    <span class="post-item">
                         <i class="fas fa-eye"></i> {{ post.visit_count }}
                     </span>
 
-                    <span class="ml-2">
+                    <span class="post-item">
                         <a class="dark-grey-text" href="{{ url_for('posts.post', post_slug=post.slug) }}#comments">
                             <i class="far fa-comments"></i> {{ post.comments|length }}
                         </a>

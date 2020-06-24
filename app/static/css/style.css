@@ -163,3 +163,8 @@
     background: #e7e7e7;
 }
 
+.post-item {
+    border-left: 1px solid #e6e6e6;
+    padding-left: 10px;
+    margin-left: 10px;
+}

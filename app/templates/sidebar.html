@@ -54,7 +54,9 @@
             <div class="post-card-measure">
                 <div class="post-card-measure-inner">
                     <div class="post-number dark-grey-text">
-                        {{ tag_nums }}
+                        <a href="#tags" class="dark-grey-text">
+                            {{ tag_nums }}
+                        </a>
                     </div>
                     <div class="dark-grey-text text-center py-1 mb-3">
                         {{ _("TAGS") }}
@@ -65,7 +67,9 @@
             <div class="post-card-measure">
                 <div class="post-card-measure-inner">
                     <div class="post-number dark-grey-text">
-                        {{ category_nums }}
+                        <a href="#categories" class="dark-grey-text">
+                            {{ category_nums }}
+                        </a>
                     </div>
                     <div class="dark-grey-text text-center py-1 mb-3">
                         {{ _("CATEGORIES") }}
@@ -103,7 +107,7 @@
 
     <!-- Tags -->
     {% if tags %}
-    <section class="section widget-content mb-5">
+    <section id="tags" class="section widget-content mb-5">
         <!--  Card -->
         <div class="card card-body pb-0">
           <p class="font-weight-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
@@ -174,7 +178,7 @@
 
     <!-- Section: Categories -->
     {% if categories %}
-    <section class="category mb-5">
+    <section id="categories" class="category mb-5">
 
       <!--  Card -->
       <div class="card card-body pb-0">

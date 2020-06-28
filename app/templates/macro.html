@@ -1,5 +1,5 @@
 {% macro nav_active_item(endpoints, text, icon_class) -%}
-    <li class="nav-item {% if request.endpoint and request.endpoint in endpoints %} active{% endif %}">
+    <li class="nav-item ml-3{% if request.endpoint and request.endpoint in endpoints %} active{% endif %}">
         <a class="nav-link waves-effect waves-light font-weight-bold" href="{{ url_for(endpoints[0], **kwargs) }}">
             <i class="{{ icon_class }}"></i>
             {{ text }}

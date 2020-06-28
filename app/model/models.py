@@ -295,6 +295,8 @@ class Post(db.Model):
     def __repr__(self):
         return '<Post %r>' % self.id
 
+    __mapper_args__ = {"order_by": timestamp.desc()}
+
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)

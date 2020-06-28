@@ -212,7 +212,7 @@
     font-size: 16px;
     line-height: 1.1;
     margin: 0;
-    padding: 5px;
+    padding: 10px;
 }
 .timeline>div>.timeline-item>.timeline-body, .timeline>div>.timeline-item>.timeline-footer {
     padding: 10px;
@@ -223,7 +223,7 @@
     width: 15px;
     height: 15px;
     left: 33px;
-    bottom: 4px;
+    bottom: 15px;
     transform: translate(-50%, 0);
     border: 2px solid #1890FF;
     border-radius: 50%;

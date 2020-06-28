@@ -24,16 +24,19 @@
           {% for post in archive.posts %}
           <div>
             <div class="timeline-item-head"></div>
-{#            <i class="fas fa-clock gray"></i>#}
-
             <div class="timeline-item">
-              <h3 class="timeline-header no-border">
+              <h2 class="timeline-header no-border">
                   <span data-toggle="tooltip" data-placement="top"
                         title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
                       {{ moment(post.timestamp, local=True).fromNow() }}
                   </span>
                   <a class="ml-1" href="{{ url_for('posts.post', post_slug=post.slug) }}">{{ post.title }}</a>
-              </h3>
+                  {% if post.is_privacy %}
+                    <span class="Label Label--outline v-align-middle ml-1">
+                      Private
+                    </span>
+                  {% endif %}
+              </h2>
             </div>
           </div>
           {% endfor %}

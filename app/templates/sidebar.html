@@ -43,7 +43,9 @@
             <div class="post-card-measure">
                 <div class="post-card-measure-inner">
                     <div class="post-number dark-grey-text">
-                        {{ post_nums }}
+                        <a href="{{ url_for('posts.posts') }}" class="dark-grey-text">
+                            {{ post_nums }}
+                        </a>
                     </div>
                     <div class="dark-grey-text text-center py-1 mb-3">
                         {{ _("POSTS") }}

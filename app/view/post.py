@@ -17,6 +17,13 @@ from app.controller.signals import post_visited
 
 posts_bp = flask.Blueprint('posts', __name__, url_prefix='/')
 
+markdown_extensions = [
+    'markdown.extensions.extra',
+    'markdown.extensions.fenced_code',
+    'markdown.extensions.toc',
+    'markdown.extensions.tables'
+]
+
 
 @posts_bp.route('/', methods=['GET'])
 def posts():
@@ -124,7 +131,7 @@ def create_post(editor):
 
         if editor == "markdown":
             body_md = post_form.body.data
-            md = markdown.Markdown()
+            md = markdown.Markdown(extensions=markdown_extensions)
             body = md.convert(body_md)
             is_markdown = True
         else:
@@ -209,7 +216,8 @@ def edit_post(post_slug):
     post_form.privacy.data = search_post.is_privacy
 
     if is_markdown:
-        post_form.body.data = html2text.html2text(search_post.body)
+        text_maker = html2text.HTML2Text()
+        post_form.body.data = text_maker.handle(search_post.body)
     else:
         post_form.body.data = search_post.body
 
@@ -224,7 +232,7 @@ def edit_post(post_slug):
 
         if is_markdown:
             body_md = flask.request.form.get('body')
-            md = markdown.Markdown()
+            md = markdown.Markdown(extensions=markdown_extensions)
             body = md.convert(body_md)
         else:
             body = flask.request.form.get('body')

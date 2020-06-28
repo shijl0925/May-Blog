@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+
+    <style>
+        .navbar {
+            background-color: #6f7782;
+        }
+        footer.page-footer {
+            background-color: #6f7782;
+        }
+    </style>
+{% endblock styles %}
+
+{% block page_content %}
+    <div class="timeline">
+
+      {% for archive in archives %}
+          <div class="time-label">
+            <span class="green">{{ archive.label }}</span>
+          </div>
+          {% for post in archive.posts %}
+          <div>
+            <div class="timeline-item-head"></div>
+{#            <i class="fas fa-clock gray"></i>#}
+
+            <div class="timeline-item">
+              <h3 class="timeline-header no-border">
+                  <span data-toggle="tooltip" data-placement="top"
+                        title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
+                      {{ moment(post.timestamp, local=True).fromNow() }}
+                  </span>
+                  <a class="ml-1" href="{{ url_for('posts.post', post_slug=post.slug) }}">{{ post.title }}</a>
+              </h3>
+            </div>
+          </div>
+          {% endfor %}
+      {% endfor %}
+    </div>
+
+    <nav class="mb-5 pb-2">
+        {% from "mdbootstrap/pagination.html" import render_pagination %}
+        {{ render_pagination(pagination,
+         prev=('<span aria-hidden="true">&larr;</span> Pre')|safe,
+         next=('Next <span aria-hidden="true">&rarr;</span>')|safe,
+         align="center") }}
+    </nav>
+{% endblock page_content %}

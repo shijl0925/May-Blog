@@ -1,4 +1,3 @@
-import os
 from datetime import datetime
 import flask
 import markdown
@@ -11,6 +10,7 @@ from app.model.models import Post, Category, Tag, Archive, Collection, Comment
 from app.form.forms import PostForm, OperateForm, CreateForm
 from app.controller.extensions import db
 from app.utils.common import redirect_back
+from app.controller.md_ext import BootStrapExtension
 from app.utils.decorator import permission_required
 from app.controller.signals import post_visited
 
@@ -21,7 +21,8 @@ markdown_extensions = [
     'markdown.extensions.extra',
     'markdown.extensions.fenced_code',
     'markdown.extensions.toc',
-    'markdown.extensions.tables'
+    'markdown.extensions.tables',
+    BootStrapExtension(configs={})
 ]
 
 

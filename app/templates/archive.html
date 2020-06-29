@@ -16,30 +16,33 @@
 
 {% block page_content %}
     <div class="timeline">
-
       {% for archive in archives %}
-          <div class="time-label">
-            <span class="green">{{ archive.label }}</span>
-          </div>
-          {% for post in archive.posts %}
-          <div>
-            <div class="timeline-item-head"></div>
-            <div class="timeline-item">
-              <h2 class="timeline-header no-border">
-                  <span data-toggle="tooltip" data-placement="top"
-                        title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
-                      {{ moment(post.timestamp, local=True).fromNow() }}
-                  </span>
-                  <a class="ml-1" href="{{ url_for('posts.post', post_slug=post.slug) }}">{{ post.title }}</a>
-                  {% if post.is_privacy %}
-                    <span class="Label Label--outline v-align-middle ml-1">
-                      Private
-                    </span>
-                  {% endif %}
-              </h2>
-            </div>
-          </div>
-          {% endfor %}
+          {% with post_nums = archive|count_post_nums_with_archive %}
+              {% if post_nums %}
+                  <div class="time-label">
+                    <span class="white-text">{{ archive.label }}</span>
+                  </div>
+                  {% for post in archive.posts %}
+                  <div>
+                    <div class="timeline-item-head"></div>
+                    <div class="timeline-item">
+                      <h2 class="timeline-header no-border">
+                          <span data-toggle="tooltip" data-placement="top"
+                                title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
+                              {{ moment(post.timestamp, local=True).fromNow() }}
+                          </span>
+                          <a class="ml-1" href="{{ url_for('posts.post', post_slug=post.slug) }}">{{ post.title }}</a>
+                          {% if post.is_privacy %}
+                            <span class="Label Label--outline v-align-middle ml-1">
+                              Private
+                            </span>
+                          {% endif %}
+                      </h2>
+                    </div>
+                  </div>
+                  {% endfor %}
+              {% endif %}
+          {% endwith %}
       {% endfor %}
     </div>
 

@@ -154,16 +154,18 @@
                 <!-- List -->
                 <ul class="list-unstyled">
                   {% for archive in archives %}
-                  <li class="d-flex justify-content-between align-items-center">
-                      <a href="{{ url_for('posts.posts', archive=archive.label) }}" class="dark-grey-text hvr-sweep-to-right">
-                          <p class="mb-1">{{ archive.label }}</p>
-                      </a>
-                      {% with post_nums = archive|count_post_nums_with_archive  %}
-                        {% if post_nums %}
-                          <span class="badge badge-pill badge-primary font-small hvr-buzz-out">{{ post_nums }}</span>
-                        {% endif %}
-                      {% endwith %}
-                  </li>
+                  {% with post_nums = archive|count_post_nums_with_archive %}
+                      {% if post_nums %}
+                      <li class="d-flex justify-content-between align-items-center">
+                          <a href="{{ url_for('posts.posts', archive=archive.label) }}" class="dark-grey-text hvr-sweep-to-right">
+                              <p class="mb-1">{{ archive.label }}</p>
+                          </a>
+                          {% if post_nums %}
+                              <span class="badge badge-pill badge-primary font-small hvr-buzz-out">{{ post_nums }}</span>
+                          {% endif %}
+                      </li>
+                      {% endif %}
+                  {% endwith %}
                   {% endfor %}
                 </ul>
                 <!-- List -->

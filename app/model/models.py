@@ -318,8 +318,7 @@ class Comment(db.Model):
 
 @db.event.listens_for(Post.timestamp, 'set', named=True)
 def update_post_archive(target, value, oldvalue, initiator):
-    # label = datetime.strftime(value, "%Y/%m")
-    label = datetime.strftime(value, "%b.%Y")
+    label = datetime.strftime(value, "%Y/%m")
     search_archive = Archive.query.filter_by(label=label).first()
     if search_archive is None:
         search_archive = Archive(label=label)

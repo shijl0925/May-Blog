@@ -20,7 +20,7 @@
           {% with post_nums = archive|count_post_nums_with_archive %}
               {% if post_nums %}
                   <div class="time-label">
-                    <span class="white-text">{{ archive.label }}</span>
+                    <span class="white-text">{{ archive.label|format_date }}</span>
                   </div>
                   {% for post in archive.posts %}
                   <div>

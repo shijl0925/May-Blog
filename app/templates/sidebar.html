@@ -158,7 +158,7 @@
                       {% if post_nums %}
                       <li class="d-flex justify-content-between align-items-center">
                           <a href="{{ url_for('posts.posts', archive=archive.label) }}" class="dark-grey-text hvr-sweep-to-right">
-                              <p class="mb-1">{{ archive.label }}</p>
+                              <p class="mb-1">{{ archive.label|format_date }}</p>
                           </a>
                           {% if post_nums %}
                               <span class="badge badge-pill badge-primary font-small hvr-buzz-out">{{ post_nums }}</span>

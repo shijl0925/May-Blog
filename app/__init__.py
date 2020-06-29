@@ -1,6 +1,7 @@
 import os
 import flask
 from sqlalchemy import func
+from datetime import datetime
 from flask_wtf.csrf import CSRFError
 from flask_security import current_user
 from app.utils import config_log, get_abs_dir
@@ -96,6 +97,10 @@ def count_post_nums_with_archive(search_archive):
     return post_nums
 
 
+def format_date(str):
+    return datetime.strptime(str, "%Y/%m").strftime("%b.%Y")
+
+
 def create_app(env=None):
     config_log()
     app_ = flask.Flask(
@@ -129,6 +134,8 @@ def create_app(env=None):
     app_.add_template_filter(count_post_nums_with_tag, 'count_post_nums_with_tag')
     app_.add_template_filter(count_post_nums_with_category, 'count_post_nums_with_category')
     app_.add_template_filter(count_post_nums_with_archive, 'count_post_nums_with_archive')
+
+    app_.add_template_filter(format_date, 'format_date')
 
     app_.jinja_env.trim_blocks = True
     app_.jinja_env.lstrip_blocks = True

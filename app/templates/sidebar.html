@@ -13,11 +13,16 @@
       <!-- Card content -->
       <div class="card-body">
         <!-- Title -->
-        {% if admin.nick_name %}
+
         <h5 class="card-title dark-grey-text text-center grey lighten-4 py-2">
-          <strong>{{ admin.nick_name }}</strong>
+          <strong>
+            {% if admin.nick_name %}
+              {{ admin.nick_name }}
+            {% else %}
+              {{ admin.full_name }}
+            {% endif %}
+          </strong>
         </h5>
-        {% endif %}
 
         {% if current_user.is_admin %}
           <div style="text-align: center;">
@@ -121,7 +126,7 @@
               <!-- Excerpt -->
               <div class="col-12">
                   {% for tag in tags %}
-                      <a class="tags has-addons mr-3 hvr-buzz-out" href="{{ url_for('posts.posts', tag=tag.name) }}">
+                      <a class="tags has-addons mr-1 hvr-buzz-out" href="{{ url_for('posts.posts', tag=tag.name) }}">
                         <span class="tag">{{ tag.name }}</span>
                         <span class="tag is-grey ml-n3">{{ tag|count_post_nums_with_tag }}</span>
                       </a>

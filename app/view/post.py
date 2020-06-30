@@ -172,7 +172,7 @@ def create_post(editor):
             post.is_draft = True
             post.timestamp = datetime.now()
             db.session.commit()
-            flask.flash(_("The Post has been saved as a Draft Successful!!"), category="success")
+            flask.flash(_("The Post has been saved as a Draft Successful!"), category="success")
 
         elif post_form.publish_submit.data:
             post.timestamp = datetime.now()

@@ -11,7 +11,7 @@ from flask_security.script import CreateUserCommand, AddRoleCommand,\
     RemoveRoleCommand, ActivateUserCommand, DeactivateUserCommand
 from app.controller.extensions import db
 from app.model.models import Role, User
-from app.controller.script import ResetDB, InitDB
+from app.controller.script import ResetDB, InitDB, FakerData
 from app import app
 
 manager = Manager(app)
@@ -33,6 +33,7 @@ manager.add_command('add_role', AddRoleCommand())
 manager.add_command('remove_role', RemoveRoleCommand())
 manager.add_command('deactivate_user', DeactivateUserCommand())
 manager.add_command('activate_user', ActivateUserCommand())
+manager.add_command('faker', FakerData())
 
 
 @manager.command

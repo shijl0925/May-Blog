@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-06-24 17:00+0800\n"
-"PO-Revision-Date: 2020-06-24 17:01+0800\n"
+"POT-Creation-Date: 2020-06-30 15:53+0800\n"
+"PO-Revision-Date: 2020-06-30 15:53+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -17,6 +17,98 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
+
+#: form/auth.py:28 form/auth.py:39 form/auth.py:47 form/auth.py:73
+#: form/auth.py:91
+msgid "Email Address"
+msgstr "邮件地址"
+
+#: form/auth.py:30 form/auth.py:55
+msgid "Password"
+msgstr "密码"
+
+#: form/auth.py:32
+msgid "Remember Me"
+msgstr "记住我"
+
+#: form/auth.py:33 templates/base.html:66 templates/security/_menu.html:4
+#: templates/security/login_user.html:9
+msgid "Login"
+msgstr "登录"
+
+#: form/auth.py:41
+msgid "Recover Password"
+msgstr "修改密码"
+
+#: form/auth.py:49 form/auth.py:87
+msgid "User Name"
+msgstr "用户名"
+
+#: form/auth.py:51 form/auth.py:95
+msgid "First Name"
+msgstr "名"
+
+#: form/auth.py:53 form/auth.py:99
+msgid "Last Name"
+msgstr "姓"
+
+#: form/auth.py:58 templates/security/_menu.html:9
+#: templates/security/register_user.html:9
+msgid "Register"
+msgstr "注册"
+
+#: form/auth.py:63 form/auth.py:144
+msgid "Confirm Password"
+msgstr "确认密码"
+
+#: form/auth.py:75
+msgid "Resend Confirmation Instructions"
+msgstr "发送确认邮件"
+
+#: form/auth.py:81
+msgid "Reset Password"
+msgstr "重置密码"
+
+#: form/auth.py:103
+msgid "Address"
+msgstr "地址"
+
+#: form/auth.py:107
+msgid "Website"
+msgstr "网站"
+
+#: form/auth.py:111
+msgid "About me"
+msgstr "关于我"
+
+#: form/auth.py:116 templates/post.html:260
+msgid "Submit"
+msgstr "提交"
+
+#: form/auth.py:120
+msgid "Upload your file"
+msgstr "上传你的文件"
+
+#: form/auth.py:126 templates/file/upload.html:39
+msgid "Upload"
+msgstr "上传"
+
+#: form/auth.py:134
+msgid "Crop"
+msgstr "裁剪"
+
+#: form/auth.py:138
+msgid "Old Password"
+msgstr "旧密码"
+
+#: form/auth.py:141
+msgid "New Password"
+msgstr "新密码"
+
+#: form/file.py:13 form/forms.py:117 templates/file/upload.html:50
+#: templates/post.html:228
+msgid "Name"
+msgstr "名字"
 
 #: form/forms.py:55
 msgid "Title"
@@ -56,32 +148,27 @@ msgstr "保存草稿"
 
 #: form/forms.py:110
 msgid "Publish"
-msgstr "发表文章"
+msgstr "发布"
 
-#: form/forms.py:117 templates/file/upload.html:50 templates/post.html:228
-msgid "Name"
-msgstr "名字"
-
-#: templates/base.html:23
+#: templates/base.html:26
 msgid "Home"
 msgstr "主页"
 
-#: templates/base.html:27
+#: templates/base.html:30
+msgid "Archive"
+msgstr "存档"
+
+#: templates/base.html:34
 msgid "Search"
 msgstr "搜索..."
 
-#: templates/base.html:44
+#: templates/base.html:51
 msgid "Admin Dashboard"
 msgstr "管理后台"
 
-#: templates/base.html:51
+#: templates/base.html:58
 msgid "Logout"
 msgstr "退出"
-
-#: templates/base.html:59 templates/security/_menu.html:4
-#: templates/security/login_user.html:9
-msgid "Login"
-msgstr "登录"
 
 #: templates/create.html:140 templates/edit.html:134
 msgid "Creat a new category"
@@ -132,7 +219,7 @@ msgstr "欢迎来到我的博客"
 msgid "Stay hungry，Stay foolish"
 msgstr "求知若饥，虚心若愚"
 
-#: templates/list.html:64
+#: templates/list.html:66
 msgid "No Posts."
 msgstr "暂无文章"
 
@@ -160,35 +247,31 @@ msgstr "邮箱"
 msgid "Write something here..."
 msgstr "写下你的评论..."
 
-#: templates/post.html:260
-msgid "Submit"
-msgstr "提交"
-
-#: templates/sidebar.html:26
+#: templates/sidebar.html:31
 msgid "Create"
 msgstr "写文章"
 
-#: templates/sidebar.html:31
+#: templates/sidebar.html:36
 msgid "Draft"
 msgstr "草稿箱"
 
-#: templates/sidebar.html:49
+#: templates/sidebar.html:56
 msgid "POSTS"
 msgstr "文章"
 
-#: templates/sidebar.html:60 templates/sidebar.html:110
+#: templates/sidebar.html:69 templates/sidebar.html:121
 msgid "TAGS"
 msgstr "标签"
 
-#: templates/sidebar.html:71 templates/sidebar.html:184
+#: templates/sidebar.html:82 templates/sidebar.html:197
 msgid "CATEGORIES"
 msgstr "分类"
 
-#: templates/sidebar.html:141
+#: templates/sidebar.html:152
 msgid "ARCHIVE"
 msgstr "存档"
 
-#: templates/sidebar.html:218
+#: templates/sidebar.html:231
 msgid "POPULAR POSTS"
 msgstr "热门文章"
 
@@ -204,10 +287,6 @@ msgstr "以前的文章"
 msgid "Upload Images"
 msgstr "上传图片"
 
-#: templates/file/upload.html:39
-msgid "Upload"
-msgstr "上传"
-
 #: templates/file/upload.html:51
 msgid "Path"
 msgstr "路径"
@@ -216,10 +295,6 @@ msgstr "路径"
 msgid "Preview"
 msgstr "预览"
 
-#: templates/security/_menu.html:9 templates/security/register_user.html:9
-msgid "Register"
-msgstr "注册"
-
 #: templates/security/_menu.html:15
 msgid "Forget Password?"
 msgstr "忘记密码？"
@@ -227,6 +302,18 @@ msgstr "忘记密码？"
 #: templates/security/_menu.html:21
 msgid "Confirm account"
 msgstr "确认账户"
+
+#: templates/security/forgot_password.html:9
+msgid "Send password reset instructions"
+msgstr "发送密码重置链接"
+
+#: templates/security/reset_password.html:9
+msgid "Reset password"
+msgstr "重置密码"
+
+#: templates/security/send_confirmation.html:9
+msgid "Confirm"
+msgstr "确认"
 
 #: view/file.py:44
 msgid "This file extension is not allowed."
@@ -248,39 +335,35 @@ msgstr "文件不存在！"
 msgid "Delete Image: "
 msgstr "删除图片："
 
-#: view/post.py:161
-msgid "The Post has been saved as a Draft Successful!!"
+#: view/post.py:175 view/post.py:271
+msgid "The Post has been saved as a Draft Successful!"
 msgstr "文章已成功保存成草稿！"
 
-#: view/post.py:166
+#: view/post.py:180
 msgid "Create A New Post Successful!"
 msgstr "新的文章创建成功！"
 
-#: view/post.py:256
-msgid "The Post has been saved as a Draft Successful!"
-msgstr ""
-
-#: view/post.py:261
+#: view/post.py:276
 msgid "Update and Publish The Post Successful!"
-msgstr "文章已更新并发布成功"
+msgstr "文章已更新并发布成功！"
 
-#: view/post.py:282
+#: view/post.py:297
 msgid "Delete The Post Successful!"
 msgstr "文章已删除成功！"
 
-#: view/post.py:293
+#: view/post.py:308
 msgid "This Category already exists!"
 msgstr "此分类已存在！"
 
-#: view/post.py:309
+#: view/post.py:324
 msgid "This Collection already exists!"
-msgstr "此合集已存在"
+msgstr "此合集已存在!"
 
-#: view/post.py:325
+#: view/post.py:340
 msgid "This Tag already exists!"
 msgstr "此标签已存在！"
 
-#: view/post.py:362
+#: view/post.py:377
 msgid "Delete The Comment Successful!"
 msgstr "评论已删除成功！"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-06-24 17:00+0800\n"
+"POT-Creation-Date: 2020-06-30 15:53+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,98 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
+
+#: form/auth.py:28 form/auth.py:39 form/auth.py:47 form/auth.py:73
+#: form/auth.py:91
+msgid "Email Address"
+msgstr ""
+
+#: form/auth.py:30 form/auth.py:55
+msgid "Password"
+msgstr ""
+
+#: form/auth.py:32
+msgid "Remember Me"
+msgstr ""
+
+#: form/auth.py:33 templates/base.html:66 templates/security/_menu.html:4
+#: templates/security/login_user.html:9
+msgid "Login"
+msgstr ""
+
+#: form/auth.py:41
+msgid "Recover Password"
+msgstr ""
+
+#: form/auth.py:49 form/auth.py:87
+msgid "User Name"
+msgstr ""
+
+#: form/auth.py:51 form/auth.py:95
+msgid "First Name"
+msgstr ""
+
+#: form/auth.py:53 form/auth.py:99
+msgid "Last Name"
+msgstr ""
+
+#: form/auth.py:58 templates/security/_menu.html:9
+#: templates/security/register_user.html:9
+msgid "Register"
+msgstr ""
+
+#: form/auth.py:63 form/auth.py:144
+msgid "Confirm Password"
+msgstr ""
+
+#: form/auth.py:75
+msgid "Resend Confirmation Instructions"
+msgstr ""
+
+#: form/auth.py:81
+msgid "Reset Password"
+msgstr ""
+
+#: form/auth.py:103
+msgid "Address"
+msgstr ""
+
+#: form/auth.py:107
+msgid "Website"
+msgstr ""
+
+#: form/auth.py:111
+msgid "About me"
+msgstr ""
+
+#: form/auth.py:116 templates/post.html:260
+msgid "Submit"
+msgstr ""
+
+#: form/auth.py:120
+msgid "Upload your file"
+msgstr ""
+
+#: form/auth.py:126 templates/file/upload.html:39
+msgid "Upload"
+msgstr ""
+
+#: form/auth.py:134
+msgid "Crop"
+msgstr ""
+
+#: form/auth.py:138
+msgid "Old Password"
+msgstr ""
+
+#: form/auth.py:141
+msgid "New Password"
+msgstr ""
+
+#: form/file.py:13 form/forms.py:117 templates/file/upload.html:50
+#: templates/post.html:228
+msgid "Name"
+msgstr ""
 
 #: form/forms.py:55
 msgid "Title"
@@ -57,29 +149,24 @@ msgstr ""
 msgid "Publish"
 msgstr ""
 
-#: form/forms.py:117 templates/file/upload.html:50 templates/post.html:228
-msgid "Name"
-msgstr ""
-
-#: templates/base.html:23
+#: templates/base.html:26
 msgid "Home"
 msgstr ""
 
-#: templates/base.html:27
+#: templates/base.html:30
+msgid "Archive"
+msgstr ""
+
+#: templates/base.html:34
 msgid "Search"
 msgstr ""
 
-#: templates/base.html:44
+#: templates/base.html:51
 msgid "Admin Dashboard"
 msgstr ""
 
-#: templates/base.html:51
+#: templates/base.html:58
 msgid "Logout"
-msgstr ""
-
-#: templates/base.html:59 templates/security/_menu.html:4
-#: templates/security/login_user.html:9
-msgid "Login"
 msgstr ""
 
 #: templates/create.html:140 templates/edit.html:134
@@ -131,7 +218,7 @@ msgstr ""
 msgid "Stay hungry，Stay foolish"
 msgstr ""
 
-#: templates/list.html:64
+#: templates/list.html:66
 msgid "No Posts."
 msgstr ""
 
@@ -159,35 +246,31 @@ msgstr ""
 msgid "Write something here..."
 msgstr ""
 
-#: templates/post.html:260
-msgid "Submit"
-msgstr ""
-
-#: templates/sidebar.html:26
+#: templates/sidebar.html:31
 msgid "Create"
 msgstr ""
 
-#: templates/sidebar.html:31
+#: templates/sidebar.html:36
 msgid "Draft"
 msgstr ""
 
-#: templates/sidebar.html:49
+#: templates/sidebar.html:56
 msgid "POSTS"
 msgstr ""
 
-#: templates/sidebar.html:60 templates/sidebar.html:110
+#: templates/sidebar.html:69 templates/sidebar.html:121
 msgid "TAGS"
 msgstr ""
 
-#: templates/sidebar.html:71 templates/sidebar.html:184
+#: templates/sidebar.html:82 templates/sidebar.html:197
 msgid "CATEGORIES"
 msgstr ""
 
-#: templates/sidebar.html:141
+#: templates/sidebar.html:152
 msgid "ARCHIVE"
 msgstr ""
 
-#: templates/sidebar.html:218
+#: templates/sidebar.html:231
 msgid "POPULAR POSTS"
 msgstr ""
 
@@ -203,10 +286,6 @@ msgstr ""
 msgid "Upload Images"
 msgstr ""
 
-#: templates/file/upload.html:39
-msgid "Upload"
-msgstr ""
-
 #: templates/file/upload.html:51
 msgid "Path"
 msgstr ""
@@ -215,16 +294,24 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: templates/security/_menu.html:9 templates/security/register_user.html:9
-msgid "Register"
-msgstr ""
-
 #: templates/security/_menu.html:15
 msgid "Forget Password?"
 msgstr ""
 
 #: templates/security/_menu.html:21
 msgid "Confirm account"
+msgstr ""
+
+#: templates/security/forgot_password.html:9
+msgid "Send password reset instructions"
+msgstr ""
+
+#: templates/security/reset_password.html:9
+msgid "Reset password"
+msgstr ""
+
+#: templates/security/send_confirmation.html:9
+msgid "Confirm"
 msgstr ""
 
 #: view/file.py:44
@@ -247,39 +334,35 @@ msgstr ""
 msgid "Delete Image: "
 msgstr ""
 
-#: view/post.py:161
-msgid "The Post has been saved as a Draft Successful!!"
-msgstr ""
-
-#: view/post.py:166
-msgid "Create A New Post Successful!"
-msgstr ""
-
-#: view/post.py:256
+#: view/post.py:175 view/post.py:271
 msgid "The Post has been saved as a Draft Successful!"
 msgstr ""
 
-#: view/post.py:261
+#: view/post.py:180
+msgid "Create A New Post Successful!"
+msgstr ""
+
+#: view/post.py:276
 msgid "Update and Publish The Post Successful!"
 msgstr ""
 
-#: view/post.py:282
+#: view/post.py:297
 msgid "Delete The Post Successful!"
 msgstr ""
 
-#: view/post.py:293
+#: view/post.py:308
 msgid "This Category already exists!"
 msgstr ""
 
-#: view/post.py:309
+#: view/post.py:324
 msgid "This Collection already exists!"
 msgstr ""
 
-#: view/post.py:325
+#: view/post.py:340
 msgid "This Tag already exists!"
 msgstr ""
 
-#: view/post.py:362
+#: view/post.py:377
 msgid "Delete The Comment Successful!"
 msgstr ""
 

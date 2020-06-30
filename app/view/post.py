@@ -116,7 +116,7 @@ def search_post():
     # pagination = Post.query.filter(or_(Post.title.like(u'%{}%'.format(q)),
     #                                Post.abstract.like(u'%{}%'.format(q)),
     #                                Post.body.like(u'%{}%'.format(q)))).paginate(page=page, per_page=10)
-    pagination = Post.query.whooshee_search(q).paginate(page=page, per_page=10)
+    pagination = Post.query.whooshee_search(q).order_by(Post.timestamp.desc()).paginate(page=page, per_page=10)
     return flask.render_template(
         "posts.html",
         pagination=pagination,

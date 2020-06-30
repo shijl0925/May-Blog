@@ -316,6 +316,11 @@ class Comment(db.Model):
     replies = db.relationship('Comment', back_populates='replied', cascade='all, delete-orphan')
     replied = db.relationship('Comment', back_populates='replies', remote_side=[id])
 
+    def __repr__(self):
+        return '<Comment %r>' % self.id
+
+    __mapper_args__ = {"order_by": timestamp.desc()}
+
 
 @db.event.listens_for(Post.timestamp, 'set', named=True)
 def update_post_archive(target, value, oldvalue, initiator):
@@ -357,6 +362,9 @@ class Tracker(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     post = db.relationship('Post', back_populates='trackers')
 
+    def __repr__(self):
+        return '<Tracker %r>' % self.id
+
     __mapper_args__ = {"order_by": timestamp.desc()}
 
 
@@ -373,4 +381,8 @@ class Request(db.Model):
 
     status_code = db.Column(db.Integer)
     arguments = db.Column(MutableDict.as_mutable(db.PickleType), default=dict())
+
+    def __repr__(self):
+        return '<Request %r>' % self.id
+
     __mapper_args__ = {"order_by": timestamp.desc()}

@@ -50,7 +50,7 @@ def posts():
         search_archive = Archive.query.filter_by(label=archive).first_or_404()
         posts = posts.filter_by(archive=search_archive)
 
-    pagination = posts.order_by(Post.timestamp.desc()).paginate(page=page, per_page=6)
+    pagination = posts.order_by(Post.timestamp.desc()).paginate(page=page, per_page=10)
 
     if pagination.page == 1:
         posts_template = "index.html"
@@ -82,7 +82,7 @@ def archive():
 def draft():
     operate_form = OperateForm()
     page = int(flask.request.args.get('page', 1))
-    pagination = Post.query.filter_by(is_draft=True).order_by(Post.timestamp.desc()).paginate(page=page, per_page=6)
+    pagination = Post.query.filter_by(is_draft=True).order_by(Post.timestamp.desc()).paginate(page=page, per_page=10)
 
     return flask.render_template(
         "drafts.html",
@@ -113,10 +113,10 @@ def post(post_slug):
 def search_post():
     q = flask.request.args.get('q')
     page = int(flask.request.args.get('page', 1))
-    result = Post.query.filter(or_(Post.title.like(u'%{}%'.format(q)),
-                                   Post.abstract.like(u'%{}%'.format(q)),
-                                   Post.body.like(u'%{}%'.format(q))))
-    pagination = result.paginate(page=page, per_page=6)
+    # pagination = Post.query.filter(or_(Post.title.like(u'%{}%'.format(q)),
+    #                                Post.abstract.like(u'%{}%'.format(q)),
+    #                                Post.body.like(u'%{}%'.format(q)))).paginate(page=page, per_page=10)
+    pagination = Post.query.whooshee_search(q).paginate(page=page, per_page=10)
     return flask.render_template(
         "posts.html",
         pagination=pagination,

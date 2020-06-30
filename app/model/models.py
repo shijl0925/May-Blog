@@ -9,7 +9,7 @@ from flask import current_app
 from werkzeug.local import LocalProxy
 from flask_security import UserMixin, RoleMixin
 from flask_security.utils import verify_password, encrypt_password
-from app.controller.extensions import db
+from app.controller.extensions import db, whooshee
 from app.config import BaseConfig
 
 
@@ -259,6 +259,7 @@ class Tag(db.Model):
         return '<Tag %r>' % self.name
 
 
+@whooshee.register_model('title', 'abstract', 'body')
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 

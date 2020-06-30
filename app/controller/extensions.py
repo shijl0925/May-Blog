@@ -8,6 +8,7 @@ from flask_avatars import Avatars
 from flask_adminlte3 import AdminLTE3
 from flask_mdbootstrap import MDBootstrap
 from flask_ckeditor import CKEditor
+from flask_whooshee import Whooshee
 from flask_wtf.csrf import CSRFProtect
 
 boostrap = Bootstrap()
@@ -21,3 +22,4 @@ adminlte = AdminLTE3()
 mdb = MDBootstrap()
 ckeditor = CKEditor()
 csrf = CSRFProtect()
+whooshee = Whooshee()

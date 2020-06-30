@@ -52,6 +52,7 @@
               <hr class="mb-5">
             {% endfor %}
         </section>
+        {% if pagination %}
         <nav class="mb-5 pb-2">
           {% from "mdbootstrap/pagination.html" import render_pagination %}
           {{ render_pagination(pagination,
@@ -59,6 +60,7 @@
           next=('Next <span aria-hidden="true">&rarr;</span>')|safe,
           align="center") }}
         </nav>
+        {% endif %}
     {% else %}
         <div class="text-center mt-sm-2">
             <h6>{{ _("No Posts.") }}</h6>

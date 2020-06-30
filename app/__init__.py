@@ -6,7 +6,20 @@ from flask_wtf.csrf import CSRFError
 from flask_security import current_user
 from app.utils import config_log, get_abs_dir
 from app.config import config
-from app.controller.extensions import mail, toolbar, db, moment, babel, avatars, adminlte, mdb, boostrap, ckeditor, csrf
+from app.controller.extensions import (
+    mail,
+    toolbar,
+    db,
+    moment,
+    babel,
+    avatars,
+    adminlte,
+    mdb,
+    boostrap,
+    ckeditor,
+    csrf,
+    whooshee
+)
 from app.controller.admin import admin
 from app.view import init_blue_print
 from app.controller.security import create_security
@@ -123,6 +136,7 @@ def create_app(env=None):
     babel.init_app(app_)
     avatars.init_app(app_)
     ckeditor.init_app(app_)
+    whooshee.init_app(app_)
     csrf.init_app(app_)
 
     # app_.after_request(save_request)

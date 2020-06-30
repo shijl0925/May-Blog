@@ -51,6 +51,7 @@ class BaseConfig:
     FILEUPLOAD_IMG_FOLDER = os.path.join(basedir, 'uploads')
     FILEUPLOAD_ALLOWED_EXTENSIONS = ['gif', 'jpg', 'png', 'jpeg']
 
+    WHOOSHEE_MIN_STRING_LEN = 1
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True

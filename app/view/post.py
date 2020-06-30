@@ -250,6 +250,7 @@ def edit_post(post_slug):
             body = flask.request.form.get('body')
 
         search_post.title = title
+        search_post.slug = slugify(title, max_length=100)
 
         category = Category.query.filter_by(name=category_name).first()
         if category:

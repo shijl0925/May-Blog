@@ -29,7 +29,7 @@
                     <i class="far fa-clock"></i>
                     <span data-toggle="tooltip" data-placement="top"
                           title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
-                        {{ moment(post.timestamp, local=True).format('YYYY-MM-DD') }}
+                        {{ moment(post.timestamp).format('LL') }}
                     </span>
                   </p>
                 </div>
@@ -69,7 +69,7 @@
                     <i class="far fa-clock"></i>
                     <span data-toggle="tooltip" data-placement="top"
                           title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
-                        {{ moment(post.timestamp, local=True).format('YYYY-MM-DD') }}
+                        {{ moment(post.timestamp).format('LL') }}
                     </span>
                   </p>
 

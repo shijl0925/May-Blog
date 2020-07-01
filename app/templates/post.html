@@ -157,7 +157,7 @@
                                         <i class="far fa-clock"></i>
                                         <span data-toggle="tooltip" data-placement="top"
                                               title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
-                                            {{ moment(post.timestamp, local=True).format('YYYY-MM-DD') }}
+                                            {{ moment(post.timestamp).format('LL') }}
                                         </span>
                                       </p>
                                     </div>
@@ -186,7 +186,13 @@
                                       <h5 class="user-name font-weight-bold">{{ comment.author }}</h5>
                                       <div class="mt-2">
                                         <ul class="list-unstyled">
-                                          <li class="comment-date font-small grey-text"><i class="far fa-clock"></i> {{ comment.timestamp.strftime('%d/%m/%Y') }}</li>
+                                          <li class="comment-date font-small grey-text">
+                                              <i class="far fa-clock"></i>
+                                              <span data-toggle="tooltip" data-placement="top"
+                                                  title="{{ comment.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
+                                                {{ moment(comment.timestamp).format('LL') }}
+                                              </span>
+                                          </li>
                                         </ul>
                                       </div>
                                       <p class="dark-grey-text article">

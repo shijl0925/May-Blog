@@ -20,7 +20,7 @@
           {% with post_nums = archive|count_post_nums_with_archive %}
               {% if post_nums %}
                   <div class="time-label">
-                    <span class="white-text">{{ archive.label|format_date }}</span>
+                    <span class="white-text">{{ archive.label }}</span>
                   </div>
                   {% for post in archive.posts %}
                   <div>
@@ -29,7 +29,7 @@
                       <h2 class="timeline-header no-border">
                           <span data-toggle="tooltip" data-placement="top"
                                 title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
-                              {{ moment(post.timestamp, local=True).fromNow() }}
+                              {{ moment(post.timestamp).format("LL") }}
                           </span>
                           <a class="ml-1" href="{{ url_for('posts.post', post_slug=post.slug) }}">{{ post.title }}</a>
                           {% if post.is_privacy %}

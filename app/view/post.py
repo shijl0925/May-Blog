@@ -1,7 +1,11 @@
 from datetime import datetime
 import flask
-import markdown
-import html2text
+from marko import Markdown
+from marko.ext.codehilite import CodeHilite
+from marko.ext.pangu import Pangu
+from marko.ext.footnote import Footnote
+from marko.ext.toc import Toc
+from marko.ext.gfm import GFM
 from flask_security import login_required, current_user
 from sqlalchemy import or_
 from flask_babelex import gettext as _
@@ -10,20 +14,15 @@ from app.model.models import Post, Category, Tag, Archive, Collection, Comment
 from app.form.forms import PostForm, OperateForm, CreateForm
 from app.controller.extensions import db
 from app.utils.common import redirect_back
-from app.controller.md_ext import BootStrapExtension
 from app.utils.decorator import permission_required
 from app.controller.signals import post_visited
+from app.controller.md_ext import May
 
 
 posts_bp = flask.Blueprint('posts', __name__, url_prefix='/')
 
-markdown_extensions = [
-    'markdown.extensions.extra',
-    'markdown.extensions.fenced_code',
-    'markdown.extensions.toc',
-    'markdown.extensions.tables',
-    BootStrapExtension(configs={})
-]
+
+markdown_extensions = [GFM, Pangu, Toc, Footnote, CodeHilite, May]
 
 
 @posts_bp.route('/', methods=['GET'])
@@ -142,12 +141,13 @@ def create_post(editor):
         privacy = post_form.privacy.data
 
         if editor == "markdown":
-            body_md = post_form.body.data
-            md = markdown.Markdown(extensions=markdown_extensions)
-            body = md.convert(body_md)
+            content = post_form.body.data
+            md = Markdown(extensions=markdown_extensions)
+            body = md.convert(content)
             is_markdown = True
         else:
-            body = post_form.body.data
+            content = post_form.body.data
+            body = content
             is_markdown = False
 
         slug = slugify(title, max_length=100)
@@ -161,6 +161,7 @@ def create_post(editor):
             deny_comment=deny_comment,
             is_privacy=privacy,
             is_markdown=is_markdown,
+            content=content,
             body=body,
             author=current_user
         )
@@ -226,12 +227,7 @@ def edit_post(post_slug):
     post_form.abstract.data = search_post.abstract
     post_form.deny_comment.data = search_post.deny_comment
     post_form.privacy.data = search_post.is_privacy
-
-    if is_markdown:
-        text_maker = html2text.HTML2Text()
-        post_form.body.data = text_maker.handle(search_post.body)
-    else:
-        post_form.body.data = search_post.body
+    post_form.body.data = search_post.content
 
     if post_form.validate_on_submit():
         title = flask.request.form.get('title')
@@ -243,11 +239,12 @@ def edit_post(post_slug):
         privacy = True if flask.request.form.get('privacy') else False
 
         if is_markdown:
-            body_md = flask.request.form.get('body')
-            md = markdown.Markdown(extensions=markdown_extensions)
-            body = md.convert(body_md)
+            content = flask.request.form.get('body')
+            md = Markdown(extensions=markdown_extensions)
+            body = md.convert(content)
         else:
-            body = flask.request.form.get('body')
+            content = flask.request.form.get('body')
+            body = content
 
         search_post.title = title
         search_post.slug = slugify(title, max_length=100)
@@ -263,6 +260,7 @@ def edit_post(post_slug):
         search_post.tags = [Tag.query.filter_by(name=item).first() for item in tag_names]
         search_post.abstract = abstract
         search_post.is_privacy = privacy
+        search_post.content = content
         search_post.body = body
 
         if post_form.save_submit.data:

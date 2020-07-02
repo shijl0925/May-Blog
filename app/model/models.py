@@ -265,6 +265,7 @@ class Post(db.Model):
 
     title = db.Column(db.String(256), nullable=False)
     abstract = db.Column(db.String(256), nullable=False)
+    content = db.Column(db.Text, nullable=False)
     body = db.Column(db.Text, nullable=False)
     slug = db.Column(db.String(256), nullable=False)
     timestamp = db.Column(db.DateTime)

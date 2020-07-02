@@ -9,7 +9,7 @@
             {{ _("Upload new File") }}
         </a>
     </p>
-    {{form.body(placeholder="Blog text", required="", data_provide="markdown", rows="15")}}
+    {{ form.body }}
     {% if form.body.errors %}
       <ul>
       {% for error in form.body.errors %}

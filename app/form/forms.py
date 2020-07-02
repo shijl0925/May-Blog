@@ -93,9 +93,10 @@ class PostForm(FlaskForm):
         get_pk=get_pk
     )
 
-    body = CKEditorField(
+    body = TextAreaField(
         _('Body'),
-        validators=[validators.DataRequired()]
+        render_kw={'placeholder': 'Basic textarea',
+                   'class': 'form-control md-textarea'}
     )
 
     deny_comment = BooleanField(_('Deny Comment'))

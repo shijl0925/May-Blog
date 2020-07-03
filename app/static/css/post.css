@@ -39,3 +39,25 @@ figure img {
 .photo-set figure:hover figcaption {
   opacity: 1;
 }
+
+.pangu {
+  margin: 0 .12em;
+}
+
+.footnotes {
+  line-height: 1.32;
+  opacity: .96;
+}
+
+.footnotes::before {
+  content: "";
+  display: block;
+  border-top: 4px solid var(--primary-color);
+  width: 50%;
+  max-width: 100px;
+  margin: 40px 0 20px;
+}
+
+.footnotes a[href^="#fnref"] {
+  border-bottom: 0;
+}

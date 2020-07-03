@@ -62,7 +62,7 @@ figure img {
   border-bottom: 0;
 }
 
-.highlight {
+.hljs, .highlight {
     border-radius: 6px;
     font-family: "Consulas", "Courier New", Courier, mono, serif;
     font-size: 15px;
@@ -73,6 +73,7 @@ figure img {
     margin: 0;
     width: 100%;
     font-weight: 500;
+    color: #000;
     white-space: pre-wrap;
     word-break: normal;
 }

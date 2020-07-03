@@ -14,11 +14,11 @@ figure img {
 }
 
 .photo-set {
-  margin: 50px 0;
+  margin: 25px 0;
 }
 
 .photo-set + .photo-set {
-  margin-top: -50px;
+  margin-top: -25px;
 }
 
 .photo-set figure figcaption {

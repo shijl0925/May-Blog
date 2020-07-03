@@ -61,3 +61,18 @@ figure img {
 .footnotes a[href^="#fnref"] {
   border-bottom: 0;
 }
+
+.highlight {
+    border-radius: 6px;
+    font-family: "Consulas", "Courier New", Courier, mono, serif;
+    font-size: 15px;
+    line-height: 1.45;
+    background-color: #f6f8fa;
+    display: block;
+    padding: 16px;
+    margin: 0;
+    width: 100%;
+    font-weight: 500;
+    white-space: pre-wrap;
+    word-break: normal;
+}

@@ -47,7 +47,7 @@ class MayRendererMixin:
     #     rv = [
     #         '<div class="block-code">\n'
     #         '<div class="code-head clearfix">{}<span class="copy-code"'
-    #         ' title="Copy code">{} <i class="far fa-copy"></i></span></div>\n'
+    #         '>{}</span></div>\n'
     #         .format(element.extra, element.lang.upper()),
     #         super().render_fenced_code(element),
     #         '</div>\n'

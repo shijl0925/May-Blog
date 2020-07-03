@@ -1,11 +1,6 @@
 from datetime import datetime
 import flask
 from marko import Markdown
-from marko.ext.codehilite import CodeHilite
-from marko.ext.pangu import Pangu
-from marko.ext.footnote import Footnote
-from marko.ext.toc import Toc
-from marko.ext.gfm import GFM
 from flask_security import login_required, current_user
 from sqlalchemy import or_
 from flask_babelex import gettext as _
@@ -22,7 +17,7 @@ from app.controller.md_ext import May
 posts_bp = flask.Blueprint('posts', __name__, url_prefix='/')
 
 
-markdown_extensions = [GFM, Pangu, Toc, Footnote, CodeHilite, May]
+markdown_extensions = ["gfm", "pangu", 'toc', "footnote", "codehilite", May]
 
 
 @posts_bp.route('/', methods=['GET'])

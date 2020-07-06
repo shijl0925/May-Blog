@@ -19,8 +19,10 @@
     </style>
 {% endblock styles %}
 
+{% block navbar_attribs %}fixed-top{% endblock navbar_attribs %}
+
 {% block page_content %}
-    <div class="mt-3 pt-3 post_content">
+    <div class="post_content" style="margin-top: 60px;">
         <div class="row">
             <div class="col-md-12">
                 <h1>{{ _("Upload Images") }}</h1>

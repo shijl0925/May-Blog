@@ -8,6 +8,8 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.2/dist/photoswipe.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.2/dist/default-skin/default-skin.css">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='toc-helper/css/toc-helper.min.css') }}">
     <style>
     .navbar {
         background-color: #6f7782;
@@ -22,8 +24,10 @@
     </style>
 {% endblock styles %}
 
+{% block navbar_attribs %}fixed-top{% endblock navbar_attribs %}
+
 {% block page_content %}
-    <div class="row mt-3 pt-3">
+    <div class="row" style="margin-top: 60px;">
         <!-- Main List -->
         <div class="col-lg-9 col-12 mt-1">
           {% include 'pswp.html' %}
@@ -65,7 +69,7 @@
                             </div>
 
                             <div class="dark-grey-text mb-3 mt-4 mx-4">
-                              {{ post.body|safe }}
+                              <div data-toc="#toc">{{ post.body|safe }}</div>
 
                               <div class="row mb-3">
                                   <div class="col-12">
@@ -252,9 +256,9 @@
           <!--Section: Blog v.4-->
         </div>
 
-        <!-- Sidebar -->
-        {% include "sidebar.html" %}
-        <!-- Sidebar -->
+        <div class="col-lg-3 col-12 mt-1">
+            <div id="toc"></div>
+        </div>
     </div>
     {% include "tail.html" %}
 {% endblock page_content %}
@@ -266,8 +270,16 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
     <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    <script src="{{ url_for('static', filename='toc-helper/js/toc-helper.min.js') }}"></script>
     <script type="text/javascript">
         hljs.initHighlightingOnLoad();
+        new TocHelper(
+            {
+                tocFixed: {
+                    top: 65,
+                    left: 0
+                }
+            }).reset();
 
         function del(){
             if(!confirm("Are you Sure delete this post?")){

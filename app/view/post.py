@@ -1,23 +1,17 @@
 from datetime import datetime
 import flask
-from marko import Markdown
 from flask_security import login_required, current_user
 from sqlalchemy import or_
 from flask_babelex import gettext as _
-from slugify import slugify
 from app.model.models import Post, Category, Tag, Archive, Collection, Comment
 from app.form.forms import PostForm, OperateForm, CreateForm
 from app.controller.extensions import db
 from app.utils.common import redirect_back
 from app.utils.decorator import permission_required
 from app.controller.signals import post_visited
-from app.controller.md_ext import May
-
+from app.controller.md_ext import md
 
 posts_bp = flask.Blueprint('posts', __name__, url_prefix='/')
-
-
-markdown_extensions = ["gfm", "pangu", 'toc', "footnote", "codehilite", May]
 
 
 @posts_bp.route('/', methods=['GET'])
@@ -137,41 +131,37 @@ def create_post(editor):
 
         if editor == "markdown":
             content = post_form.body.data
-            md = Markdown(extensions=markdown_extensions)
             body = md.convert(content)
             is_markdown = True
         else:
-            content = post_form.body.data
-            body = content
+            body = post_form.body.data
             is_markdown = False
 
-        slug = slugify(title, max_length=100)
         post = Post(
             title=title,
             category=Category.query.filter_by(name=category).first(),
             collection=Collection.query.filter_by(name=collection).first(),
             tags=[Tag.query.filter_by(name=item).first() for item in tag_names],
-            slug=slug,
             abstract=abstract,
             deny_comment=deny_comment,
             is_privacy=privacy,
             is_markdown=is_markdown,
-            content=content,
             body=body,
             author=current_user
         )
+
+        if editor == "markdown":
+            post.content = content
 
         db.session.add(post)
         db.session.commit()
 
         if post_form.save_submit.data:
             post.is_draft = True
-            post.timestamp = datetime.now()
             db.session.commit()
             flask.flash(_("The Post has been saved as a Draft Successful!"), category="success")
 
         elif post_form.publish_submit.data:
-            post.timestamp = datetime.now()
             db.session.commit()
             flask.flash(_("Create A New Post Successful!"), category="success")
 
@@ -222,7 +212,11 @@ def edit_post(post_slug):
     post_form.abstract.data = search_post.abstract
     post_form.deny_comment.data = search_post.deny_comment
     post_form.privacy.data = search_post.is_privacy
-    post_form.body.data = search_post.content
+
+    if is_markdown:
+        post_form.body.data = search_post.content
+    else:
+        post_form.body.data = search_post.body
 
     if post_form.validate_on_submit():
         title = flask.request.form.get('title')
@@ -235,14 +229,11 @@ def edit_post(post_slug):
 
         if is_markdown:
             content = flask.request.form.get('body')
-            md = Markdown(extensions=markdown_extensions)
             body = md.convert(content)
         else:
-            content = flask.request.form.get('body')
-            body = content
+            body = flask.request.form.get('body')
 
         search_post.title = title
-        search_post.slug = slugify(title, max_length=100)
 
         category = Category.query.filter_by(name=category_name).first()
         if category:
@@ -255,17 +246,17 @@ def edit_post(post_slug):
         search_post.tags = [Tag.query.filter_by(name=item).first() for item in tag_names]
         search_post.abstract = abstract
         search_post.is_privacy = privacy
-        search_post.content = content
         search_post.body = body
+
+        if is_markdown:
+            search_post.content = content
 
         if post_form.save_submit.data:
             search_post.is_draft = True
-            search_post.timestamp = datetime.now()
             db.session.commit()
             flask.flash(_("The Post has been saved as a Draft Successful!"), category="success")
         elif post_form.publish_submit.data:
             search_post.is_draft = False
-            search_post.timestamp = datetime.now()
             db.session.commit()
             flask.flash(_("Update and Publish The Post Successful!"), category="success")
 

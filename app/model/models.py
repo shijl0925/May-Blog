@@ -4,6 +4,7 @@
 import os
 from datetime import datetime
 from sqlalchemy.ext.mutable import MutableDict
+from slugify import slugify
 from flask_avatars import Identicon
 from flask import current_app
 from werkzeug.local import LocalProxy
@@ -265,7 +266,7 @@ class Post(db.Model):
 
     title = db.Column(db.String(256), nullable=False)
     abstract = db.Column(db.String(256), nullable=False)
-    content = db.Column(db.Text, nullable=False)
+    content = db.Column(db.Text)
     body = db.Column(db.Text, nullable=False)
     slug = db.Column(db.String(256), nullable=False)
     timestamp = db.Column(db.DateTime)
@@ -298,6 +299,14 @@ class Post(db.Model):
         return '<Post %r>' % self.id
 
     __mapper_args__ = {"order_by": timestamp.desc()}
+
+
+@db.event.listens_for(Post, 'before_insert', named=True)
+@db.event.listens_for(Post, 'before_update', named=True)
+def render_post(**kwargs):
+    target = kwargs['target']
+    target.slug = slugify(target.title, max_length=100)
+    target.timestamp = datetime.now()
 
 
 class Comment(db.Model):

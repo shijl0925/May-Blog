@@ -2,7 +2,9 @@
 # -*- coding:utf-8 -*-
 # @Author: Jialiang Shi
 import re
+from marko import Markdown
 from marko import block, HTMLRenderer
+from marko.ext.toc import Toc
 
 
 class PhotoSet(block.BlockElement):
@@ -89,3 +91,7 @@ class MayRendererMixin:
 class May:
     elements = [PhotoSet]
     renderer_mixins = [MayRendererMixin]
+
+
+markdown_extensions = ["gfm", "pangu", "footnote", "codehilite", May]
+md = Markdown(extensions=markdown_extensions)

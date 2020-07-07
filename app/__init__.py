@@ -17,6 +17,7 @@ from app.controller.extensions import (
     mdb,
     boostrap,
     ckeditor,
+    dropzone,
     csrf,
     whooshee
 )
@@ -25,7 +26,7 @@ from app.view import init_blue_print
 from app.controller.security import create_security
 from app.controller.request import save_request
 from app.model.models import User, Post, Category, Tag, Archive
-from app.view.file import get_abs_existing_files, get_filename
+from app.view.file import get_abs_existing_files, get_filename, get_filename_thumb
 
 apps_abs_dir = get_abs_dir(__file__)
 
@@ -136,6 +137,7 @@ def create_app(env=None):
     babel.init_app(app_)
     avatars.init_app(app_)
     ckeditor.init_app(app_)
+    dropzone.init_app(app_)
     whooshee.init_app(app_)
     csrf.init_app(app_)
 
@@ -144,6 +146,7 @@ def create_app(env=None):
     app_.context_processor(inject_context_variables)
     app_.add_template_global(get_abs_existing_files, "get_abs_existing_files")
     app_.add_template_filter(get_filename, "get_filename")
+    app_.add_template_filter(get_filename_thumb, "get_filename_thumb")
 
     app_.add_template_filter(count_post_nums_with_tag, 'count_post_nums_with_tag')
     app_.add_template_filter(count_post_nums_with_category, 'count_post_nums_with_category')

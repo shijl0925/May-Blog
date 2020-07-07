@@ -4,6 +4,8 @@
 import os
 import uuid
 import flask
+import PIL
+from PIL import Image
 from urllib.parse import urlparse, urljoin
 from app.config import BaseConfig
 
@@ -39,3 +41,17 @@ def remove_preview_avatar(filename):
     avatar_path = os.path.join(BaseConfig.AVATARS_SAVE_PATH, filename)
     if os.path.exists(avatar_path):
         os.remove(avatar_path)
+
+
+def resize_image(image, filename, base_width):
+    filename, ext = os.path.splitext(filename)
+    img = Image.open(image)
+    if img.size[0] <= base_width:
+        return filename + ext
+    w_percent = (base_width / float(img.size[0]))
+    h_size = int((float(img.size[1]) * float(w_percent)))
+    img = img.resize((base_width, h_size), PIL.Image.ANTIALIAS)
+
+    filename += "_thumb" + ext
+    img.save(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], filename), optimize=True, quality=85)
+    return filename

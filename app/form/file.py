@@ -15,4 +15,7 @@ class UploadForm(FlaskForm):
         render_kw={'placeholder': 'jpg, png, jpeg',
                    'class': 'form-control'}
     )
-    upload_img = FileField(validators=[FileRequired()])
+    upload_img = FileField(
+        validators=[FileRequired()],
+        render_kw={'class': 'mt-3'}
+    )

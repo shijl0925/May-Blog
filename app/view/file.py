@@ -12,13 +12,14 @@ from app.form.file import UploadForm
 from app.form.forms import OperateForm
 from app.config import BaseConfig
 from app.controller.extensions import csrf
+from app.utils.common import resize_image
 
 
 file_bp = flask.Blueprint('files', __name__, url_prefix='/files')
 
 
 def get_existing_files():
-    return [f for f in os.listdir(BaseConfig.FILEUPLOAD_IMG_FOLDER)]
+    return [f for f in os.listdir(BaseConfig.FILEUPLOAD_IMG_FOLDER) if "_thumb" not in f]
 
 
 def get_abs_existing_files():
@@ -27,6 +28,11 @@ def get_abs_existing_files():
 
 def get_filename(full_file_path):
     return full_file_path.split('/')[-1]
+
+
+def get_filename_thumb(full_file_path):
+    item, ext = os.path.splitext(full_file_path)
+    return item + "_thumb" + ext
 
 
 @file_bp.route('/', methods=["GET", "POST"])
@@ -49,11 +55,24 @@ def upload():
             return flask.redirect(flask.url_for("files.upload"))
 
         file_data.save(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], filename))
+        filename_thumb = resize_image(file_data, filename, 120)
 
         flask.flash(_("Image saved: ") + filename, category="info")
         return flask.redirect(flask.url_for("files.upload"))
 
     return flask.render_template("file/upload.html", form=upload_form, delete_form=delete_form)
+
+
+@file_bp.route('/uploads', methods=["GET", "POST"])
+@login_required
+@permission_required('ADMINISTER')
+def uploads():
+    if flask.request.method == "POST":
+        # f = flask.request.files.get('file')
+        for key, f in flask.request.files.items():
+            f.save(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], f.filename))
+            filename_thumb = resize_image(f, f.filename, 120)
+        return flask.redirect(flask.url_for("files.upload"))
 
 
 @file_bp.route('/<path:filename>')
@@ -73,6 +92,12 @@ def upload_delete(filename):
             return flask.redirect(flask.url_for("files.upload"))
         else:
             os.remove(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], filename))
+
+            filename, ext = os.path.splitext(filename)
+            filename_thumb = filename + "_thumb" + ext
+            if filename_thumb in os.listdir(BaseConfig.FILEUPLOAD_IMG_FOLDER):
+                os.remove(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], filename_thumb))
+
             flask.flash(_("Delete Image: ") + filename, category="info")
 
     return flask.redirect(flask.url_for("files.upload"))
@@ -91,6 +116,7 @@ def ckeditor_upload():
         return upload_fail(message='File already exists, choose an other Image!')
 
     f.save(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], f.filename))
+    filename_thumb = resize_image(f, f.filename, 120)
 
     url = flask.url_for('files.uploaded_files', filename=f.filename)
     return upload_success(url=url)

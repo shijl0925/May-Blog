@@ -3,18 +3,14 @@
 {% block styles %}
     {{ super() }}
     <link href="http://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet"/>
+    {{ dropzone.load_css() }}
+    {{ dropzone.style('border: 2px dashed #0087F7; margin: 5px 0; min-height: 300px;') }}
     <style>
         .navbar {
             background-color: #6f7782;
         }
         footer.page-footer {
             background-color: #6f7782;
-        }
-        html,
-        body,
-        .post_content {
-          height: auto;
-          min-height: 100vh;
         }
     </style>
 {% endblock styles %}
@@ -29,30 +25,44 @@
             </div>
         </div>
 
-        <div class="row">
-            <form method="post" enctype=multipart/form-data class="col-md-12">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="upload-tab" data-toggle="tab" href="#upload" role="tab" aria-controls="upload"
+              aria-selected="true">Upload image</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="uploads-tab" data-toggle="tab" href="#uploads" role="tab" aria-controls="uploads"
+              aria-selected="false">Upload images</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="upload" role="tabpanel" aria-labelledby="upload-tab">
+            <form method="post" action="{{ url_for('files.upload') }}" enctype="multipart/form-data" class="mt-3">
                 {{ form.csrf_token }}
                 <div class="mb-3">
                     {{ form.upload_name(required=True) }}
                     {{ form.upload_img }}
                 </div>
 
-                <div class="form-group float-right">
-                    <button type="submit" class="btn btn-primary">{{ _("Upload") }}</button>
-                </div>
+                <button type="submit" class="btn btn-primary" style="margin-left: 0;">{{ _("Upload") }}</button>
             </form>
-            <div class="col-md-12" style="height:30px;"></div>
+          </div>
+          <div class="tab-pane fade" id="uploads" role="tabpanel" aria-labelledby="uploads-tab">
+            {{ dropzone.create(action='files.uploads') }}
+            <button id="upload-btn" class="btn btn-primary" style="margin-left: 0;">{{ _("Upload") }}</button>
+          </div>
         </div>
+        <div class="col-md-12" style="height:45px;"></div>
 
         <hr>
 
         <table id="imges" class="table table-sm table-striped">
             <thead>
                 <tr>
-                    <th style="width: 40%">{{ _("Name") }}</th>
-                    <th style="width: 40%">{{ _("Path") }}</th>
-                    <th style="width: 10%">{{ _("Preview") }}</th>
-                    <th style="width: 10%">{{ _("Delete") }}</th>
+                    <th style="width: 20%">{{ _("Name") }}</th>
+                    <th style="width: 50%">{{ _("Path") }}</th>
+                    <th style="width: 15%">{{ _("Preview") }}</th>
+                    <th style="width: 15%">{{ _("Delete") }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,14 +71,14 @@
                     <tr>
                         <td>
                             <a href="{{ file_abs }}">
-                                {{ file_abs|get_filename }}
+                                {{ file_abs|get_filename|truncate(50) }}
                             </a>
                         </td>
-                        <td class="path-input-col">
+                        <td>
                             <input class="path-input" title="path" style="width: 100%;" type="text" readonly value="{{file_abs}}">
                         </td>
                         <td>
-                            <img class="thumbnail" style="height: 30px; width: auto; max-width:30px;" src="{{file_abs}}">
+                            <img class="thumbnail" style="max-width:80%;" src="{{file_abs|get_filename_thumb}}">
                         </td>
                         <td>
                             <form method="POST" action="{{ url_for('files.upload_delete', filename=filename) }}" onclick="return del()">
@@ -89,6 +99,11 @@
 {% block scripts %}
     {{ super() }}
     <script src="http://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    {{ dropzone.load_js() }}
+    {{ dropzone.config(custom_init='dz = this;document.getElementById("upload-btn").addEventListener("click", function handler(e) {dz.processQueue();});',
+                     custom_options='autoProcessQueue: false, addRemoveLinks: true,') }}
+
     <script>
         $(document).ready(function() {
             // Build the whole data table

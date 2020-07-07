@@ -53,6 +53,14 @@ class BaseConfig:
 
     WHOOSHEE_MIN_STRING_LEN = 1
 
+    DROPZONE_MAX_FILE_SIZE = 5
+    DROPZONE_MAX_FILES = 10
+    DROPZONE_ALLOWED_FILE_TYPE = 'image'
+    DROPZONE_ENABLE_CSRF = True
+    DROPZONE_PARALLEL_UPLOADS = 10
+    DROPZONE_UPLOAD_MULTIPLE = True
+
+
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')

@@ -7,7 +7,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Hover/css/hover.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-
 {% endblock %}
 
 {% block header %}
@@ -126,7 +125,7 @@
 
 {% block scripts %}
     {{ super() }}
-    {{ moment.include_moment() }}
+    {{ moment.include_moment(local_js=url_for('static', filename='js/moment-with-locales.js')) }}
     {{ moment.locale('zh-cn') }}
     <script>
         window.onscroll = function() {

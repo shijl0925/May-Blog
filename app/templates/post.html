@@ -6,8 +6,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/post.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/highlight.css') }}">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.2/dist/photoswipe.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.2/dist/default-skin/default-skin.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='PhotoSwipe/photoswipe.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='PhotoSwipe/default-skin/default-skin.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='toc-helper/css/toc-helper.min.css') }}">
     <style>
@@ -265,8 +265,8 @@
 
 {% block scripts %}
     {{ super() }}
-    <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.2/dist/photoswipe.min.js" charset="utf-8"></script>
-    <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.2/dist/photoswipe-ui-default.min.js" charset="utf-8"></script>
+    <script src="{{ url_for('static', filename='PhotoSwipe/photoswipe.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='PhotoSwipe/photoswipe-ui-default.min.js') }}"></script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
     <script src="{{ url_for('static', filename='js/custom.js') }}"></script>

@@ -42,6 +42,15 @@
         line-height: 32px;
     }
 
+    .nav-previous {
+        float: left;
+        width: 50%;
+    }
+    .nav-next {
+        float: right;
+        text-align: right;
+        width: 50%;
+    }
     </style>
 {% endblock styles %}
 
@@ -93,7 +102,7 @@
                               <div data-toc="#toc" id="articleContent">{{ post.body|safe }}</div>
 
                               <div class="row mb-3">
-                                  <div class="col-12">
+                                  <div class="col-12" style="padding: 10px;">
                                       {% if current_user.is_admin %}
                                       <div class="btn-group float-right" role="group">
                                           <a href="{{ url_for('posts.edit_post', post_slug=post.slug) }}">
@@ -165,6 +174,27 @@
                             </div>
                         </section>
                         {% endif %}
+
+                        <hr>
+                        <section class="section pb-5 fadeIn">
+                            <div class="mb-5">
+                                {% if post.previous %}
+                                <span class="nav-previous">
+                                    <a href="{{ url_for('posts.post', post_slug=post.previous.slug) }}" rel="prev">
+                                        <span class="meta-nav">¡û</span> {{ post.previous.title }}
+                                    </a>
+                                </span>
+                                {% endif %}
+
+                                {% if post.next %}
+                                <span class="nav-next">
+                                    <a href="{{ url_for('posts.post', post_slug=post.next.slug) }}" rel="next">
+                                        {{ post.next.title }} <span class="meta-nav">¡ú</span>
+                                    </a>
+                                </span>
+                                {% endif %}
+                            </div>
+                        </section>
 
                         <hr>
                         <section id="comments" class="section pb-3 fadeIn">
@@ -279,7 +309,7 @@
         {% include "sidebar.html" %}
     </div>
 
-    <div id="toc"></div>
+    <div id="toc" style="display: none;"></div>
 
     {% include "tail.html" %}
 

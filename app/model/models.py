@@ -295,6 +295,14 @@ class Post(db.Model):
     trackers = db.relationship('Tracker', back_populates='post', cascade='all')
     visit_count = db.Column(db.Integer, default=0)
 
+    @property
+    def previous(self):
+        return Post.query.order_by(Post.id.desc()).filter(Post.is_draft == False, Post.id < self.id).first()
+
+    @property
+    def next(self):
+        return Post.query.order_by(Post.id.desc()).filter(Post.is_draft == False, Post.id > self.id).first()
+
     def __repr__(self):
         return '<Post %r>' % self.id
 

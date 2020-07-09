@@ -60,6 +60,15 @@ class PostForm(FlaskForm):
         render_kw={'class': 'form-control'}
     )
 
+    background_image_url = StringField(
+        _('Background Image Url'),
+        validators=[
+            validators.DataRequired(),
+            validators.Length(1, 256)
+        ],
+        render_kw={'class': 'form-control'}
+    )
+
     category = QuerySelectField(
         _('Category'),
         validators=[validators.DataRequired()],

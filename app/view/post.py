@@ -123,6 +123,7 @@ def create_post(editor):
         title = post_form.title.data
         category = post_form.category.data
         collection = post_form.collection.data
+        background = post_form.background_image_url.data
         tag_names = post_form.tags.data
         deny_comment = post_form.deny_comment.data
         privacy = post_form.privacy.data
@@ -143,6 +144,7 @@ def create_post(editor):
             deny_comment=deny_comment,
             is_privacy=privacy,
             is_markdown=is_markdown,
+            background=background,
             body=body,
             author=current_user
         )
@@ -206,6 +208,7 @@ def edit_post(post_slug):
         if Tag.query.first():
             post_form.tags.data = [Tag.query.first().name]
 
+    post_form.background_image_url.data = search_post.background
     post_form.deny_comment.data = search_post.deny_comment
     post_form.privacy.data = search_post.is_privacy
 
@@ -220,6 +223,7 @@ def edit_post(post_slug):
 
         collection_name = flask.request.form.get('collection')
         tag_names = flask.request.form.getlist('tags')
+        background = flask.request.form.get('background_image_url')
         privacy = True if flask.request.form.get('privacy') else False
 
         if is_markdown:
@@ -239,6 +243,7 @@ def edit_post(post_slug):
             search_post.collection = collection
 
         search_post.tags = [Tag.query.filter_by(name=item).first() for item in tag_names]
+        search_post.background=background
         search_post.is_privacy = privacy
         search_post.body = body
 

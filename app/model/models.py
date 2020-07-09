@@ -269,6 +269,7 @@ class Post(db.Model):
     body = db.Column(db.Text, nullable=False)
     slug = db.Column(db.String(256), nullable=False)
     timestamp = db.Column(db.DateTime)
+    background = db.Column(db.String(256), nullable=False)
 
     is_draft = db.Column(db.Boolean, default=False)
     is_privacy = db.Column(db.Boolean, default=False)

@@ -51,7 +51,6 @@ class FakerData(Command):
         for i in range(50):
             title = faker.text(max_nb_chars=50)
             slug = slugify(title, max_length=100)
-            abstract = faker.text(max_nb_chars=200)
             body = "<p>{}</p>".format(faker.text(max_nb_chars=2000))
 
             timestamp = faker.date_time_this_year()
@@ -59,7 +58,6 @@ class FakerData(Command):
             post = Post(
                 title=title,
                 slug=slug,
-                abstract=abstract,
                 timestamp=timestamp,
                 body=body,
                 author=admin

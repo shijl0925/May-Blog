@@ -102,7 +102,6 @@ def search_post():
     q = flask.request.args.get('q')
     page = int(flask.request.args.get('page', 1))
     # pagination = Post.query.filter(or_(Post.title.like(u'%{}%'.format(q)),
-    #                                Post.abstract.like(u'%{}%'.format(q)),
     #                                Post.body.like(u'%{}%'.format(q)))).paginate(page=page, per_page=10)
     pagination = Post.query.whooshee_search(q).order_by(Post.timestamp.desc()).paginate(page=page, per_page=10)
     return flask.render_template(
@@ -125,7 +124,6 @@ def create_post(editor):
         category = post_form.category.data
         collection = post_form.collection.data
         tag_names = post_form.tags.data
-        abstract = post_form.abstract.data
         deny_comment = post_form.deny_comment.data
         privacy = post_form.privacy.data
 
@@ -142,7 +140,6 @@ def create_post(editor):
             category=Category.query.filter_by(name=category).first(),
             collection=Collection.query.filter_by(name=collection).first(),
             tags=[Tag.query.filter_by(name=item).first() for item in tag_names],
-            abstract=abstract,
             deny_comment=deny_comment,
             is_privacy=privacy,
             is_markdown=is_markdown,
@@ -209,7 +206,6 @@ def edit_post(post_slug):
         if Tag.query.first():
             post_form.tags.data = [Tag.query.first().name]
 
-    post_form.abstract.data = search_post.abstract
     post_form.deny_comment.data = search_post.deny_comment
     post_form.privacy.data = search_post.is_privacy
 
@@ -224,7 +220,6 @@ def edit_post(post_slug):
 
         collection_name = flask.request.form.get('collection')
         tag_names = flask.request.form.getlist('tags')
-        abstract = flask.request.form.get('abstract')
         privacy = True if flask.request.form.get('privacy') else False
 
         if is_markdown:
@@ -244,7 +239,6 @@ def edit_post(post_slug):
             search_post.collection = collection
 
         search_post.tags = [Tag.query.filter_by(name=item).first() for item in tag_names]
-        search_post.abstract = abstract
         search_post.is_privacy = privacy
         search_post.body = body
 

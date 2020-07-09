@@ -260,12 +260,11 @@ class Tag(db.Model):
         return '<Tag %r>' % self.name
 
 
-@whooshee.register_model('title', 'abstract', 'body')
+@whooshee.register_model('title', 'body')
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     title = db.Column(db.String(256), nullable=False)
-    abstract = db.Column(db.String(256), nullable=False)
     content = db.Column(db.Text)
     body = db.Column(db.Text, nullable=False)
     slug = db.Column(db.String(256), nullable=False)

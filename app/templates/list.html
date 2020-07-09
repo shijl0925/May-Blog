@@ -17,7 +17,7 @@
                 </h4>
 
                 <p class="dark-grey-text">
-                    {{ post.abstract|truncate(225) }}
+                    {{ post.body|striptags|truncate(200) }}
                 </p>
 
                 <p class="dark-grey-text">

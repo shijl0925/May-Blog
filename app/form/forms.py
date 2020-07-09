@@ -60,15 +60,6 @@ class PostForm(FlaskForm):
         render_kw={'class': 'form-control'}
     )
 
-    abstract = StringField(
-        _('Abstract'),
-        validators=[
-            validators.DataRequired(),
-            validators.Length(1, 256)
-        ],
-        render_kw={'class': 'form-control'}
-    )
-
     category = QuerySelectField(
         _('Category'),
         validators=[validators.DataRequired()],

@@ -40,7 +40,6 @@
                       <!-- Grid column -->
                       <div class="col-md-9">
                         {{ render_field_with_errors(form.title, necessary=True) }}
-                        {{ render_field_with_errors(form.abstract, necessary=True) }}
 
                         {% if post.is_markdown %}
                           {% include "markdown.html" %}

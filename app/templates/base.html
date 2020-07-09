@@ -100,7 +100,7 @@
 
         <div id="go-to-top">
             <span class="btn-floating btn-sm btn-primary text-center shadow-none">
-                <i class="fas fa-arrow-up" style="padding-top: 12px;font-size: 20px;"></i>
+                <i class="fa fa-angle-up" style="padding-top: 12px;font-size: 20px;"></i>
             </span>
         </div>
     </main>
@@ -125,6 +125,8 @@
 
 {% block scripts %}
     {{ super() }}
+{#    <script src="{{ url_for('static', filename='js/heart.js') }}"></script>#}
+{#    <script src="{{ url_for('static', filename='js/sakura.js') }}"></script>#}
     {{ moment.include_moment(local_js=url_for('static', filename='js/moment-with-locales.js')) }}
     {{ moment.locale('zh-cn') }}
     <script>
@@ -157,9 +159,9 @@
 
             var newTop = document.documentElement.scrollTop || document.body.scrollTop;
             if (newTop > 100) {
-                toTop.style.display = 'block';
+                $("#go-to-top").slideDown(300);
             } else {
-                toTop.style.display = 'none';
+                $("#go-to-top").slideUp(300);
             }
             if (newTop > oldTop) {
                 clearInterval(timer);

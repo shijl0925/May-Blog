@@ -21,6 +21,27 @@
     .blog-body img {
         max-width: 100%;
     }
+
+    #toc {
+        position: fixed;
+        right: 0;
+        z-index: 1030;
+        border-radius: 0;
+        margin-bottom: 0;
+    }
+
+    #toc-btn {
+        position: fixed;
+        right: 10px;
+        bottom: 105px;
+        z-index: 11111;
+        padding-top: 15px;
+        margin-bottom: 0;
+        cursor: pointer;
+        text-align: center;
+        line-height: 32px;
+    }
+
     </style>
 {% endblock styles %}
 
@@ -69,7 +90,7 @@
                             </div>
 
                             <div class="dark-grey-text mb-3 mt-4 mx-4">
-                              <div data-toc="#toc">{{ post.body|safe }}</div>
+                              <div data-toc="#toc" id="articleContent">{{ post.body|safe }}</div>
 
                               <div class="row mb-3">
                                   <div class="col-12">
@@ -255,12 +276,18 @@
 
           <!--Section: Blog v.4-->
         </div>
-
-        <div class="col-lg-3 col-12 mt-1">
-            <div id="toc"></div>
-        </div>
+        {% include "sidebar.html" %}
     </div>
+
+    <div id="toc"></div>
+
     {% include "tail.html" %}
+
+    <div id="toc-btn">
+        <span class="btn-floating btn-sm btn-light-green text-center shadow-none">
+            <i class="fa fa-list" style="padding-top: 12px;font-size: 20px;"></i>
+        </span>
+    </div>
 {% endblock page_content %}
 
 {% block scripts %}
@@ -276,15 +303,91 @@
         new TocHelper(
             {
                 tocFixed: {
-                    top: 65,
+                    top: 42,
                     left: 0
                 }
-            }).reset();
+            }
+           ).reset();
 
         function del(){
             if(!confirm("Are you Sure delete this post?")){
                 window.event.returnValue = false;
             }
         }
+
+        var isHiden = true;
+        $(function(){
+            var toc = document.getElementById('toc');
+            $('#toc-btn').click(function () {
+                if(isHiden){
+                    toc.style.display="block";
+                    // timer_hide_toc = auto_hide_toc();
+                }else{
+                    // clearTimeout(timer_hide_toc);
+                    toc.style.display="none";
+                }
+                isHiden = !isHiden;
+            });
+        });
+
+        function auto_hide_toc(){
+            return setTimeout(function () {
+                if(!isHiden){
+                    toc.style.display="none";
+                    isHiden = !isHiden;
+                }
+            }, 10000);
+        }
+        // var timer_hide_toc = auto_hide_toc();
+    </script>
+
+    <script async defer>
+        $('#articleContent').on('copy', function (e) {
+
+            // IE8 or earlier browser is 'undefined'
+            if (typeof window.getSelection === 'undefined') return;
+
+            const selection = window.getSelection();
+            const selectRange = selection.getRangeAt(0);
+
+            let textData = selectRange.toString();
+
+            const node = document.createElement('div')
+            node.appendChild(selectRange.cloneContents())
+
+            let htmlData = node.innerHTML
+
+            if (textData.length < 100) {
+                return
+            }
+            const url = location.href
+
+            const copyright = '本文章著作权归作者所有，任何形式的转载都请注明出处。'
+
+            const appendText = ''
+                + '\n-------------------------------\n'
+                + '来源：May Blog\n'
+                + '文章链接：' + url + '\n'
+                + copyright + '\n\n'
+
+            //文本格式附加版权信息
+            textData += appendText
+
+            //html格式附加版权信息
+            htmlData = '<div>' + htmlData + appendText.replace(/\n/g, '<br/>') + '</div>'
+            if (window.clipboardData) {
+                window.clipboardData.setData("Text", textData);
+                return false;
+            }
+            node.innerHTML = htmlData
+            node.style.position = "absolute"
+            node.style.left = "-99999px"
+            document.body.appendChild(node)
+
+            selection.selectAllChildren(node)
+            setTimeout(function () {
+                document.body.removeChild(node)
+            }, 0)
+        });
     </script>
 {% endblock %}

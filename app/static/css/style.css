@@ -22,7 +22,8 @@
     right: 10px;
     bottom: 50px;
     z-index: 11111;
-    margin-top: -2px;
+    padding-top: 15px;
+    margin-bottom: 0;
     cursor: pointer;
     text-align: center;
     line-height: 32px;

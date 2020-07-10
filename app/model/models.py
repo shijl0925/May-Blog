@@ -309,12 +309,13 @@ class Post(db.Model):
     __mapper_args__ = {"order_by": timestamp.desc()}
 
 
-@db.event.listens_for(Post, 'before_insert', named=True)
-@db.event.listens_for(Post, 'before_update', named=True)
-def render_post(**kwargs):
-    target = kwargs['target']
-    target.slug = slugify(target.title, max_length=100)
-    target.timestamp = datetime.now()
+# @db.event.listens_for(Post, 'before_insert', named=True)
+# @db.event.listens_for(Post, 'before_update', named=True)
+# def render_post(**kwargs):
+#     target = kwargs['target']
+#     target.slug = slugify(target.title, max_length=100)
+#     now = datetime.now()
+#     target.timestamp = now
 
 
 class Comment(db.Model):

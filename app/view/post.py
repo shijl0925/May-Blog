@@ -2,6 +2,7 @@ from datetime import datetime
 import flask
 from flask_security import login_required, current_user
 from sqlalchemy import or_
+from slugify import slugify
 from flask_babelex import gettext as _
 from app.model.models import Post, Category, Tag, Archive, Collection, Comment
 from app.form.forms import PostForm, OperateForm, CreateForm
@@ -138,6 +139,7 @@ def create_post(editor):
 
         post = Post(
             title=title,
+            slug=slugify(title, max_length=100),
             category=Category.query.filter_by(name=category).first(),
             collection=Collection.query.filter_by(name=collection).first(),
             tags=[Tag.query.filter_by(name=item).first() for item in tag_names],
@@ -146,6 +148,7 @@ def create_post(editor):
             is_markdown=is_markdown,
             background=background,
             body=body,
+            timestamp=datetime.now(),
             author=current_user
         )
 
@@ -233,6 +236,7 @@ def edit_post(post_slug):
             body = flask.request.form.get('body')
 
         search_post.title = title
+        search_post.slug = slugify(title, max_length=100)
 
         category = Category.query.filter_by(name=category_name).first()
         if category:
@@ -243,9 +247,10 @@ def edit_post(post_slug):
             search_post.collection = collection
 
         search_post.tags = [Tag.query.filter_by(name=item).first() for item in tag_names]
-        search_post.background=background
+        search_post.background = background
         search_post.is_privacy = privacy
         search_post.body = body
+        search_post.timestamp=datetime.now()
 
         if is_markdown:
             search_post.content = content

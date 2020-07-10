@@ -165,41 +165,46 @@
                                   </h3>
                               </div>
 
-                              {% for post in post.collection.posts %}
+                              {% for item in post.collection.posts %}
+                                {%  if post.id != item.id %}
                                 <div class="row mb-3">
                                   <div class="col-3">
-                                      <div class="view overlay z-depth-1 mb-3">
-                                        <img src="{{ post.background }}" class="img-fluid" alt="Post">
+                                      <div class="view overlay z-depth-1">
+                                        <img src="{{ item.background }}" class="img-fluid" alt="Post">
                                         <a>
                                           <div class="mask rgba-white-slight waves-effect waves-light"></div>
                                         </a>
                                       </div>
                                   </div>
                                   <div class="col-9">
-                                    <h6 class="mt-0">
-                                      <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="dark-grey-text">
-                                        <strong>{{ post.title }}</strong>
+                                    <h6 class="mt-0 mb-3">
+                                      <a href="{{ url_for('posts.post', post_slug=item.slug) }}" class="dark-grey-text">
+                                        <strong>{{ item.title }}</strong>
                                       </a>
-                                      {% if post.is_privacy %}
+                                      {% if item.is_privacy %}
                                           <span class="Label Label--outline v-align-middle ml-1 mb-1">
                                             Private
                                           </span>
                                       {% endif %}
                                     </h6>
 
+                                    <p class="mb-3 dark-grey-text">
+                                        {{ item.body|striptags|truncate(50) }}
+                                    </p>
+
                                     <div class="post-data">
                                       <p class="font-small grey-text mb-0">
                                         <i class="far fa-clock"></i>
                                         <span data-toggle="tooltip" data-placement="top"
-                                              title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
-                                            {{ moment(post.timestamp).format('LL') }}
+                                              title="{{ item.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
+                                            {{ moment(item.timestamp).format('LL') }}
                                         </span>
                                       </p>
                                     </div>
                                   </div>
                                   <!--  Excerpt -->
                                 </div>
-
+                                {% endif %}
                               {% endfor %}
                             </div>
                         </section>

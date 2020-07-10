@@ -8,12 +8,12 @@
           {% if latest_posts %}
           <div class="col-md-6">
             <h6 class="font-weight-bold mt-5 mb-3">{{ _("LATESTS POSTS") }}</h6>
-            <hr class="mb-5">
+            <hr class="mb-3">
             {% for post in latest_posts %}
             <!-- Grid row -->
-            <div class="row mt-4">
+            <div class="row mt-3">
               <div class="col-3">
-                  <div class="view overlay z-depth-1 mb-3">
+                  <div class="view overlay z-depth-1">
                     <img src="{{ post.background }}" class="img-fluid" alt="Post">
                     <a>
                       <div class="mask rgba-white-slight waves-effect waves-light"></div>
@@ -23,24 +23,23 @@
 
               <div class="col-9 mb-1">
                 <!-- Post data -->
-                <div>
-                  <p class="mb-1" style="font-size: .87rem;line-height: 1.5rem;">
+                  <h6 class="mt-1 mb-3">
                     <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="text-hover font-weight-bold">{{ post.title }}</a>
                     {% if post.is_privacy %}
                       <span class="Label Label--outline v-align-middle ml-1 mb-1">
                         Private
                       </span>
                     {% endif %}
-                  </p>
-                  <p class="font-small grey-text">
-                    <i class="far fa-clock"></i>
-                    <span data-toggle="tooltip" data-placement="top"
-                          title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
-                        {{ moment(post.timestamp).format('LL') }}
-                    </span>
-                  </p>
-                </div>
-
+                  </h6>
+                  <div class="post-data">
+                      <p class="font-small grey-text mb-0">
+                        <i class="far fa-clock"></i>
+                        <span data-toggle="tooltip" data-placement="top"
+                              title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
+                            {{ moment(post.timestamp).format('LL') }}
+                        </span>
+                      </p>
+                  </div>
               </div>
               <!-- Second column -->
 
@@ -55,12 +54,12 @@
           {% if older_posts %}
           <div class="col-md-6">
             <h6 class="font-weight-bold mt-5 mb-3">{{ _("OLDER POSTS") }}</h6>
-            <hr class="mb-5">
+            <hr class="mb-3">
             {% for post in older_posts %}
             <!-- Grid row -->
-            <div class="row mt-4">
+            <div class="row mt-3">
               <div class="col-3">
-                  <div class="view overlay z-depth-1 mb-3">
+                  <div class="view overlay z-depth-1">
                     <img src="{{ post.background }}" class="img-fluid" alt="Post">
                     <a>
                       <div class="mask rgba-white-slight waves-effect waves-light"></div>
@@ -69,16 +68,16 @@
               </div>
               <div class="col-9 mb-1">
                 <!-- Post data -->
-                <div>
-                  <p class="mb-1" style="font-size: .87rem;line-height: 1.5rem;">
+                  <h6 class="mt-1 mb-3">
                     <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="text-hover font-weight-bold">{{ post.title }}</a>
                     {% if post.is_privacy %}
                       <span class="Label Label--outline v-align-middle ml-1 mb-1">
                         Private
                       </span>
                     {% endif %}
-                  </p>
-                  <p class="font-small grey-text">
+                  </h6>
+                <div class="post-data">
+                  <p class="font-small grey-text mb-0">
                     <i class="far fa-clock"></i>
                     <span data-toggle="tooltip" data-placement="top"
                           title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">

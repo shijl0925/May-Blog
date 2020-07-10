@@ -3,21 +3,19 @@
         <section class="pb-3 text-center text-lg-left">
             {% for post in posts %}
               <div class="row">
-                <div class="col-lg-5 mb-4 inner">
-                    <div class="view overlay z-depth-1">
+                <div class="col-lg-5 mb-4">
+                    <div class="view zoom overlay z-depth-1 rounded">
                       <img src="{{ post.background }}" class="img-fluid" alt="First sample image">
                       <a>
                         <div class="mask rgba-white-slight waves-effect waves-light"></div>
                       </a>
                     </div>
                 </div>
-                <div class="col-lg-6 ml-xl-4 mb-4">
+                <div class="col-lg-6 mb-4 text-left">
                     <h4 class="mb-3 mt-0">
-                      <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="dark-grey-text">
-                          <strong>
-                            {{ post.title }}
-                          </strong>
-                      </a>
+                      <strong>
+                        {{ post.title }}
+                      </strong>
                       {% if post.is_privacy %}
                         <span class="Label Label--outline v-align-middle ml-1" style="vertical-align: top; margin-top: 5px;">
                           Private
@@ -26,7 +24,7 @@
                     </h4>
 
                     <p class="dark-grey-text">
-                        {{ post.body|striptags|truncate(200) }}
+                        {{ post.body|striptags|truncate(50) }}
                     </p>
 
                     <p class="dark-grey-text">
@@ -56,6 +54,7 @@
                             </span>
                         {% endfor %}
                     </p>
+                    <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="btn btn-indigo btn-sm waves-effect waves-light" style="margin-left: 0;">Read more</a>
                 </div>
               </div>
 

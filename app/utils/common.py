@@ -55,3 +55,19 @@ def resize_image(image, filename, base_width):
     filename += "_thumb" + ext
     img.save(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], filename), optimize=True, quality=85)
     return filename
+
+
+def rename_image(old_filename):
+    ext = os.path.splitext(old_filename)[1]
+    new_filename = uuid.uuid4().hex + ext
+    return new_filename
+
+
+def flash_errors(form):
+    for field, errors in form.errors.items():
+        for error in errors:
+            flask.flash(u"Error in the %s field - %s" % (
+                getattr(form, field).label.text,
+                error
+            ))
+

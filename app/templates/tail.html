@@ -12,9 +12,16 @@
             {% for post in latest_posts %}
             <!-- Grid row -->
             <div class="row mt-4">
-              <!-- Second column -->
-              <div class="col-12 mb-1">
+              <div class="col-3">
+                  <div class="view overlay z-depth-1 mb-3">
+                    <img src="{{ post.background }}" class="img-fluid" alt="Post">
+                    <a>
+                      <div class="mask rgba-white-slight waves-effect waves-light"></div>
+                    </a>
+                  </div>
+              </div>
 
+              <div class="col-9 mb-1">
                 <!-- Post data -->
                 <div>
                   <p class="mb-1" style="font-size: .87rem;line-height: 1.5rem;">
@@ -52,9 +59,15 @@
             {% for post in older_posts %}
             <!-- Grid row -->
             <div class="row mt-4">
-              <!-- Second column -->
-              <div class="col-12 mb-1">
-
+              <div class="col-3">
+                  <div class="view overlay z-depth-1 mb-3">
+                    <img src="{{ post.background }}" class="img-fluid" alt="Post">
+                    <a>
+                      <div class="mask rgba-white-slight waves-effect waves-light"></div>
+                    </a>
+                  </div>
+              </div>
+              <div class="col-9 mb-1">
                 <!-- Post data -->
                 <div>
                   <p class="mb-1" style="font-size: .87rem;line-height: 1.5rem;">

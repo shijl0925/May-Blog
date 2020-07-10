@@ -235,8 +235,16 @@
         <div class="single-post">
           <!-- Grid row -->
           <div class="row mb-4">
-            <!-- Excerpt -->
-            <div class="col-12">
+            <div class="col-4" style="padding: 0 10px;">
+              <div class="view overlay z-depth-1">
+                <img src="{{ post.background }}" class="img-fluid" alt="Post">
+                <a>
+                  <div class="mask rgba-white-slight waves-effect waves-light"></div>
+                </a>
+              </div>
+            </div>
+
+            <div class="col-8" style="padding: 0 5px;">
               <h6 class="mt-0 font-small">
                 <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="dark-grey-text">
                   <strong>{{ post.title }}</strong>

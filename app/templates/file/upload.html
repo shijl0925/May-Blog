@@ -2,7 +2,8 @@
 
 {% block styles %}
     {{ super() }}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='DataTables/datatables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lightgallery/css/lightgallery.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lightgallery/css/lg-transitions.css') }}">
     {{ dropzone.load_css() }}
     {{ dropzone.style('border: 2px dashed #0087F7; margin: 5px 0; min-height: 300px;') }}
     <style>
@@ -78,7 +79,9 @@
                             <input class="path-input" title="path" style="width: 100%;" type="text" readonly value="{{file_abs}}">
                         </td>
                         <td>
-                            <img class="thumbnail" style="max-width:80%;" src="{{file_abs|get_filename_thumb}}">
+                            <a class="thumbnail" href="{{ file_abs }}">
+                                <img style="max-width:80%;" src="{{ file_abs }}">
+                            </a>
                         </td>
                         <td>
                             <form method="POST" action="{{ url_for('files.upload_delete', filename=filename) }}" onclick="return del()">
@@ -98,33 +101,25 @@
 
 {% block scripts %}
     {{ super() }}
-    <script src="{{ url_for('static', filename='DataTables/datatables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lightgallery/js/lightgallery.js') }}"></script>
+    <script src="{{ url_for('static', filename='lightgallery/modules/lg-fullscreen.js') }}"></script>
+    <script src="{{ url_for('static', filename='lightgallery/modules/lg-thumbnail.js') }}"></script>
+    <script src="{{ url_for('static', filename='lightgallery/modules/lg-zoom.js') }}"></script>
 
     {{ dropzone.load_js() }}
     {{ dropzone.config(custom_init='dz = this;document.getElementById("upload-btn").addEventListener("click", function handler(e) {dz.processQueue();});',
                      custom_options='autoProcessQueue: false, addRemoveLinks: true,') }}
 
     <script>
-        $(document).ready(function() {
-            // Build the whole data table
-            $('#imges').DataTable({
-                "columnDefs":[
-                    {"orderable": false, "targets": [1, 2, 3]}
-                ]
-            });
-
-            // Register autofill on new selected image upload
-            document.getElementById("upload_img").addEventListener("change", function(){
-                var file = document.getElementById("upload_img").files[0].name;
-                document.getElementById("upload_name").value = file
-            });
-
-        } );
         function del(){
             if(!confirm("Are you Sure delete this image?")){
                 window.event.returnValue = false;
             }
         }
+
+        $(function () {
+            $('#imges').lightGallery({selector: '.thumbnail', thumbnail:true});
+        });
     </script>
 {% endblock %}
 

@@ -6,7 +6,7 @@
 
     var getItems = function() {
       var items = []
-      $('.blog-body img').each(function() {
+      $('#articleContent img').each(function() {
         var src = $(this).attr('src')
         var width = this.naturalWidth
         var height = this.naturalHeight
@@ -28,7 +28,7 @@
 
     var bindEvent = function() {
       var items = getItems()
-      $('.blog-body img').each(function(i) {
+      $('#articleContent img').each(function(i) {
         $(this).on('click', function(e) {
           e.preventDefault()
 

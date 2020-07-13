@@ -250,3 +250,43 @@
 .widget-content .single-post:last-of-type {
     border-bottom: none;
 }
+
+.progress {
+    position:fixed;
+    right:0;
+    top:58px;
+    left:0;
+    width:100%;
+    height:3px;
+    color:#3eb0ef;
+    border:none;
+    background:0 0;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    z-index: 680;
+    appearance:none
+}
+.progress::-webkit-progress-bar{
+    background-color:transparent
+}
+.progress::-webkit-progress-value{
+    background-color:#3eb0ef
+}
+.progress::-moz-progress-bar{
+    background-color:#3eb0ef
+}
+.progress-container{
+    position:absolute;
+    top:0;
+    left:0;
+    display:block;
+    width:100%;
+    height:2px;
+    background-color:transparent
+}
+.progress-bar{
+    display:block;
+    width:50%;
+    height:inherit;
+    background-color:#3eb0ef
+}

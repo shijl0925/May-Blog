@@ -1,6 +1,6 @@
 .photo-set figure {
   position: relative;
-  padding: 3px 3px;
+  padding: 5px;
   margin: 0;
   flex: 1;
 }
@@ -78,3 +78,29 @@ figure img {
     white-space: pre-wrap;
     word-break: normal;
 }
+
+.t-g-control {
+    position: fixed;
+    z-index: 666;
+    top: 40%;
+    right: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -ms-flex-direction: column;
+}
+
+.gobottom, .gotop, .toc-control {
+    width: 40px;
+    height: 40px;
+    margin: 0 10px 10px 0;
+    padding: 4px;
+    border-radius: 4px;
+    background: #f6f8fa;
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+}
+

@@ -12,9 +12,9 @@
                     </div>
                 </div>
                 <div class="col-lg-6 mb-4 text-left">
-                    <h4 class="mb-3 mt-0">
+                    <h4 class="mt-0">
                       <strong>
-                        {{ post.title }}
+                        <a class="dark-grey-text" href="{{ url_for('posts.post', post_slug=post.slug) }}">{{ post.title }}</a>
                       </strong>
                       {% if post.is_privacy %}
                         <span class="Label Label--outline v-align-middle ml-1" style="vertical-align: top; margin-top: 5px;">
@@ -24,7 +24,7 @@
                     </h4>
 
                     <p class="dark-grey-text">
-                        {{ post.body|striptags|truncate(50) }}
+                        {{ post.body|striptags|truncate(125) }}
                     </p>
 
                     <p class="dark-grey-text">
@@ -54,7 +54,6 @@
                             </span>
                         {% endfor %}
                     </p>
-                    <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="btn btn-indigo btn-sm waves-effect waves-light" style="margin-left: 0;">Read more</a>
                 </div>
               </div>
 

@@ -1,6 +1,6 @@
 <div class="col-lg-9 col-12 mt-1">
     {% if posts %}
-        <section class="pb-3 text-center text-lg-left">
+        <section class="pb-3 text-lg-left">
             {% for post in posts %}
               <div class="row">
                 <div class="col-lg-5 mb-4">
@@ -11,7 +11,7 @@
                       </a>
                     </div>
                 </div>
-                <div class="col-lg-6 mb-4 text-left">
+                <div class="col-lg-7 mb-4">
                     <h4 class="mt-0">
                       <strong>
                         <a class="dark-grey-text" href="{{ url_for('posts.post', post_slug=post.slug) }}">{{ post.title }}</a>

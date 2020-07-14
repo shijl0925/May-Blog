@@ -1,0 +1,53 @@
+<hr>
+<section class="section pb-3 fadeIn">
+    <!--  Card -->
+    <div class="dark-grey-text mb-5 mt-4 mx-4">
+      <div class="text-center mb-4">
+          <h3 class="font-weight-bold pt-3 mb-5">
+              {{ _("RELATED POSTS") }} <span class="badge pink">{{ post.collection.posts|length }}</span>
+          </h3>
+      </div>
+
+      {% for item in post.collection.posts %}
+        {%  if post.id != item.id %}
+        <div class="row mb-3">
+          <div class="col-3">
+              <div class="view inner overlay z-depth-1">
+                <img src="{{ item.background }}" class="img-fluid" alt="Post">
+                <a>
+                  <div class="mask rgba-white-slight waves-effect waves-light"></div>
+                </a>
+              </div>
+          </div>
+          <div class="col-9">
+            <h6 class="mt-0 mb-3">
+              <a href="{{ url_for('posts.post', post_slug=item.slug) }}" class="dark-grey-text">
+                <strong>{{ item.title }}</strong>
+              </a>
+              {% if item.is_privacy %}
+                  <span class="Label Label--outline v-align-middle ml-1 mb-1">
+                    Private
+                  </span>
+              {% endif %}
+            </h6>
+
+            <p class="mb-3 dark-grey-text">
+                {{ item.body|striptags|truncate(50) }}
+            </p>
+
+            <div class="post-data">
+              <p class="font-small grey-text mb-0">
+                <i class="far fa-clock"></i>
+                <span data-toggle="tooltip" data-placement="top"
+                      title="{{ item.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
+                    {{ moment(item.timestamp).format('LL') }}
+                </span>
+              </p>
+            </div>
+          </div>
+          <!--  Excerpt -->
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+</section>

@@ -43,9 +43,9 @@
                         {{ render_field_with_errors(form.background_image_url, necessary=True) }}
 
                         {% if post.is_markdown %}
-                          {% include "markdown.html" %}
+                          {% include "_markdown.html" %}
                         {% else %}
-                          {% include "ckeditor.html" %}
+                          {% include "_ckeditor.html" %}
                         {% endif %}
                       </div>
                       <!-- Grid column -->

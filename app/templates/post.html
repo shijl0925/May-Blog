@@ -149,59 +149,7 @@
                         </section>
 
                         {% if post and post.collection %}
-                        <hr>
-                        <section class="section pb-3 fadeIn">
-                            <!--  Card -->
-                            <div class="dark-grey-text mb-5 mt-4 mx-4">
-                              <div class="text-center mb-4">
-                                  <h3 class="font-weight-bold pt-3 mb-5">
-                                      {{ _("RELATED POSTS") }} <span class="badge pink">{{ post.collection.posts|length }}</span>
-                                  </h3>
-                              </div>
-
-                              {% for item in post.collection.posts %}
-                                {%  if post.id != item.id %}
-                                <div class="row mb-3">
-                                  <div class="col-3">
-                                      <div class="view overlay z-depth-1">
-                                        <img src="{{ item.background }}" class="img-fluid" alt="Post">
-                                        <a>
-                                          <div class="mask rgba-white-slight waves-effect waves-light"></div>
-                                        </a>
-                                      </div>
-                                  </div>
-                                  <div class="col-9">
-                                    <h6 class="mt-0 mb-3">
-                                      <a href="{{ url_for('posts.post', post_slug=item.slug) }}" class="dark-grey-text">
-                                        <strong>{{ item.title }}</strong>
-                                      </a>
-                                      {% if item.is_privacy %}
-                                          <span class="Label Label--outline v-align-middle ml-1 mb-1">
-                                            Private
-                                          </span>
-                                      {% endif %}
-                                    </h6>
-
-                                    <p class="mb-3 dark-grey-text">
-                                        {{ item.body|striptags|truncate(50) }}
-                                    </p>
-
-                                    <div class="post-data">
-                                      <p class="font-small grey-text mb-0">
-                                        <i class="far fa-clock"></i>
-                                        <span data-toggle="tooltip" data-placement="top"
-                                              title="{{ item.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
-                                            {{ moment(item.timestamp).format('LL') }}
-                                        </span>
-                                      </p>
-                                    </div>
-                                  </div>
-                                  <!--  Excerpt -->
-                                </div>
-                                {% endif %}
-                              {% endfor %}
-                            </div>
-                        </section>
+                            {% include "_collection.html" %}
                         {% endif %}
 
                         <hr>
@@ -225,107 +173,12 @@
                             </div>
                         </section>
 
-                        <hr>
-                        <section id="comments" class="section pb-3 fadeIn">
-                            <div class="comments-list text-center text-md-left mb-3 mt-5 mx-4">
-                              <div class="text-center mb-4">
-                                <h3 class="font-weight-bold pt-3 mb-5">
-                                    {{ _("Comments") }} <span class="badge pink">{{ post.comments|length }}</span>
-                                </h3>
-                              </div>
-
-                              {% for comment in post.comments %}
-                                  <div class="row mb-4">
-                                    <!--Content column-->
-                                    <div class="col-md-10 col-12">
-                                      <h5 class="user-name font-weight-bold">{{ comment.author }}</h5>
-                                      <div class="mt-2">
-                                        <ul class="list-unstyled">
-                                          <li class="comment-date font-small grey-text">
-                                              <i class="far fa-clock"></i>
-                                              <span data-toggle="tooltip" data-placement="top"
-                                                  title="{{ comment.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
-                                                {{ moment(comment.timestamp).format('LL') }}
-                                              </span>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                      <p class="dark-grey-text article">
-                                          {{ comment.body }}
-                                      </p>
-                                    </div>
-                                    {% if current_user.is_admin %}
-                                    <div class="col-md-2">
-                                        <form class="float-right" method="POST" action="{{ url_for('posts.delete_comment', comment_id=comment.id) }}" onclick="return del()">
-                                          {{ operate_form.csrf_token }}
-                                          <button type="submit" class="btn btn-sm btn-outline-danger shadow-none ml-0">
-                                              {{ _("Delete") }}
-                                          </button>
-                                        </form>
-                                    </div>
-                                    {% endif %}
-                                    <!--/.Content column-->
-                                  </div>
-                              {% endfor %}
-                            </div>
-                        </section>
+                        {% if post.comments|length %}
+                            {% include "_comments.html" %}
+                        {% endif %}
 
                         {% if not post.deny_comment %}
-                        <hr>
-                        <section class="section mb-4 fadeIn">
-                            <h3 class="font-weight-bold text-center my-5">{{ _("Leave a reply") }}</h3>
-                            <form class="card-body" method="POST" action="{{ url_for('posts.create_comment', post_slug=post.slug) }}">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                                <!-- Grid row -->
-                                <div class="row">
-
-                                  <!-- Grid column -->
-                                  <div class="col-lg-6 col-md-12 mb-4">
-
-                                    <div class="input-group md-form form-sm form-3 pl-0">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text white black-text" id="basic-addon8">1</span>
-                                      </div>
-                                      <input type="text" name="author" required class="form-control mt-0 black-border rgba-white-strong" placeholder="{{ _('Name') }}" aria-describedby="basic-addon9">
-                                    </div>
-
-                                  </div>
-                                  <!-- Grid column -->
-
-                                  <!-- Grid column -->
-                                  <div class="col-lg-6 col-md-6 mb-4">
-
-                                    <div class="input-group md-form form-sm form-3 pl-0">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text white black-text" id="basic-addon9">2</span>
-                                      </div>
-                                      <input type="text" name="email" required class="form-control mt-0 black-border rgba-white-strong" placeholder="{{ _('Email') }}" aria-describedby="basic-addon9">
-                                    </div>
-
-                                  </div>
-                                  <!-- Grid column -->
-
-                                </div>
-                                <!-- Grid row -->
-
-                                <!-- Grid row -->
-                                <div class="row">
-
-                                  <div class="col-12 mt-1">
-                                    <div class="form-group basic-textarea">
-
-                                      <textarea name="body" class="form-control" required id="exampleFormControlTextarea6" rows="5" placeholder="{{ _('Write something here...') }}"></textarea>
-                                    </div>
-
-                                    <div class="text-right">
-                                      <button class="btn btn-primary btn-sm waves-effect waves-light">{{ _("Submit") }}</button>
-                                    </div>
-                                  </div>
-
-                                </div>
-                                <!-- Grid row -->
-                            </form>
-                        </section>
+                            {% include "_reply.html" %}
                         {% endif %}
                       </div>
                 </div>
@@ -335,7 +188,7 @@
 
           <!--Section: Blog v.4-->
         </div>
-        {% include "sidebar.html" %}
+        {% include "_sidebar.html" %}
     </div>
 
     <div id="t-g-control" class="t-g-control">
@@ -353,7 +206,7 @@
 
     <div id="toc" style="display: none;"></div>
 
-    {% include "tail.html" %}
+    {% include "_tail.html" %}
 
 {% endblock page_content %}
 

@@ -257,8 +257,8 @@
     top:0;
     left:0;
     width:100%;
-    height:2px;
-    color:#3eb0ef;
+    height:4px;
+    color:#07C160;
     border:none;
     background:0 0;
     -webkit-appearance:none;
@@ -270,10 +270,10 @@
     background-color:transparent
 }
 .progress::-webkit-progress-value{
-    background-color:#3eb0ef
+    background-color:#07C160
 }
 .progress::-moz-progress-bar{
-    background-color:#3eb0ef
+    background-color:#07C160
 }
 .progress-container{
     position:absolute;

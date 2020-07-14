@@ -19,7 +19,8 @@ from app.controller.extensions import (
     ckeditor,
     dropzone,
     csrf,
-    whooshee
+    whooshee,
+    jwt
 )
 from app.controller.admin import admin
 from app.view import init_blue_print
@@ -140,6 +141,7 @@ def create_app(env=None):
     dropzone.init_app(app_)
     whooshee.init_app(app_)
     csrf.init_app(app_)
+    jwt.init_app(app_)
 
     # app_.after_request(save_request)
 

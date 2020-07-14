@@ -18,8 +18,9 @@ python-slugify
 email_validator
 werkzeug==0.15.4
 flask-moment
-flask-ckeditor==0.4.3
+flask-ckeditor
 redis
 markdown
 html2text
 flask-whooshee
+flask-restful

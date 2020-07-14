@@ -4,6 +4,7 @@ from flask_mail import Mail
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_moment import Moment
 from flask_babelex import Babel
+from flask_jwt_extended import JWTManager
 from flask_avatars import Avatars
 from flask_adminlte3 import AdminLTE3
 from flask_mdbootstrap import MDBootstrap
@@ -18,6 +19,7 @@ db = SQLAlchemy()
 toolbar = DebugToolbarExtension()
 moment = Moment()
 babel = Babel()
+jwt = JWTManager()
 avatars = Avatars()
 adminlte = AdminLTE3()
 mdb = MDBootstrap()

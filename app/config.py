@@ -61,6 +61,9 @@ class BaseConfig:
     DROPZONE_PARALLEL_UPLOADS = 10
     DROPZONE_UPLOAD_MULTIPLE = True
 
+    JWT_SECRET_KEY = 'a3f@>da12sr$482jLdg+#d'
+    JWT_ACCESS_TOKEN_EXPIRES = 12*30*24*3600
+
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True

@@ -204,7 +204,7 @@
         </button>
     </div>
 
-    <div id="toc" style="display: none;"></div>
+    <div id="toc" style="right: -100%"></div>
 
     {% include "_tail.html" %}
 
@@ -237,21 +237,22 @@
 
         var isHiden = true;
         $(function(){
-            var toc = document.getElementById('toc');
-            var control = document.getElementById('t-g-control');
+            var width = $('#toc').width();
             $('.toc-control').click(function () {
                 if(isHiden){
-                    // timer_hide_toc = auto_hide_toc();
-                    toc.style.display="block";
-                    control.setAttribute('style','right:330px;');
+                    //timer_hide_toc = auto_hide_toc();
+                    $('#toc').animate({right: 0}, "slow");
+                    $('#t-g-control').animate({right: width}, "slow");
+
                     $('.toc-icon').hide();
                     $('.toc-close').show();
                 }else{
-                    // clearTimeout(timer_hide_toc);
-                    control.setAttribute('style','right:0;');
+                    //clearTimeout(timer_hide_toc);
+                    $('#toc').animate({right: -width}, "slow");
+                    $('#t-g-control').animate({right: 0}, "slow");
+
                     $('.toc-close').hide();
                     $('.toc-icon').show();
-                    toc.style.display="none";
                 }
                 isHiden = !isHiden;
             });
@@ -271,9 +272,11 @@
         });
 
         function auto_hide_toc(){
+            var width = $('#toc').width();
             return setTimeout(function () {
                 if(!isHiden){
-                    toc.style.display="none";
+                    $('#toc').animate({right: -width}, "slow");
+                    $('#t-g-control').animate({right: 0}, "slow");
                     isHiden = !isHiden;
                 }
             }, 10000);

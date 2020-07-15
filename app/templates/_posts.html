@@ -1,6 +1,18 @@
 <div class="col-lg-9 col-12 mt-1">
     {% if posts %}
         <section class="pb-3 text-lg-left">
+            <h2 class="font-weight-bold">
+            {% if "tag" in request.args %}
+                {{ request.args.get('tag') }}
+            {% elif "archive" in request.args %}
+                {{ request.args.get('archive') }}
+            {% elif "category" in request.args %}
+                {{ request.args.get('category') }}
+            {% else %}
+                {{ _("Recent Posts") }}
+            {% endif %}
+            </h2>
+            <hr class="mb-5">
             {% for post in posts %}
               <div class="row">
                 <div class="col-lg-5 mb-4">

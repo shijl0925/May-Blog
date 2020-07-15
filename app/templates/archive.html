@@ -14,10 +14,8 @@
     </style>
 {% endblock styles %}
 
-{% block navbar_attribs %}fixed-top{% endblock navbar_attribs %}
-
 {% block page_content %}
-    <div class="timeline" style="margin-top: 60px;">
+    <div class="timeline" style="margin: 15px 60px;">
       {% for archive in archives %}
           {% with post_nums = archive|count_post_nums_with_archive %}
               {% if post_nums %}

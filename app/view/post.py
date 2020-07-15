@@ -54,8 +54,8 @@ def posts():
     )
 
 
-@posts_bp.route('/archive', methods=['GET'])
-def archive():
+@posts_bp.route('/archives', methods=['GET'])
+def archives():
     page = int(flask.request.args.get('page', 1))
     pagination = Archive.query.paginate(page=page, per_page=5)
     return flask.render_template(

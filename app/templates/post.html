@@ -32,7 +32,6 @@
         right: 0;
         border-radius: 0;
         height: 100%;
-        z-index: 665;
         border-left: 1px solid rgba(0,0,0,.06);
     }
 
@@ -57,7 +56,6 @@
     </style>
 {% endblock styles %}
 
-{% block navbar_attribs %}fixed-top{% endblock navbar_attribs %}
 
 {% block navbar %}
     {{ super() }}
@@ -69,7 +67,7 @@
 {% endblock %}
 
 {% block page_content %}
-    <div class="row" style="margin-top: 15px;">
+    <div class="row">
         <!-- Main List -->
         <div class="col-lg-9 col-12 mt-1">
           {% include 'pswp.html' %}
@@ -223,7 +221,7 @@
         new TocHelper(
             {
                 tocFixed: {
-                    top: 42,
+                    top: 0,
                     left: 0
                 }
             }

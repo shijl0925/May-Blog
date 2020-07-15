@@ -34,13 +34,13 @@ class SettingsApi(Resource):
     @jwt_required
     @jwt_permission_required("ADMINISTER")
     def post(self):
-        args = setting_post_parser.parse_args()
+        args = setting_post_parser.parse_args(strict=True)
         setting_name = args.get('name')
         setting_value = args.get('value')
 
-        setting = Settings.query.filter_by(name=setting_name).first()
-        if setting:
-            return "Already exists.", 400
+        search_setting = Settings.query.filter_by(name=setting_name).first()
+        if search_setting:
+            return "already exists.", 400
 
         new_settings = Settings(name=setting_name, value=setting_value)
         db.session.add(new_settings)

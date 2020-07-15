@@ -1,43 +1,27 @@
-.photo-set figure {
-  position: relative;
-  padding: 5px;
-  margin: 0;
-  flex: 1;
+.mdb-lightbox figure {
+    float: left;
+    padding: 5px;
+    margin: 0
 }
 
-figure img {
-  cursor: pointer;
-  display: block;
-  box-sizing: border-box;
-  max-width: 100%;
-  margin: auto;
+.mdb-lightbox figure .img-fluid {
+    display: inline
 }
 
-.photo-set {
-  margin: 25px 0;
+.mdb-lightbox figure img {
+    cursor: -webkit-zoom-in;
+    cursor: zoom-in;
+    border-radius: 0;
+    -webkit-transition: opacity 0.4s;
+    transition: opacity 0.4s
 }
 
-.photo-set + .photo-set {
-  margin-top: -25px;
+.mdb-lightbox figure img:hover {
+    opacity: .8
 }
 
-.photo-set figure figcaption {
-  position: absolute;
-  left: 3px;
-  right: 3px;
-  bottom: 3px;
-  width: auto;
-  margin: 0;
-  padding: 60px 0 10px;
-  color: #fff;
-  background-image: linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0, rgba(0, 0, 0, .03) 26%, rgba(0, 0, 0, .4) 71%, rgba(0, 0, 0, .5));
-  opacity: .6;
-  -webkit-transition: opacity .2s ease;
-  transition: opacity .2s ease;
-}
-
-.photo-set figure:hover figcaption {
-  opacity: 1;
+.mdb-lightbox figure figcaption {
+    display: none
 }
 
 .pangu {

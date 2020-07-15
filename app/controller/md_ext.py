@@ -32,7 +32,7 @@ class MayRendererMixin:
     def render_image(self, element):
         result = super().render_image(element)
         result = result.replace(
-            '<img', '<img data-original="{}"'.format(self.escape_url(element.dest))
+            '<img', '<img class="img-fluid" data-original="{}"'.format(self.escape_url(element.dest))
         )
         caption = (
             '<figcaption>{}</figcaption>'.format(element.title)
@@ -41,7 +41,7 @@ class MayRendererMixin:
         return '<figure>{}{}</figure>'.format(result, caption)
 
     def render_photo_set(self, element):
-        return '<div class="photo-set d-lg-flex">\n{}</div>\n'.format(
+        return '<div class="mdb-lightbox d-lg-flex">\n{}</div>\n'.format(
             self.render_children(element)
         )
 

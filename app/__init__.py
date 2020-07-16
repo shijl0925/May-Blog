@@ -79,6 +79,9 @@ def inject_context_variables():
     older_posts = Post.query.filter_by(is_draft=False).order_by(Post.timestamp).limit(3).all()
     popular_posts = Post.query.filter_by(is_draft=False).order_by(Post.visit_count.desc()).limit(6).all()
 
+    now = datetime.now()
+    weekday = now.isoweekday()
+
     return dict(
         admin=admin,
         post_nums=post_nums,
@@ -90,7 +93,8 @@ def inject_context_variables():
         tag_nums=tag_nums,
         latest_posts=latest_posts,
         older_posts=older_posts,
-        popular_posts=popular_posts
+        popular_posts=popular_posts,
+        weekday=weekday
     )
 
 

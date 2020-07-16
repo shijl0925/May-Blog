@@ -1,7 +1,7 @@
 from datetime import datetime
 import flask
 from flask_security import login_required, current_user
-from sqlalchemy import or_
+from sqlalchemy import or_, func
 from slugify import slugify
 from flask_babelex import gettext as _
 from app.model.models import Post, Category, Tag, Archive, Collection, Comment
@@ -17,29 +17,9 @@ posts_bp = flask.Blueprint('posts', __name__, url_prefix='/')
 
 @posts_bp.route('/', methods=['GET'])
 def posts():
-    now = datetime.now()
-    weekday = now.isoweekday()
-
     page = int(flask.request.args.get('page', 1))
-    category = flask.request.args.get('category', '')
-    tag = flask.request.args.get('tag', '')
-    archive = flask.request.args.get('archive', '')
-
-    posts = Post.query.filter_by(is_draft=False)
-
-    if category:
-        search_category = Category.query.filter_by(name=category).first_or_404()
-        posts = posts.filter_by(category=search_category)
-
-    if tag:
-        search_tag = Tag.query.filter_by(name=tag).first_or_404()
-        posts = posts.filter(Post.tags.contains(search_tag))
-
-    if archive:
-        search_archive = Archive.query.filter_by(label=archive).first_or_404()
-        posts = posts.filter_by(archive=search_archive)
-
-    pagination = posts.order_by(Post.timestamp.desc()).paginate(page=page, per_page=10)
+    pagination = Post.query.filter_by(is_draft=False).paginate(page=page, per_page=10)
+    count_post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).scalar()
 
     if pagination.page == 1:
         posts_template = "index.html"
@@ -50,7 +30,7 @@ def posts():
         posts_template,
         pagination=pagination,
         posts=pagination.items,
-        weekday=weekday
+        count_post_nums=count_post_nums
     )
 
 
@@ -89,14 +69,96 @@ def topic(topic_id):
         flask.abort(404)
 
     page = int(flask.request.args.get('page', 1))
-    pagination = Post.query.filter_by(is_draft=False).with_parent(search_topic).order_by(Post.timestamp.desc()).\
-        paginate(page=page, per_page=10)
+    pagination = Post.query.filter_by(is_draft=False).with_parent(search_topic).paginate(page=page, per_page=10)
+
+    count_post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).with_parent(search_topic).scalar()
 
     return flask.render_template(
         "topic.html",
         pagination=pagination,
         posts=pagination.items,
-        topic=search_topic
+        topic=search_topic,
+        count_post_nums=count_post_nums
+    )
+
+
+@posts_bp.route('/tag/<int:tag_id>', methods=['GET'])
+def tag(tag_id):
+    search_tag = Tag.query.get(tag_id)
+    if not search_tag:
+        flask.abort(404)
+
+    page = int(flask.request.args.get('page', 1))
+    pagination = Post.query.filter_by(is_draft=False).filter(Post.tags.contains(search_tag)).\
+        paginate(page=page, per_page=10)
+
+    count_post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).\
+        filter(Post.tags.contains(search_tag)).scalar()
+
+    if pagination.page == 1:
+        posts_template = "index.html"
+    else:
+        posts_template = "posts.html"
+
+    return flask.render_template(
+        posts_template,
+        pagination=pagination,
+        posts=pagination.items,
+        tag=search_tag,
+        count_post_nums=count_post_nums
+    )
+
+
+@posts_bp.route('/category/<int:category_id>', methods=['GET'])
+def category(category_id):
+    search_category = Category.query.get(category_id)
+    if not search_category:
+        flask.abort(404)
+
+    page = int(flask.request.args.get('page', 1))
+    pagination = Post.query.filter_by(is_draft=False).filter_by(category=search_category).\
+        paginate(page=page, per_page=10)
+
+    count_post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).\
+        filter_by(category=search_category).scalar()
+
+    if pagination.page == 1:
+        posts_template = "index.html"
+    else:
+        posts_template = "posts.html"
+
+    return flask.render_template(
+        posts_template,
+        pagination=pagination,
+        posts=pagination.items,
+        category=search_category,
+        count_post_nums=count_post_nums
+    )
+
+
+@posts_bp.route('/archive/<int:archive_id>', methods=['GET'])
+def archive(archive_id):
+    search_archive = Archive.query.get(archive_id)
+    if not search_archive:
+        flask.abort(404)
+
+    page = int(flask.request.args.get('page', 1))
+    pagination = Post.query.filter_by(is_draft=False).filter_by(archive=search_archive).\
+        paginate(page=page, per_page=10)
+    count_post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).\
+        filter_by(archive=search_archive).scalar()
+
+    if pagination.page == 1:
+        posts_template = "index.html"
+    else:
+        posts_template = "posts.html"
+
+    return flask.render_template(
+        posts_template,
+        pagination=pagination,
+        posts=pagination.items,
+        archive=search_archive,
+        count_post_nums=count_post_nums
     )
 
 
@@ -106,7 +168,7 @@ def topic(topic_id):
 def draft():
     operate_form = OperateForm()
     page = int(flask.request.args.get('page', 1))
-    pagination = Post.query.filter_by(is_draft=True).order_by(Post.timestamp.desc()).paginate(page=page, per_page=10)
+    pagination = Post.query.filter_by(is_draft=True).paginate(page=page, per_page=10)
 
     return flask.render_template(
         "drafts.html",
@@ -139,7 +201,7 @@ def search_post():
     page = int(flask.request.args.get('page', 1))
     # pagination = Post.query.filter(or_(Post.title.like(u'%{}%'.format(q)),
     #                                Post.body.like(u'%{}%'.format(q)))).paginate(page=page, per_page=10)
-    pagination = Post.query.whooshee_search(q).order_by(Post.timestamp.desc()).paginate(page=page, per_page=10)
+    pagination = Post.query.whooshee_search(q).paginate(page=page, per_page=10)
     return flask.render_template(
         "posts.html",
         pagination=pagination,

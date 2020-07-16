@@ -175,10 +175,10 @@
 }
 .timeline::before {
     border-radius: .25rem;
-    background: #dee2e6;
+    border-left: 1.5px dashed #dee2e6;
     bottom: 0;
     content: '';
-    left: 30px;
+    left: 35px;
     margin: 0;
     position: absolute;
     top: 0;
@@ -190,8 +190,7 @@
     position: relative;
 }
 .timeline>.time-label>span {
-    border-radius: 5px;
-    background-color: #28a745;
+    background-color: #07C160;
     display: inline-block;
     font-weight: 600;
     padding: 5px;
@@ -219,10 +218,10 @@
 
 .timeline>div>.timeline-item-head {
     position: absolute;
-    width: 15px;
-    height: 15px;
-    left: 31px;
-    bottom: 12px;
+    width: 10px;
+    height: 10px;
+    left: 35px;
+    top: 1rem;
     transform: translate(-50%, 0);
     border: 2px solid #1890FF;
     border-radius: 50%;
@@ -289,4 +288,13 @@
     width:50%;
     height:inherit;
     background-color:#3eb0ef
+}
+
+.page-title {
+    margin-top: 0;
+    line-height: 1.2;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #4c4e54;
+    margin-bottom: .5rem;
 }

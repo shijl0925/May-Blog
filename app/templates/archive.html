@@ -34,8 +34,9 @@
                       <h2 class="timeline-header no-border">
                           <span data-toggle="tooltip" data-placement="top"
                                 title="{{ post.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}">
-                              {{ moment(post.timestamp).format("LL") }}
+                              {{ post.timestamp.strftime('%m-%d') }}
                           </span>
+
                           <span class="slash">/</span>
                           <a href="{{ url_for('posts.post', post_slug=post.slug) }}">{{ post.title }}</a>
                           {% if post.is_privacy %}

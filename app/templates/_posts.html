@@ -1,16 +1,21 @@
 <div class="col-lg-9 col-12 mt-1">
     <section class="pb-3 text-lg-left">
-        {% if "tag" in request.args %}
-            <h2 class="font-weight-bold dark-grey-text">{{ _("TAGS") }}: {{ request.args.get('tag') }}</h2>
-        {% elif "archive" in request.args %}
-            <h2 class="font-weight-bold dark-grey-text">{{ _("ARCHIVES") }}: {{ request.args.get('archive') }}</h2>
-        {% elif "category" in request.args %}
-            <h2 class="font-weight-bold dark-grey-text">{{ _("CATEGORIES") }}: {{ request.args.get('category') }}</h2>
-        {% elif request.endpoint == "posts.topic" %}
-            <h2 class="font-weight-bold dark-grey-text">{{ _("Topic Posts") }}</h2>
-        {% else %}
-            <h2 class="font-weight-bold dark-grey-text">{{ _("Recent Posts") }}</h2>
-        {% endif %}
+        <span class="page-title dark-grey-text">
+            {% if request.endpoint == "posts.tag" %}
+                {{ _("TAG") }}: {{ tag.name }}
+            {% elif request.endpoint == "posts.archive" %}
+                {{ _("ARCHIVE") }}: {{ archive.label }}
+            {% elif request.endpoint == "posts.category" %}
+                {{ _("CATEGORY") }}: {{ category.name }}
+            {% elif request.endpoint == "posts.topic" %}
+                {{ _("Topic Posts") }}
+            {% else %}
+                {{ _("Recent Posts") }}
+            {% endif %}
+        </span>
+        <div style="display: inline-block;vertical-align: top; margin-left: 0; margin-top: -5px;">
+            <span class="badge badge-pill badge-primary font-small">{{ count_post_nums }}</span>
+        </div>
         <hr class="mb-5">
       {% if posts %}
         {% for post in posts %}

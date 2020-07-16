@@ -126,7 +126,7 @@
               <!-- Excerpt -->
               <div class="col-12">
                   {% for tag in tags %}
-                      <a class="tags has-addons mr-1 hvr-buzz-out" href="{{ url_for('posts.posts', tag=tag.name) }}">
+                      <a class="tags has-addons mr-1 hvr-buzz-out" href="{{ url_for('posts.tag', tag_id=tag.id) }}">
                         <span class="tag">{{ tag.name }}</span>
                         <span class="tag is-grey ml-n3">{{ tag|count_post_nums_with_tag }}</span>
                       </a>
@@ -162,7 +162,7 @@
                   {% with post_nums = archive|count_post_nums_with_archive %}
                       {% if post_nums %}
                       <li class="d-flex justify-content-between align-items-center">
-                          <a href="{{ url_for('posts.posts', archive=archive.label) }}" class="dark-grey-text hvr-sweep-to-right">
+                          <a href="{{ url_for('posts.archive', archive_id=archive.id) }}" class="dark-grey-text hvr-sweep-to-right">
                               <p class="mb-1">{{ archive.label }}</p>
                           </a>
                           {% if post_nums %}
@@ -202,7 +202,7 @@
                   <ul class="list-unstyled">
                     {% for category in categories %}
                     <li class="d-flex justify-content-between align-items-center">
-                      <a href="{{ url_for('posts.posts', category=category.name) }}" class="dark-grey-text hvr-sweep-to-right">
+                      <a href="{{ url_for('posts.category', category_id=category.id) }}" class="dark-grey-text hvr-sweep-to-right">
                         <p class="mb-1">{{ category.name }}</p>
                       </a>
                       {% with post_nums = category|count_post_nums_with_category  %}

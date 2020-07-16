@@ -11,6 +11,9 @@ category_fields = {
 collection_fields = {
     'id': fields.Integer(),
     'name': fields.String(),
+    'description': fields.String(),
+    'background': fields.String(),
+    'timestamp': fields.DateTime(dt_format='iso8601')
 }
 
 tag_fields = {

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        html,
+        body,
+        .topics_content {
+          height: auto;
+          min-height: 100vh;
+        }
+        .navbar {
+            background-color: #6f7782;
+        }
+        footer.page-footer {
+            background-color: #6f7782;
+        }
+
+    .card .btn-action {
+        margin-top: -1.44rem;
+        margin-bottom: -1.44rem;
+    }
+
+    .btn-floating i {
+        font-size: 1.25rem;
+        line-height: 47px;
+        display: inline-block;
+        width: inherit;
+        color: #fff;
+        text-align: center;
+    }
+    </style>
+{% endblock styles %}
+
+{% block page_content %}
+    <section class="section widget-content">
+        <div class="row mb-3 mt-3">
+              {% for topic in topics %}
+              <!-- Grid column -->
+              <div class="col-md-4 my-1 mb-3">
+
+                <!-- Card -->
+                <div class="card">
+
+                  <!-- Card image -->
+                  <div class="view zoom overlay">
+                    <img src="{{ topic.background }}" class="card-img-top" style="height: 200px;" alt="sample image">
+                    <a>
+                      <div class="mask rgba-white-slight waves-effect waves-light"></div>
+                    </a>
+                  </div>
+                  <!-- Card image -->
+
+                  <!-- Button -->
+                  <a href="{{ url_for('posts.topic', topic_id=topic.id) }}" class="btn-floating btn-action ml-auto mr-4 mdb-color lighten-3 waves-effect waves-light">
+                      <i class="fas fa-chevron-right"></i>
+                  </a>
+
+                  <!-- Card content -->
+                  <div class="card-body" style="height: 225px;">
+
+                    <!-- Title -->
+                    <h4 class="card-title"><strong>{{ topic.name }}</strong></h4>
+
+                    <!-- Text -->
+                    <p class="card-text mt-3">{{ topic.description|truncate(250) }}</p>
+                  </div>
+                  <!-- Card content -->
+
+                  <!-- Card footer -->
+                  <div class="mdb-color lighten-3 text-center">
+
+                    <ul class="list-unstyled list-inline font-small mt-3">
+
+                      <li class="list-inline-item pr-2 white-text">{{ moment(topic.timestamp).format("LL") }}</li>
+
+                      <li class="list-inline-item pr-2 white-text"><i class="fas fa-blog pr-1"></i>{{ topic|count_post_nums_with_topic }}</li>
+
+                    </ul>
+
+                  </div>
+                  <!-- Card footer -->
+
+                </div>
+                <!-- Card -->
+
+              </div>
+              <!-- Grid column -->
+              {% endfor %}
+        </div>
+    </section>
+    <nav class="mb-5 pb-2">
+      {% from "mdbootstrap/pagination.html" import render_pagination %}
+      {{ render_pagination(pagination,
+      prev=('<span aria-hidden="true">&larr;</span> Pre')|safe,
+      next=('Next <span aria-hidden="true">&rarr;</span>')|safe,
+      align="center") }}
+    </nav>
+{% endblock page_content %}

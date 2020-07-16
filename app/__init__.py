@@ -112,6 +112,12 @@ def count_post_nums_with_archive(search_archive):
     return post_nums
 
 
+def count_post_nums_with_topic(search_topic):
+    post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).filter_by(
+        collection=search_topic).scalar()
+    return post_nums
+
+
 def format_date(str):
     return datetime.strptime(str, "%Y/%m").strftime("%b.%Y")
 
@@ -153,6 +159,7 @@ def create_app(env=None):
     app_.add_template_filter(count_post_nums_with_tag, 'count_post_nums_with_tag')
     app_.add_template_filter(count_post_nums_with_category, 'count_post_nums_with_category')
     app_.add_template_filter(count_post_nums_with_archive, 'count_post_nums_with_archive')
+    app_.add_template_filter(count_post_nums_with_topic, 'count_post_nums_with_topic')
 
     app_.add_template_filter(format_date, 'format_date')
 

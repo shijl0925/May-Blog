@@ -78,7 +78,7 @@ class PostForm(FlaskForm):
     )
 
     collection = QuerySelectField(
-        _('Collection'),
+        _('Topic'),
         render_kw={'class': 'browser-default custom-select'},
         query_factory=query_collection_factory,
         get_pk=get_pk
@@ -118,7 +118,26 @@ class CreateForm(FlaskForm):
         _('Name'),
         validators=[
             validators.DataRequired(),
-            validators.Length(1, 30)
+            validators.Length(1, 256)
+        ],
+        render_kw={'class': 'form-control'}
+    )
+
+
+class CreateTopicForm(CreateForm):
+    description = StringField(
+        _('Description'),
+        validators=[
+            validators.DataRequired(),
+            validators.Length(1, 256)
+        ],
+        render_kw={'class': 'form-control'}
+    )
+    background = StringField(
+        _('Background'),
+        validators=[
+            validators.DataRequired(),
+            validators.Length(1, 256)
         ],
         render_kw={'class': 'form-control'}
     )

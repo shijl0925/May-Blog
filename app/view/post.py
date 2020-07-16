@@ -5,7 +5,7 @@ from sqlalchemy import or_
 from slugify import slugify
 from flask_babelex import gettext as _
 from app.model.models import Post, Category, Tag, Archive, Collection, Comment
-from app.form.forms import PostForm, OperateForm, CreateForm
+from app.form.forms import PostForm, OperateForm, CreateForm, CreateTopicForm
 from app.controller.extensions import db
 from app.utils.common import redirect_back
 from app.utils.decorator import permission_required
@@ -65,6 +65,41 @@ def archives():
     )
 
 
+@posts_bp.route('/tags', methods=['GET'])
+def tags():
+    tags = Tag.query.all()
+    return flask.render_template("tags.html", tags=tags)
+
+
+@posts_bp.route('/topics', methods=['GET'])
+def topics():
+    page = int(flask.request.args.get('page', 1))
+    pagination = Collection.query.paginate(page=page, per_page=6)
+    return flask.render_template(
+        "topics.html",
+        pagination=pagination,
+        topics=pagination.items
+    )
+
+
+@posts_bp.route('/topic/<int:topic_id>', methods=['GET'])
+def topic(topic_id):
+    search_topic = Collection.query.get(topic_id)
+    if not search_topic:
+        flask.abort(404)
+
+    page = int(flask.request.args.get('page', 1))
+    pagination = Post.query.filter_by(is_draft=False).with_parent(search_topic).order_by(Post.timestamp.desc()).\
+        paginate(page=page, per_page=10)
+
+    return flask.render_template(
+        "topic.html",
+        pagination=pagination,
+        posts=pagination.items,
+        topic=search_topic
+    )
+
+
 @posts_bp.route('/drafts', methods=['GET'])
 @login_required
 @permission_required('ADMINISTER')
@@ -118,7 +153,7 @@ def search_post():
 def create_post(editor):
     post_form = PostForm()
     create_category_form = CreateForm()
-    create_collection_form = CreateForm()
+    create_collection_form = CreateTopicForm()
     create_tag_form = CreateForm()
     if post_form.validate_on_submit():
         title = post_form.title.data
@@ -185,7 +220,7 @@ def create_post(editor):
 def edit_post(post_slug):
     post_form = PostForm()
     create_category_form = CreateForm()
-    create_collection_form = CreateForm()
+    create_collection_form = CreateTopicForm()
     create_tag_form = CreateForm()
 
     search_post = Post.query.filter_by(slug=post_slug).first_or_404()
@@ -309,11 +344,13 @@ def create_category():
 def create_collection():
     if flask.request.method == "POST":
         collection_name = flask.request.form.get('name')
+        collection_description = flask.request.form.get('description')
+        collection_background = flask.request.form.get('background')
         if Collection.query.filter_by(name=collection_name).first():
             flask.flash(_("This Collection already exists!"), category="warning")
             return redirect_back()
 
-        collection = Collection(name=collection_name)
+        collection = Collection(name=collection_name, description=collection_description, background=collection_background)
         db.session.add(collection)
         db.session.commit()
         return redirect_back()

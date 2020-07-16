@@ -26,7 +26,9 @@
                                 </a>
                             </li>
 
-                            {{ nav_active_item(['posts.archive'], _('Archive'), 'fas fa-archive') }}
+                            {{ nav_active_item(['posts.topics', 'posts.topic'], _('TOPICS'), 'fas fa-network-wired') }}
+                            {{ nav_active_item(['posts.archives'], _('ARCHIVES'), 'fas fa-archive') }}
+
                         </ul>
                         <form class="md-form mb-0" style="margin-top: -15px;" role="search" method="GET" action="{{ url_for('posts.search_post') }}">
                           <div class="form-group md-form my-0 waves-light waves-effect waves-light">

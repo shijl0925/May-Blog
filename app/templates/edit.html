@@ -180,7 +180,7 @@
                     <div class="modal-dialog modal-full-height modal-right modal-notify modal-info">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h6 class="modal-title" id="exampleModalLabel3">{{ _("Creat a new collection") }}</h6>
+                                <h6 class="modal-title" id="exampleModalLabel3">{{ _("Creat a new topic") }}</h6>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -189,6 +189,8 @@
                                 <form class="mt-3" method="POST" action="{{ url_for('posts.create_collection') }}">
                                     {{ create_collection_form.csrf_token }}
                                     {{ render_field_with_errors(create_collection_form.name) }}
+                                    {{ render_field_with_errors(create_collection_form.description) }}
+                                    {{ render_field_with_errors(create_collection_form.background) }}
 
                                     <div style="position: fixed;right: 0;bottom: 0;">
                                         <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">{{ _("Close") }}</button>

@@ -219,10 +219,16 @@ class Collection(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(256), unique=True)
+    description = db.Column(db.String(256), nullable=True)
+    background = db.Column(db.String(256), nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.now)
+
     posts = db.relationship('Post', back_populates='collection')
 
     def __repr__(self):
         return '<Collection %r>' % self.name
+
+    __mapper_args__ = {"order_by": timestamp.desc()}
 
 
 post_tag = db.Table(

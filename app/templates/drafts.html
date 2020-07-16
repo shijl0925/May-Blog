@@ -16,14 +16,16 @@
     <div class="row mt-3 pt-3">
         <!-- Main List -->
         <div class="col-lg-9 col-12 mt-1">
-            {% if drafts %}
-                <div class="text-center mb-4">
-                    <h3 class="font-weight-bold pt-3 mb-5">
-                        {{ _("Draft Posts") }} <span class="badge pink">{{ draft_nums }}</span>
-                    </h3>
+            <section class="pb-3 text-lg-left">
+                <span class="page-title dark-grey-text">
+                    {{ _("Draft Posts") }}
+                </span>
+                <div style="display: inline-block;vertical-align: top; margin-left: 0; margin-top: -5px;">
+                    <span class="badge badge-pill badge-primary font-small">{{ draft_nums }}</span>
                 </div>
                 <hr class="mb-5">
-                <section class="pb-3 text-lg-left">
+            
+                {% if drafts %}
                     {% for post in drafts %}
                       <div class="row">
                         <div class="col-lg-5 mb-1">
@@ -89,19 +91,19 @@
                       </div>
                       <hr class="mb-5">
                     {% endfor %}
-                </section>
-                <nav class="mb-5 pb-2">
-                  {% from "mdbootstrap/pagination.html" import render_pagination %}
-                  {{ render_pagination(pagination,
-                  prev=('<span aria-hidden="true">&larr;</span> Pre')|safe,
-                  next=('Next <span aria-hidden="true">&rarr;</span>')|safe,
-                  align="center") }}
-                </nav>
-            {% else %}
-                <div class="text-center mt-sm-2">
-                    <h6>{{ _("No Draft Posts.") }}</h6>
-                </div>
-            {% endif %}
+                    <nav class="mb-5 pb-2">
+                      {% from "mdbootstrap/pagination.html" import render_pagination %}
+                      {{ render_pagination(pagination,
+                      prev=('<span aria-hidden="true">&larr;</span> Pre')|safe,
+                      next=('Next <span aria-hidden="true">&rarr;</span>')|safe,
+                      align="center") }}
+                    </nav>
+                {% else %}
+                    <div class="text-center mt-sm-2">
+                        <h6>{{ _("No Draft Posts.") }}</h6>
+                    </div>
+                {% endif %}
+            </section>
         </div>
         <!-- Main List -->
 

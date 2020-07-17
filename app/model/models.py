@@ -410,3 +410,13 @@ class About(db.Model):
 
     def __repr__(self):
         return '<About %r>' % self.id
+
+
+class Link(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    name = db.Column(db.String(32))
+    url = db.Column(db.String(256))
+
+    def __repr__(self):
+        return '<Link %r>' % self.id

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-06-30 15:53+0800\n"
+"POT-Creation-Date: 2020-07-17 15:14+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgstr ""
 msgid "Remember Me"
 msgstr ""
 
-#: form/auth.py:33 templates/base.html:66 templates/security/_menu.html:4
+#: form/auth.py:33 templates/base.html:72 templates/security/_menu.html:4
 #: templates/security/login_user.html:9
 msgid "Login"
 msgstr ""
@@ -76,11 +76,11 @@ msgstr ""
 msgid "Website"
 msgstr ""
 
-#: form/auth.py:111
+#: form/auth.py:111 templates/about.html:122
 msgid "About me"
 msgstr ""
 
-#: form/auth.py:116 templates/post.html:260
+#: form/auth.py:116 templates/_reply.html:48
 msgid "Submit"
 msgstr ""
 
@@ -88,7 +88,7 @@ msgstr ""
 msgid "Upload your file"
 msgstr ""
 
-#: form/auth.py:126 templates/file/upload.html:39
+#: form/auth.py:126 templates/file/upload.html:46 templates/file/upload.html:51
 msgid "Upload"
 msgstr ""
 
@@ -104,8 +104,8 @@ msgstr ""
 msgid "New Password"
 msgstr ""
 
-#: form/file.py:13 form/forms.py:117 templates/file/upload.html:50
-#: templates/post.html:228
+#: form/file.py:13 form/forms.py:118 templates/_reply.html:16
+#: templates/file/upload.html:61
 msgid "Name"
 msgstr ""
 
@@ -114,7 +114,7 @@ msgid "Title"
 msgstr ""
 
 #: form/forms.py:64
-msgid "Abstract"
+msgid "Background Image Url"
 msgstr ""
 
 #: form/forms.py:73
@@ -122,7 +122,7 @@ msgid "Category"
 msgstr ""
 
 #: form/forms.py:81
-msgid "Collection"
+msgid "Topic"
 msgstr ""
 
 #: form/forms.py:88
@@ -133,164 +133,196 @@ msgstr ""
 msgid "Body"
 msgstr ""
 
-#: form/forms.py:101
+#: form/forms.py:102
 msgid "Deny Comment"
 msgstr ""
 
-#: form/forms.py:102
+#: form/forms.py:103
 msgid "Set Private"
 msgstr ""
 
-#: form/forms.py:105
+#: form/forms.py:106
 msgid "Save As Draft"
 msgstr ""
 
-#: form/forms.py:110
+#: form/forms.py:111
 msgid "Publish"
 msgstr ""
 
-#: templates/base.html:26
-msgid "Home"
+#: form/forms.py:129
+msgid "Description"
 msgstr ""
 
-#: templates/base.html:30
-msgid "Archive"
+#: form/forms.py:137
+msgid "Background"
 msgstr ""
 
-#: templates/base.html:34
-msgid "Search"
-msgstr ""
-
-#: templates/base.html:51
-msgid "Admin Dashboard"
-msgstr ""
-
-#: templates/base.html:58
-msgid "Logout"
-msgstr ""
-
-#: templates/create.html:140 templates/edit.html:134
-msgid "Creat a new category"
-msgstr ""
-
-#: templates/create.html:151 templates/create.html:176
-#: templates/create.html:201 templates/edit.html:145 templates/edit.html:170
-#: templates/edit.html:195
-msgid "Close"
-msgstr ""
-
-#: templates/create.html:152 templates/create.html:177
-#: templates/create.html:202 templates/edit.html:146 templates/edit.html:171
-#: templates/edit.html:196
-msgid "Save"
-msgstr ""
-
-#: templates/create.html:165 templates/edit.html:159
-msgid "Creat a new tag"
-msgstr ""
-
-#: templates/create.html:190 templates/edit.html:184
-msgid "Creat a new collection"
-msgstr ""
-
-#: templates/drafts.html:22
-msgid "Draft Posts"
-msgstr ""
-
-#: templates/drafts.html:64 templates/post.html:105
-msgid "Edit"
-msgstr ""
-
-#: templates/drafts.html:70 templates/file/upload.html:53
-#: templates/post.html:111 templates/post.html:201
-msgid "Delete"
-msgstr ""
-
-#: templates/drafts.html:88
-msgid "No Draft Posts."
-msgstr ""
-
-#: templates/index.html:98
-msgid "welcome to my blog"
-msgstr ""
-
-#: templates/index.html:101
-msgid "Stay hungry，Stay foolish"
-msgstr ""
-
-#: templates/list.html:66
-msgid "No Posts."
-msgstr ""
-
-#: templates/markdown.html:9
+#: templates/_ckeditor.html:9 templates/_markdown.html:9
 msgid "Upload new File"
 msgstr ""
 
-#: templates/post.html:141
-msgid "RELATED POSTS"
+#: templates/_collection.html:7
+msgid "TOPIC"
 msgstr ""
 
-#: templates/post.html:178
+#: templates/_comments.html:6
 msgid "Comments"
 msgstr ""
 
-#: templates/post.html:215
-msgid "Leave a reply"
+#: templates/_comments.html:35 templates/drafts.html:86
+#: templates/file/upload.html:64 templates/post.html:126
+msgid "Delete"
 msgstr ""
 
-#: templates/post.html:241
-msgid "Email"
+#: templates/_posts.html:5
+msgid "TAG"
 msgstr ""
 
-#: templates/post.html:256
-msgid "Write something here..."
-msgstr ""
-
-#: templates/sidebar.html:31
-msgid "Create"
-msgstr ""
-
-#: templates/sidebar.html:36
-msgid "Draft"
-msgstr ""
-
-#: templates/sidebar.html:56
-msgid "POSTS"
-msgstr ""
-
-#: templates/sidebar.html:69 templates/sidebar.html:121
-msgid "TAGS"
-msgstr ""
-
-#: templates/sidebar.html:82 templates/sidebar.html:197
-msgid "CATEGORIES"
-msgstr ""
-
-#: templates/sidebar.html:152
+#: templates/_posts.html:7
 msgid "ARCHIVE"
 msgstr ""
 
-#: templates/sidebar.html:231
+#: templates/_posts.html:9
+msgid "CATEGORY"
+msgstr ""
+
+#: templates/_posts.html:11
+msgid "Topic Posts"
+msgstr ""
+
+#: templates/_posts.html:13
+msgid "Posts"
+msgstr ""
+
+#: templates/_posts.html:87
+msgid "No Posts."
+msgstr ""
+
+#: templates/_reply.html:3
+msgid "Leave a reply"
+msgstr ""
+
+#: templates/_reply.html:29
+msgid "Email"
+msgstr ""
+
+#: templates/_reply.html:44
+msgid "Write something here..."
+msgstr ""
+
+#: templates/_sidebar.html:31
+msgid "Create"
+msgstr ""
+
+#: templates/_sidebar.html:36
+msgid "Draft"
+msgstr ""
+
+#: templates/_sidebar.html:56
+msgid "POSTS"
+msgstr ""
+
+#: templates/_sidebar.html:69 templates/_sidebar.html:121
+msgid "TAGS"
+msgstr ""
+
+#: templates/_sidebar.html:82 templates/_sidebar.html:197
+msgid "CATEGORIES"
+msgstr ""
+
+#: templates/_sidebar.html:152 templates/base.html:30
+msgid "ARCHIVES"
+msgstr ""
+
+#: templates/_sidebar.html:231
 msgid "POPULAR POSTS"
 msgstr ""
 
-#: templates/tail.html:10
+#: templates/_tail.html:10
 msgid "LATESTS POSTS"
 msgstr ""
 
-#: templates/tail.html:50
+#: templates/_tail.html:56
 msgid "OLDER POSTS"
 msgstr ""
 
-#: templates/file/upload.html:26
+#: templates/about.html:98 templates/index.html:98
+msgid "welcome to my blog"
+msgstr ""
+
+#: templates/base.html:25
+msgid "Home"
+msgstr ""
+
+#: templates/base.html:29
+msgid "TOPICS"
+msgstr ""
+
+#: templates/base.html:31
+msgid "ABOUT"
+msgstr ""
+
+#: templates/base.html:36
+msgid "Search"
+msgstr ""
+
+#: templates/base.html:53
+msgid "Upload Image"
+msgstr ""
+
+#: templates/base.html:57
+msgid "Admin Dashboard"
+msgstr ""
+
+#: templates/base.html:64
+msgid "Logout"
+msgstr ""
+
+#: templates/create.html:138 templates/edit.html:133
+msgid "Creat a new category"
+msgstr ""
+
+#: templates/create.html:149 templates/create.html:174
+#: templates/create.html:201 templates/edit.html:144 templates/edit.html:169
+#: templates/edit.html:196
+msgid "Close"
+msgstr ""
+
+#: templates/create.html:150 templates/create.html:175
+#: templates/create.html:202 templates/edit.html:145 templates/edit.html:170
+#: templates/edit.html:197
+msgid "Save"
+msgstr ""
+
+#: templates/create.html:163 templates/edit.html:158
+msgid "Creat a new tag"
+msgstr ""
+
+#: templates/create.html:188 templates/edit.html:183
+msgid "Creat a new topic"
+msgstr ""
+
+#: templates/drafts.html:21
+msgid "Draft Posts"
+msgstr ""
+
+#: templates/drafts.html:80 templates/post.html:120
+msgid "Edit"
+msgstr ""
+
+#: templates/drafts.html:103
+msgid "No Draft Posts."
+msgstr ""
+
+#: templates/file/upload.html:23
 msgid "Upload Images"
 msgstr ""
 
-#: templates/file/upload.html:51
+#: templates/file/upload.html:62
 msgid "Path"
 msgstr ""
 
-#: templates/file/upload.html:52
+#: templates/file/upload.html:63
 msgid "Preview"
 msgstr ""
 
@@ -314,55 +346,55 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
-#: view/file.py:44
+#: view/file.py:50
 msgid "This file extension is not allowed."
 msgstr ""
 
-#: view/file.py:48
+#: view/file.py:54
 msgid "File already exists, choose an other name."
 msgstr ""
 
-#: view/file.py:53
+#: view/file.py:60
 msgid "Image saved: "
 msgstr ""
 
-#: view/file.py:72
+#: view/file.py:91
 msgid "File does not exist!"
 msgstr ""
 
-#: view/file.py:76
+#: view/file.py:101
 msgid "Delete Image: "
 msgstr ""
 
-#: view/post.py:175 view/post.py:271
+#: view/post.py:252 view/post.py:349
 msgid "The Post has been saved as a Draft Successful!"
 msgstr ""
 
-#: view/post.py:180
+#: view/post.py:256
 msgid "Create A New Post Successful!"
 msgstr ""
 
-#: view/post.py:276
+#: view/post.py:353
 msgid "Update and Publish The Post Successful!"
 msgstr ""
 
-#: view/post.py:297
+#: view/post.py:374
 msgid "Delete The Post Successful!"
 msgstr ""
 
-#: view/post.py:308
+#: view/post.py:385
 msgid "This Category already exists!"
 msgstr ""
 
-#: view/post.py:324
+#: view/post.py:403
 msgid "This Collection already exists!"
 msgstr ""
 
-#: view/post.py:340
+#: view/post.py:419
 msgid "This Tag already exists!"
 msgstr ""
 
-#: view/post.py:377
+#: view/post.py:456
 msgid "Delete The Comment Successful!"
 msgstr ""
 

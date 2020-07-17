@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-06-30 15:53+0800\n"
-"PO-Revision-Date: 2020-06-30 15:53+0800\n"
+"POT-Creation-Date: 2020-07-17 15:14+0800\n"
+"PO-Revision-Date: 2020-07-17 15:14+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgstr "密码"
 msgid "Remember Me"
 msgstr "记住我"
 
-#: form/auth.py:33 templates/base.html:66 templates/security/_menu.html:4
+#: form/auth.py:33 templates/base.html:72 templates/security/_menu.html:4
 #: templates/security/login_user.html:9
 msgid "Login"
 msgstr "登录"
@@ -77,11 +77,11 @@ msgstr "地址"
 msgid "Website"
 msgstr "网站"
 
-#: form/auth.py:111
+#: form/auth.py:111 templates/about.html:122
 msgid "About me"
 msgstr "关于我"
 
-#: form/auth.py:116 templates/post.html:260
+#: form/auth.py:116 templates/_reply.html:48
 msgid "Submit"
 msgstr "提交"
 
@@ -89,7 +89,7 @@ msgstr "提交"
 msgid "Upload your file"
 msgstr "上传你的文件"
 
-#: form/auth.py:126 templates/file/upload.html:39
+#: form/auth.py:126 templates/file/upload.html:46 templates/file/upload.html:51
 msgid "Upload"
 msgstr "上传"
 
@@ -105,8 +105,8 @@ msgstr "旧密码"
 msgid "New Password"
 msgstr "新密码"
 
-#: form/file.py:13 form/forms.py:117 templates/file/upload.html:50
-#: templates/post.html:228
+#: form/file.py:13 form/forms.py:118 templates/_reply.html:16
+#: templates/file/upload.html:61
 msgid "Name"
 msgstr "名字"
 
@@ -115,16 +115,16 @@ msgid "Title"
 msgstr "标题"
 
 #: form/forms.py:64
-msgid "Abstract"
-msgstr "摘要"
+msgid "Background Image Url"
+msgstr "背景图片地址"
 
 #: form/forms.py:73
 msgid "Category"
 msgstr "分类"
 
 #: form/forms.py:81
-msgid "Collection"
-msgstr "合集"
+msgid "Topic"
+msgstr "专题"
 
 #: form/forms.py:88
 msgid "Tags"
@@ -134,164 +134,196 @@ msgstr "标签"
 msgid "Body"
 msgstr "内容"
 
-#: form/forms.py:101
+#: form/forms.py:102
 msgid "Deny Comment"
 msgstr "禁止评论"
 
-#: form/forms.py:102
+#: form/forms.py:103
 msgid "Set Private"
 msgstr "仅自己可见"
 
-#: form/forms.py:105
+#: form/forms.py:106
 msgid "Save As Draft"
 msgstr "保存草稿"
 
-#: form/forms.py:110
+#: form/forms.py:111
 msgid "Publish"
 msgstr "发布"
 
-#: templates/base.html:26
-msgid "Home"
-msgstr "主页"
+#: form/forms.py:129
+msgid "Description"
+msgstr "说明"
 
-#: templates/base.html:30
-msgid "Archive"
-msgstr "存档"
+#: form/forms.py:137
+msgid "Background"
+msgstr "背景图片"
 
-#: templates/base.html:34
-msgid "Search"
-msgstr "搜索..."
-
-#: templates/base.html:51
-msgid "Admin Dashboard"
-msgstr "管理后台"
-
-#: templates/base.html:58
-msgid "Logout"
-msgstr "退出"
-
-#: templates/create.html:140 templates/edit.html:134
-msgid "Creat a new category"
-msgstr "创建新的分类"
-
-#: templates/create.html:151 templates/create.html:176
-#: templates/create.html:201 templates/edit.html:145 templates/edit.html:170
-#: templates/edit.html:195
-msgid "Close"
-msgstr "关闭"
-
-#: templates/create.html:152 templates/create.html:177
-#: templates/create.html:202 templates/edit.html:146 templates/edit.html:171
-#: templates/edit.html:196
-msgid "Save"
-msgstr "保存"
-
-#: templates/create.html:165 templates/edit.html:159
-msgid "Creat a new tag"
-msgstr "创建新的标签"
-
-#: templates/create.html:190 templates/edit.html:184
-msgid "Creat a new collection"
-msgstr "创建新的合集"
-
-#: templates/drafts.html:22
-msgid "Draft Posts"
-msgstr "草稿箱"
-
-#: templates/drafts.html:64 templates/post.html:105
-msgid "Edit"
-msgstr "编辑"
-
-#: templates/drafts.html:70 templates/file/upload.html:53
-#: templates/post.html:111 templates/post.html:201
-msgid "Delete"
-msgstr "删除"
-
-#: templates/drafts.html:88
-msgid "No Draft Posts."
-msgstr "暂无草稿"
-
-#: templates/index.html:98
-msgid "welcome to my blog"
-msgstr "欢迎来到我的博客"
-
-#: templates/index.html:101
-msgid "Stay hungry，Stay foolish"
-msgstr "求知若饥，虚心若愚"
-
-#: templates/list.html:66
-msgid "No Posts."
-msgstr "暂无文章"
-
-#: templates/markdown.html:9
+#: templates/_ckeditor.html:9 templates/_markdown.html:9
 msgid "Upload new File"
-msgstr "上传新的文件"
+msgstr "上传文件"
 
-#: templates/post.html:141
-msgid "RELATED POSTS"
-msgstr "相关文章"
+#: templates/_collection.html:7
+msgid "TOPIC"
+msgstr "专题"
 
-#: templates/post.html:178
+#: templates/_comments.html:6
 msgid "Comments"
 msgstr "评论"
 
-#: templates/post.html:215
+#: templates/_comments.html:35 templates/drafts.html:86
+#: templates/file/upload.html:64 templates/post.html:126
+msgid "Delete"
+msgstr "删除"
+
+#: templates/_posts.html:5
+msgid "TAG"
+msgstr "标签"
+
+#: templates/_posts.html:7
+msgid "ARCHIVE"
+msgstr "归档"
+
+#: templates/_posts.html:9
+msgid "CATEGORY"
+msgstr "分类"
+
+#: templates/_posts.html:11
+msgid "Topic Posts"
+msgstr "专题博客"
+
+#: templates/_posts.html:13
+msgid "Posts"
+msgstr "博客"
+
+#: templates/_posts.html:87
+msgid "No Posts."
+msgstr "暂无文章"
+
+#: templates/_reply.html:3
 msgid "Leave a reply"
 msgstr "发表评论"
 
-#: templates/post.html:241
+#: templates/_reply.html:29
 msgid "Email"
 msgstr "邮箱"
 
-#: templates/post.html:256
+#: templates/_reply.html:44
 msgid "Write something here..."
 msgstr "写下你的评论..."
 
-#: templates/sidebar.html:31
+#: templates/_sidebar.html:31
 msgid "Create"
 msgstr "写文章"
 
-#: templates/sidebar.html:36
+#: templates/_sidebar.html:36
 msgid "Draft"
 msgstr "草稿箱"
 
-#: templates/sidebar.html:56
+#: templates/_sidebar.html:56
 msgid "POSTS"
 msgstr "文章"
 
-#: templates/sidebar.html:69 templates/sidebar.html:121
+#: templates/_sidebar.html:69 templates/_sidebar.html:121
 msgid "TAGS"
 msgstr "标签"
 
-#: templates/sidebar.html:82 templates/sidebar.html:197
+#: templates/_sidebar.html:82 templates/_sidebar.html:197
 msgid "CATEGORIES"
 msgstr "分类"
 
-#: templates/sidebar.html:152
-msgid "ARCHIVE"
+#: templates/_sidebar.html:152 templates/base.html:30
+msgid "ARCHIVES"
 msgstr "存档"
 
-#: templates/sidebar.html:231
+#: templates/_sidebar.html:231
 msgid "POPULAR POSTS"
 msgstr "热门文章"
 
-#: templates/tail.html:10
+#: templates/_tail.html:10
 msgid "LATESTS POSTS"
 msgstr "最新的文章"
 
-#: templates/tail.html:50
+#: templates/_tail.html:56
 msgid "OLDER POSTS"
 msgstr "以前的文章"
 
-#: templates/file/upload.html:26
+#: templates/about.html:98 templates/index.html:98
+msgid "welcome to my blog"
+msgstr "欢迎来到我的博客"
+
+#: templates/base.html:25
+msgid "Home"
+msgstr "主页"
+
+#: templates/base.html:29
+msgid "TOPICS"
+msgstr "专题"
+
+#: templates/base.html:31
+msgid "ABOUT"
+msgstr "关于"
+
+#: templates/base.html:36
+msgid "Search"
+msgstr "搜索"
+
+#: templates/base.html:53
+msgid "Upload Image"
+msgstr "上传图片"
+
+#: templates/base.html:57
+msgid "Admin Dashboard"
+msgstr "管理后台"
+
+#: templates/base.html:64
+msgid "Logout"
+msgstr "退出"
+
+#: templates/create.html:138 templates/edit.html:133
+msgid "Creat a new category"
+msgstr "创建新的分类"
+
+#: templates/create.html:149 templates/create.html:174
+#: templates/create.html:201 templates/edit.html:144 templates/edit.html:169
+#: templates/edit.html:196
+msgid "Close"
+msgstr "关闭"
+
+#: templates/create.html:150 templates/create.html:175
+#: templates/create.html:202 templates/edit.html:145 templates/edit.html:170
+#: templates/edit.html:197
+msgid "Save"
+msgstr "保存"
+
+#: templates/create.html:163 templates/edit.html:158
+msgid "Creat a new tag"
+msgstr "创建新的标签"
+
+#: templates/create.html:188 templates/edit.html:183
+msgid "Creat a new topic"
+msgstr "创建新的专题"
+
+#: templates/drafts.html:21
+msgid "Draft Posts"
+msgstr "草稿箱"
+
+#: templates/drafts.html:80 templates/post.html:120
+msgid "Edit"
+msgstr "编辑"
+
+#: templates/drafts.html:103
+msgid "No Draft Posts."
+msgstr "暂无草稿"
+
+#: templates/file/upload.html:23
 msgid "Upload Images"
 msgstr "上传图片"
 
-#: templates/file/upload.html:51
+#: templates/file/upload.html:62
 msgid "Path"
 msgstr "路径"
 
-#: templates/file/upload.html:52
+#: templates/file/upload.html:63
 msgid "Preview"
 msgstr "预览"
 
@@ -315,55 +347,55 @@ msgstr "重置密码"
 msgid "Confirm"
 msgstr "确认"
 
-#: view/file.py:44
+#: view/file.py:50
 msgid "This file extension is not allowed."
 msgstr "此文件类型不允许上传。"
 
-#: view/file.py:48
+#: view/file.py:54
 msgid "File already exists, choose an other name."
 msgstr "文件已存在，请选择新的名字。"
 
-#: view/file.py:53
+#: view/file.py:60
 msgid "Image saved: "
 msgstr "保存图片："
 
-#: view/file.py:72
+#: view/file.py:91
 msgid "File does not exist!"
 msgstr "文件不存在！"
 
-#: view/file.py:76
+#: view/file.py:101
 msgid "Delete Image: "
 msgstr "删除图片："
 
-#: view/post.py:175 view/post.py:271
+#: view/post.py:252 view/post.py:349
 msgid "The Post has been saved as a Draft Successful!"
 msgstr "文章已成功保存成草稿！"
 
-#: view/post.py:180
+#: view/post.py:256
 msgid "Create A New Post Successful!"
 msgstr "新的文章创建成功！"
 
-#: view/post.py:276
+#: view/post.py:353
 msgid "Update and Publish The Post Successful!"
 msgstr "文章已更新并发布成功！"
 
-#: view/post.py:297
+#: view/post.py:374
 msgid "Delete The Post Successful!"
 msgstr "文章已删除成功！"
 
-#: view/post.py:308
+#: view/post.py:385
 msgid "This Category already exists!"
 msgstr "此分类已存在！"
 
-#: view/post.py:324
+#: view/post.py:403
 msgid "This Collection already exists!"
 msgstr "此合集已存在!"
 
-#: view/post.py:340
+#: view/post.py:419
 msgid "This Tag already exists!"
 msgstr "此标签已存在！"
 
-#: view/post.py:377
+#: view/post.py:456
 msgid "Delete The Comment Successful!"
 msgstr "评论已删除成功！"
 

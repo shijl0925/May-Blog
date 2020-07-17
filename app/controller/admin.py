@@ -13,7 +13,7 @@ from flask_admin.menu import MenuLink
 from flask_admin.helpers import get_form_data
 from flask_security import current_user
 from flask_security.utils import encrypt_password
-from app.model.models import User, Role, Permission, Settings, Post, Category, Archive, Tag, Collection, Comment, Tracker, Request, About
+from app.model.models import User, Role, Permission, Settings, Post, Category, Archive, Tag, Collection, Comment, Tracker, Request, About, Link
 from app.controller.extensions import db, avatars
 from app.form.auth import CropAvatarForm, UploadForm
 from app.config import BaseConfig
@@ -318,6 +318,10 @@ class AboutBaseModelview(MyBaseModelview):
     create_template = edit_template = 'myadmin3/ckeditor.html'
 
 
+class LinkBaseModelview(MyBaseModelview):
+    column_searchable_list = ['name']
+
+
 class PostBaseModelview(MyBaseModelview):
     column_searchable_list = ["title", "body"]
     column_editable_list = ["category", "is_draft", "deny_comment"]
@@ -452,6 +456,15 @@ admin.add_view(TrackerBaseModelview(Tracker,
                                     menu_icon_value='fa-suitcase-rolling',
                                     name='Tracker',
                                     endpoint='tracker'))
+
+
+admin.add_view(LinkBaseModelview(Link,
+                                 db.session,
+                                 menu_icon_type='fas',
+                                 menu_icon_value='fa-link',
+                                 name='Link',
+                                 endpoint='link'))
+
 
 # admin.add_view(MyBaseModelview(Settings,
 #                                db.session,

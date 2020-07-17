@@ -247,7 +247,12 @@
             <div class="col-8" style="padding: 0 5px;">
               <h6 class="mt-0 font-small">
                 <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="dark-grey-text">
-                  <strong>{{ post.title }}</strong>
+                  <strong>
+                      <span data-toggle="tooltip" data-placement="top"
+                          title="{{ post.title }}">
+                          {{ post.title|truncate(20) }}
+                      </span>
+                  </strong>
                 </a>
                 {% if post.is_privacy %}
                   <span class="Label Label--outline v-align-middle ml-1 mb-1">

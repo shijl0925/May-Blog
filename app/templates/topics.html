@@ -60,10 +60,18 @@
                   <div class="card-body" style="height: 225px;">
 
                     <!-- Title -->
-                    <h4 class="card-title"><strong>{{ topic.name }}</strong></h4>
+                    <h4 class="card-title">
+                        <strong>
+                            <span data-toggle="tooltip" data-placement="top"
+                              title="{{ topic.name }}">
+                              {{ topic.name|truncate(30) }}
+                            </span>
+                        </strong>
+                    </h4>
+                    <hr>
 
                     <!-- Text -->
-                    <p class="card-text mt-3">{{ topic.description|truncate(250) }}</p>
+                    <p class="card-text">{{ topic.description|truncate(250) }}</p>
                   </div>
                   <!-- Card content -->
 
@@ -89,7 +97,7 @@
               {% endfor %}
         </div>
     </section>
-    <nav class="mb-5 pb-2">
+    <nav class="mb-3">
       {% from "mdbootstrap/pagination.html" import render_pagination %}
       {{ render_pagination(pagination,
       prev=('<span aria-hidden="true">&larr;</span> Pre')|safe,

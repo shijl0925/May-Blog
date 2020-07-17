@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-07-17 15:14+0800\n"
-"PO-Revision-Date: 2020-07-17 15:14+0800\n"
+"POT-Creation-Date: 2020-07-17 16:09+0800\n"
+"PO-Revision-Date: 2020-07-17 16:14+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -239,6 +239,10 @@ msgstr "存档"
 msgid "POPULAR POSTS"
 msgstr "热门文章"
 
+#: templates/_sidebar.html:292
+msgid "LINKS"
+msgstr "链接"
+
 #: templates/_tail.html:10
 msgid "LATESTS POSTS"
 msgstr "最新的文章"
@@ -367,35 +371,39 @@ msgstr "文件不存在！"
 msgid "Delete Image: "
 msgstr "删除图片："
 
-#: view/post.py:252 view/post.py:349
+#: view/post.py:230 view/post.py:335
+msgid "This post name already exists, choose an other name."
+msgstr "文章名字已存在，请重新填写。"
+
+#: view/post.py:257 view/post.py:361
 msgid "The Post has been saved as a Draft Successful!"
 msgstr "文章已成功保存成草稿！"
 
-#: view/post.py:256
+#: view/post.py:261
 msgid "Create A New Post Successful!"
 msgstr "新的文章创建成功！"
 
-#: view/post.py:353
+#: view/post.py:365
 msgid "Update and Publish The Post Successful!"
 msgstr "文章已更新并发布成功！"
 
-#: view/post.py:374
+#: view/post.py:386
 msgid "Delete The Post Successful!"
 msgstr "文章已删除成功！"
 
-#: view/post.py:385
+#: view/post.py:397
 msgid "This Category already exists!"
 msgstr "此分类已存在！"
 
-#: view/post.py:403
-msgid "This Collection already exists!"
-msgstr "此合集已存在!"
+#: view/post.py:415
+msgid "This topic already exists!"
+msgstr "此专题已存在!"
 
-#: view/post.py:419
+#: view/post.py:435
 msgid "This Tag already exists!"
 msgstr "此标签已存在！"
 
-#: view/post.py:456
+#: view/post.py:472
 msgid "Delete The Comment Successful!"
 msgstr "评论已删除成功！"
 

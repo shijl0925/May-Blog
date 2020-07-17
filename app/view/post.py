@@ -225,9 +225,14 @@ def create_post(editor):
             body = post_form.body.data
             is_markdown = False
 
+        slug = slugify(title, max_length=100)
+        if Post.query.filter_by(slug=slug).first():
+            flask.flash(_("This post name already exists, choose an other name."), category="warning")
+            return redirect_back()
+
         post = Post(
             title=title,
-            slug=slugify(title, max_length=100),
+            slug=slug,
             category=Category.query.filter_by(name=category).first(),
             collection=Collection.query.filter_by(name=collection).first(),
             tags=[Tag.query.filter_by(name=item).first() for item in tag_names],
@@ -281,6 +286,7 @@ def edit_post(post_slug):
     is_markdown = search_post.is_markdown
 
     post_form.title.data = search_post.title
+    old_slug = search_post.slug
 
     if search_post.category:
         post_form.category.data = search_post.category.name
@@ -323,8 +329,14 @@ def edit_post(post_slug):
         else:
             body = flask.request.form.get('body')
 
+        new_slug = slugify(title, max_length=100)
+
+        if new_slug != old_slug and Post.query.filter_by(slug=new_slug).first():
+            flask.flash(_("This post name already exists, choose an other name."), category="warning")
+            return redirect_back()
+
         search_post.title = title
-        search_post.slug = slugify(title, max_length=100)
+        search_post.slug = new_slug
 
         category = Category.query.filter_by(name=category_name).first()
         if category:
@@ -400,10 +412,14 @@ def create_collection():
         collection_description = flask.request.form.get('description')
         collection_background = flask.request.form.get('background')
         if Collection.query.filter_by(name=collection_name).first():
-            flask.flash(_("This Collection already exists!"), category="warning")
+            flask.flash(_("This topic already exists!"), category="warning")
             return redirect_back()
 
-        collection = Collection(name=collection_name, description=collection_description, background=collection_background)
+        collection = Collection(
+            name=collection_name,
+            description=collection_description,
+            background=collection_background
+        )
         db.session.add(collection)
         db.session.commit()
         return redirect_back()

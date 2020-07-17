@@ -270,7 +270,7 @@ class Tag(db.Model):
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
-    title = db.Column(db.String(256), nullable=False)
+    title = db.Column(db.String(256), nullable=False, unique=True)
     content = db.Column(db.Text)
     body = db.Column(db.Text, nullable=False)
     slug = db.Column(db.String(256), nullable=False)
@@ -351,7 +351,7 @@ def update_post_archive(target, value, oldvalue, initiator):
 class Archive(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
-    label = db.Column(db.String(32), nullable=False)
+    label = db.Column(db.String(32), nullable=False, unique=True)
     posts = db.relationship('Post', back_populates='archive')
 
     def __repr__(self):
@@ -415,7 +415,7 @@ class About(db.Model):
 class Link(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
-    name = db.Column(db.String(32))
+    name = db.Column(db.String(32), unique=True)
     url = db.Column(db.String(256))
 
     def __repr__(self):

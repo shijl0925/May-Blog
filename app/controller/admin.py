@@ -13,7 +13,7 @@ from flask_admin.menu import MenuLink
 from flask_admin.helpers import get_form_data
 from flask_security import current_user
 from flask_security.utils import encrypt_password
-from app.model.models import User, Role, Permission, Settings, Post, Category, Archive, Tag, Collection, Comment, Tracker, Request
+from app.model.models import User, Role, Permission, Settings, Post, Category, Archive, Tag, Collection, Comment, Tracker, Request, About
 from app.controller.extensions import db, avatars
 from app.form.auth import CropAvatarForm, UploadForm
 from app.config import BaseConfig
@@ -311,6 +311,13 @@ class NotificationBaseModelview(MyBaseModelview):
     }
 
 
+class AboutBaseModelview(MyBaseModelview):
+    form_overrides = {
+        'body': CKTextAreaField
+    }
+    create_template = edit_template = 'myadmin3/ckeditor.html'
+
+
 class PostBaseModelview(MyBaseModelview):
     column_searchable_list = ["title", "body"]
     column_editable_list = ["category", "is_draft", "deny_comment"]
@@ -384,6 +391,14 @@ admin.add_view(PermissionBaseModelview(Permission,
                                        name='Permission',
                                        category='Authorization',
                                        endpoint='permission'))
+
+
+admin.add_view(AboutBaseModelview(About,
+                                  db.session,
+                                  menu_icon_type='fas',
+                                  menu_icon_value='fa-atom',
+                                  name='About',
+                                  endpoint='about'))
 
 
 admin.add_view(PostBaseModelview(Post,

@@ -4,7 +4,7 @@ from flask_security import login_required, current_user
 from sqlalchemy import or_, func
 from slugify import slugify
 from flask_babelex import gettext as _
-from app.model.models import Post, Category, Tag, Archive, Collection, Comment
+from app.model.models import Post, Category, Tag, Archive, Collection, Comment, About
 from app.form.forms import PostForm, OperateForm, CreateForm, CreateTopicForm
 from app.controller.extensions import db
 from app.utils.common import redirect_back
@@ -95,10 +95,7 @@ def tag(tag_id):
     count_post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).\
         filter(Post.tags.contains(search_tag)).scalar()
 
-    if pagination.page == 1:
-        posts_template = "index.html"
-    else:
-        posts_template = "posts.html"
+    posts_template = "posts.html"
 
     return flask.render_template(
         posts_template,
@@ -122,10 +119,7 @@ def category(category_id):
     count_post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).\
         filter_by(category=search_category).scalar()
 
-    if pagination.page == 1:
-        posts_template = "index.html"
-    else:
-        posts_template = "posts.html"
+    posts_template = "posts.html"
 
     return flask.render_template(
         posts_template,
@@ -148,10 +142,7 @@ def archive(archive_id):
     count_post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).\
         filter_by(archive=search_archive).scalar()
 
-    if pagination.page == 1:
-        posts_template = "index.html"
-    else:
-        posts_template = "posts.html"
+    posts_template = "posts.html"
 
     return flask.render_template(
         posts_template,
@@ -465,3 +456,8 @@ def delete_comment(comment_id):
         flask.flash(_("Delete The Comment Successful!"), category="success")
         return flask.redirect(flask.url_for('posts.post', post_slug=post_slug))
 
+
+@posts_bp.route('/about')
+def about():
+    about = About.query.get(1)
+    return flask.render_template("about.html", about=about)

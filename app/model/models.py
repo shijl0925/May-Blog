@@ -402,3 +402,11 @@ class Request(db.Model):
         return '<Request %r>' % self.id
 
     __mapper_args__ = {"order_by": timestamp.desc()}
+
+
+class About(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text)
+
+    def __repr__(self):
+        return '<About %r>' % self.id

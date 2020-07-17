@@ -109,6 +109,15 @@
                      custom_options='autoProcessQueue: false, addRemoveLinks: true,') }}
 
     <script>
+        $(document).ready(function() {
+            // Register autofill on new selected image upload
+            document.getElementById("upload_img").addEventListener("change", function(){
+                var file = document.getElementById("upload_img").files[0].name;
+                document.getElementById("upload_name").value = file
+            });
+
+        } );
+
         function del(){
             if(!confirm("Are you Sure delete this image?")){
                 window.event.returnValue = false;

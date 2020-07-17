@@ -6,7 +6,7 @@ from faker import Faker
 from slugify import slugify
 from flask_script import Command
 from app.controller.extensions import db
-from app.model.models import User, Role, Category, Tag, Post, Comment
+from app.model.models import User, Role, Category, Tag, Post, Comment, Collection
 
 
 class ResetDB(Command):
@@ -48,18 +48,46 @@ class FakerData(Command):
             'K8S'
         ]
 
+        backgrounds = [
+            'http://localhost:8000/files/background_image_1.jpg',
+            'http://localhost:8000/files/background_image_2.jpg',
+            'http://localhost:8000/files/background_image_3.jpg',
+            'http://localhost:8000/files/background_image_4.jpg',
+            'http://localhost:8000/files/background_image_5.jpg',
+            'http://localhost:8000/files/background_image_6.jpg',
+            'http://localhost:8000/files/background_image_7.jpg',
+        ]
+
+        for i in range(10):
+            name = faker.text(max_nb_chars=50)
+            description = faker.text(max_nb_chars=150)
+            timestamp = faker.date_time_this_year()
+            background = random.choice(backgrounds)
+
+            topic = Collection(
+                name=name,
+                description=description,
+                background=background,
+                timestamp=timestamp
+            )
+            db.session.add(topic)
+            db.session.commit()
+            print("Create a Fake Topic {}".format(topic))
+
         for i in range(50):
             title = faker.text(max_nb_chars=50)
             slug = slugify(title, max_length=100)
             body = "<p>{}</p>".format(faker.text(max_nb_chars=2000))
 
             timestamp = faker.date_time_this_year()
+            background = random.choice(backgrounds)
 
             post = Post(
                 title=title,
                 slug=slug,
                 timestamp=timestamp,
                 body=body,
+                background=background,
                 author=admin
             )
             db.session.add(post)

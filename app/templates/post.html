@@ -156,7 +156,7 @@
                                 {% if post.previous %}
                                 <span class="nav-previous">
                                     <a href="{{ url_for('posts.post', post_slug=post.previous.slug) }}" rel="prev">
-                                        <span class="meta-nav">¡û</span> {{ post.previous.title }}
+                                        <span class="meta-nav">â†</span> {{ post.previous.title }}
                                     </a>
                                 </span>
                                 {% endif %}
@@ -164,7 +164,7 @@
                                 {% if post.next %}
                                 <span class="nav-next">
                                     <a href="{{ url_for('posts.post', post_slug=post.next.slug) }}" rel="next">
-                                        {{ post.next.title }} <span class="meta-nav">¡ú</span>
+                                        {{ post.next.title }} <span class="meta-nav">â†’</span>
                                     </a>
                                 </span>
                                 {% endif %}
@@ -332,18 +332,18 @@
             }
             const url = location.href
 
-            const copyright = '±¾ÎÄÕÂÖø×÷È¨¹é×÷ÕßËùÓĞ£¬ÈÎºÎĞÎÊ½µÄ×ªÔØ¶¼Çë×¢Ã÷³ö´¦¡£'
+            const copyright = 'æœ¬æ–‡ç« è‘—ä½œæƒå½’ä½œè€…æ‰€æœ‰ï¼Œä»»ä½•å½¢å¼çš„è½¬è½½éƒ½è¯·æ³¨æ˜å‡ºå¤„ã€‚'
 
             const appendText = ''
                 + '\n-------------------------------\n'
-                + 'À´Ô´£ºMay Blog\n'
-                + 'ÎÄÕÂÁ´½Ó£º' + url + '\n'
+                + 'æ¥æºï¼šMay Blog\n'
+                + 'æ–‡ç« é“¾æ¥ï¼š' + url + '\n'
                 + copyright + '\n\n'
 
-            //ÎÄ±¾¸ñÊ½¸½¼Ó°æÈ¨ĞÅÏ¢
+            //æ–‡æœ¬æ ¼å¼é™„åŠ ç‰ˆæƒä¿¡æ¯
             textData += appendText
 
-            //html¸ñÊ½¸½¼Ó°æÈ¨ĞÅÏ¢
+            //htmlæ ¼å¼é™„åŠ ç‰ˆæƒä¿¡æ¯
             htmlData = '<div>' + htmlData + appendText.replace(/\n/g, '<br/>') + '</div>'
             if (window.clipboardData) {
                 window.clipboardData.setData("Text", textData);

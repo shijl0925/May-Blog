@@ -20,8 +20,9 @@
 {% endblock styles %}
 
 {% block page_content %}
-    <section class="min_content">
-        <div class="timeline" style="margin: 15px 60px;">
+    <section class="section min_content">
+      {% if archives %}
+        <div class="timeline mb-3 mt-3" style="margin: 0 60px;">
             {% for archive in archives %}
               {% with post_nums = archive|count_post_nums_with_archive %}
                   {% if post_nums %}
@@ -53,7 +54,6 @@
               {% endwith %}
             {% endfor %}
         </div>
-
         <nav class="mb-3">
             {% from "mdbootstrap/pagination.html" import render_pagination %}
             {{ render_pagination(pagination,
@@ -61,5 +61,6 @@
              next=('Next <span aria-hidden="true">&rarr;</span>')|safe,
              align="center") }}
         </nav>
+      {% endif %}
     </section>
 {% endblock page_content %}

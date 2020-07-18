@@ -26,7 +26,7 @@ from app.controller.admin import admin
 from app.view import init_blue_print
 from app.controller.security import create_security
 from app.controller.request import save_request
-from app.model.models import User, Post, Category, Tag, Archive
+from app.model.models import User, Post, Category, Tag, Archive, Link
 from app.view.file import get_abs_existing_files, get_filename, get_filename_thumb
 
 apps_abs_dir = get_abs_dir(__file__)
@@ -68,6 +68,7 @@ def inject_context_variables():
     categories = Category.query.all()
     archives = Archive.query.all()
     tags = Tag.query.all()
+    links = Link.query.all()
 
     post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).scalar()
     draft_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=True).scalar()
@@ -88,6 +89,7 @@ def inject_context_variables():
         draft_nums=draft_nums,
         categories=categories,
         tags=tags,
+        links=links,
         archives=archives,
         category_nums=category_nums,
         tag_nums=tag_nums,

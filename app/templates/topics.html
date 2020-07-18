@@ -29,7 +29,8 @@
 {% block page_content %}
     <section class="section min_content">
         <div class="row mb-3 mt-3">
-              {% for topic in topics %}
+          {% if topics %}
+            {% for topic in topics %}
               <!-- Grid column -->
               <div class="col-md-4 my-1 mb-3">
 
@@ -88,14 +89,15 @@
 
               </div>
               <!-- Grid column -->
-              {% endfor %}
+            {% endfor %}
+            <nav class="mb-3">
+              {% from "mdbootstrap/pagination.html" import render_pagination %}
+              {{ render_pagination(pagination,
+              prev=('<span aria-hidden="true">&larr;</span> Pre')|safe,
+              next=('Next <span aria-hidden="true">&rarr;</span>')|safe,
+              align="center") }}
+            </nav>
+          {% endif %}
         </div>
     </section>
-    <nav class="mb-3">
-      {% from "mdbootstrap/pagination.html" import render_pagination %}
-      {{ render_pagination(pagination,
-      prev=('<span aria-hidden="true">&larr;</span> Pre')|safe,
-      next=('Next <span aria-hidden="true">&rarr;</span>')|safe,
-      align="center") }}
-    </nav>
 {% endblock page_content %}

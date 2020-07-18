@@ -24,3 +24,5 @@ markdown
 html2text
 flask-whooshee
 flask-restful
+flask-jwt-extended
+flask-dropzone

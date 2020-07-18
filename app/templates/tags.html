@@ -3,12 +3,6 @@
 {% block styles %}
     {{ super() }}
     <style>
-        html,
-        body,
-        .tags_content {
-          height: auto;
-          min-height: 100vh;
-        }
         .navbar {
             background-color: #6f7782;
         }
@@ -44,7 +38,7 @@
 
 
 {% block page_content %}
-    <section class="section widget-content mb-5 tags_content" style="margin: 15px 60px;">
+    <section class="section mb-5 min_content" style="margin: 15px 60px;">
         <div class="post-content">
             <ul class="tag-list">
               {% for tag in tags %}

@@ -3,12 +3,6 @@
 {% block styles %}
     {{ super() }}
     <style>
-        html,
-        body,
-        .topics_content {
-          height: auto;
-          min-height: 100vh;
-        }
         .navbar {
             background-color: #6f7782;
         }
@@ -33,7 +27,7 @@
 {% endblock styles %}
 
 {% block page_content %}
-    <section class="section widget-content">
+    <section class="section min_content">
         <div class="row mb-3 mt-3">
               {% for topic in topics %}
               <!-- Grid column -->

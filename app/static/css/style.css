@@ -298,3 +298,10 @@
     color: #4c4e54;
     margin-bottom: .5rem;
 }
+
+html,
+body,
+.min_content {
+  height: auto;
+  min-height: 85vh;
+}

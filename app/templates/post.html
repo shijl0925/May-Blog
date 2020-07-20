@@ -232,24 +232,31 @@
             }
         }
 
+        function toc_show() {
+            var width = $('#toc').width();
+            $('#toc').animate({right: 0}, "slow");
+            $('#t-g-control').animate({right: width}, "slow");
+
+            $('.toc-icon').hide();
+            $('.toc-close').show();
+        }
+
+        function toc_hide() {
+            var width = $('#toc').width();
+            $('#toc').animate({right: -width}, "slow");
+            $('#t-g-control').animate({right: 0}, "slow");
+
+            $('.toc-close').hide();
+            $('.toc-icon').show();
+        }
+
         var isHiden = true;
         $(function(){
-            var width = $('#toc').width();
             $('.toc-control').click(function () {
                 if(isHiden){
-                    //timer_hide_toc = auto_hide_toc();
-                    $('#toc').animate({right: 0}, "slow");
-                    $('#t-g-control').animate({right: width}, "slow");
-
-                    $('.toc-icon').hide();
-                    $('.toc-close').show();
+                    toc_show();
                 }else{
-                    //clearTimeout(timer_hide_toc);
-                    $('#toc').animate({right: -width}, "slow");
-                    $('#t-g-control').animate({right: 0}, "slow");
-
-                    $('.toc-close').hide();
-                    $('.toc-icon').show();
+                    toc_hide()
                 }
                 isHiden = !isHiden;
             });
@@ -268,17 +275,20 @@
             });
         });
 
-        function auto_hide_toc(){
-            var width = $('#toc').width();
-            return setTimeout(function () {
-                if(!isHiden){
-                    $('#toc').animate({right: -width}, "slow");
-                    $('#t-g-control').animate({right: 0}, "slow");
-                    isHiden = !isHiden;
-                }
-            }, 10000);
-        }
-        // var timer_hide_toc = auto_hide_toc();
+
+        $(document).bind('click',function(e){
+        　　 var e = e || window.event;
+        　　 var elem = e.target || e.srcElement;
+        　　 while (elem) {
+        　　　　 if (elem.id && (elem.id=='t-g-control' || elem.id=='toc')) {
+        　　　　     return;
+        　　     }
+        　　 elem = elem.parentNode;
+        　　 }
+
+             toc_hide();
+             isHiden = true;
+        });
     </script>
 
     <script>

@@ -9,30 +9,6 @@
         footer.page-footer {
             background-color: #6f7782;
         }
-
-        .tag-list .tag-list-item {
-            line-height: 20px;
-            display: inline-block;
-            height: 30px;
-            margin: 5px;
-            padding: 5px 15px;
-            color: #555;
-            border-radius: 3px;
-            background: #f6f6f6;
-            min-width: 30px;
-            font-size: 14px;
-            text-align: center;
-        }
-
-        .tag-list .tag-list-item .tag-list-link {
-            font-weight: 500;
-            margin-right: 5px;
-        }
-
-        .tag-list .tag-list-item a {
-            color: #555;
-        }
-
     </style>
 {% endblock styles %}
 
@@ -40,14 +16,11 @@
 {% block page_content %}
     <section class="section mb-5 min_content" style="margin: 15px 60px;">
         <div class="post-content">
-            <ul class="tag-list">
-              {% for tag in tags %}
-              <li class="tag-list-item hvr-buzz-out">
-                <a class="tag-list-link" href="{{ url_for('posts.posts', tag=tag.name) }}">{{ tag.name }}</a>
-                <span class="tag-list-count">{{ tag|count_post_nums_with_tag }}</span>
-              </li>
-              {% endfor %}
-            </ul>
+            {% for tag in tags %}
+                <div class="chip hvr-buzz-out">
+                  {{ tag.name }} {{ tag|count_post_nums_with_tag }}
+                </div>
+            {% endfor %}
           </div>
     </section>
 {% endblock page_content %}

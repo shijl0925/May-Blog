@@ -9,6 +9,8 @@
                 {{ _("CATEGORY") }}: {{ category.name }}
             {% elif request.endpoint == "posts.topic" %}
                 {{ _("Topic Posts") }}
+            {% elif request.endpoint == "posts.search_post" %}
+                {{ _('Search') }}: {{ request.args.get('q') }}
             {% else %}
                 {{ _("Posts") }}
             {% endif %}

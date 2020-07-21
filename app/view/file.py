@@ -7,12 +7,12 @@ import flask
 from flask_security import login_required
 from flask_babelex import gettext as _
 from flask_ckeditor import upload_success, upload_fail
+from werkzeug.utils import secure_filename
 from app.utils.decorator import permission_required
 from app.form.file import UploadForm
 from app.form.forms import OperateForm
 from app.config import BaseConfig
 from app.controller.extensions import csrf
-from app.utils.common import resize_image
 
 
 file_bp = flask.Blueprint('files', __name__, url_prefix='/files')
@@ -28,11 +28,6 @@ def get_abs_existing_files():
 
 def get_filename(full_file_path):
     return full_file_path.split('/')[-1]
-
-
-def get_filename_thumb(full_file_path):
-    item, ext = os.path.splitext(full_file_path)
-    return item + "_thumb" + ext
 
 
 @file_bp.route('/', methods=["GET", "POST"])
@@ -54,8 +49,8 @@ def upload():
             flask.flash(_("File already exists, choose an other name."), category="warning")
             return flask.redirect(flask.url_for("files.upload"))
 
-        file_data.save(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], filename))
-        filename_thumb = resize_image(file_data, filename, 120)
+        file_name = secure_filename(filename)
+        file_data.save(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], file_name))
 
         flask.flash(_("Image saved: ") + filename, category="info")
         return flask.redirect(flask.url_for("files.upload"))
@@ -68,10 +63,9 @@ def upload():
 @permission_required('ADMINISTER')
 def uploads():
     if flask.request.method == "POST":
-        # f = flask.request.files.get('file')
         for key, f in flask.request.files.items():
-            f.save(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], f.filename))
-            filename_thumb = resize_image(f, f.filename, 120)
+            file_name = secure_filename(f.filename)
+            f.save(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], file_name))
         return flask.redirect(flask.url_for("files.upload"))
 
 
@@ -93,11 +87,6 @@ def upload_delete(filename):
         else:
             os.remove(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], filename))
 
-            filename, ext = os.path.splitext(filename)
-            filename_thumb = filename + "_thumb" + ext
-            if filename_thumb in os.listdir(BaseConfig.FILEUPLOAD_IMG_FOLDER):
-                os.remove(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], filename_thumb))
-
             flask.flash(_("Delete Image: ") + filename, category="info")
 
     return flask.redirect(flask.url_for("files.upload"))
@@ -115,9 +104,9 @@ def ckeditor_upload():
     if f.filename in get_existing_files():
         return upload_fail(message='File already exists, choose an other Image!')
 
-    f.save(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], f.filename))
-    filename_thumb = resize_image(f, f.filename, 120)
+    file_name = secure_filename(f.filename)
+    f.save(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], file_name))
 
-    url = flask.url_for('files.uploaded_files', filename=f.filename)
+    url = flask.url_for('files.uploaded_files', filename=file_name)
     return upload_success(url=url)
 

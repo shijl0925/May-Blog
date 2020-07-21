@@ -39,7 +39,7 @@
 
                   <!-- Card image -->
                   <div class="view zoom overlay">
-                    <img src="{{ topic.background }}" class="card-img-top" style="height: 200px;" alt="sample image">
+                    <img src="{{ url_for('files.uploaded_files', filename=topic.background) }}" class="card-img-top" style="height: 200px;" alt="sample image">
                     <a>
                       <div class="mask rgba-white-slight waves-effect waves-light"></div>
                     </a>

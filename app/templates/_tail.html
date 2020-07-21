@@ -14,7 +14,7 @@
             <div class="row mt-3">
               <div class="col-3">
                   <div class="view inner overlay z-depth-1">
-                    <img src="{{ post.background }}" class="img-fluid" alt="Post">
+                    <img src="{{ url_for('files.uploaded_files', filename=post.background) }}" class="img-fluid" alt="Post">
                     <a>
                       <div class="mask rgba-white-slight waves-effect waves-light"></div>
                     </a>
@@ -60,7 +60,7 @@
             <div class="row mt-3">
               <div class="col-3">
                   <div class="view inner overlay z-depth-1">
-                    <img src="{{ post.background }}" class="img-fluid" alt="Post">
+                    <img src="{{ url_for('files.uploaded_files', filename=post.background) }}" class="img-fluid" alt="Post">
                     <a>
                       <div class="mask rgba-white-slight waves-effect waves-light"></div>
                     </a>

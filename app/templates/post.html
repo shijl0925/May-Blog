@@ -61,7 +61,7 @@
     {{ super() }}
     <section>
       <div class="view overlay entry-cover">
-        <img src="{{ post.background }}" style="width: 100%;margin-top: -15%;">
+        <img src="{{ url_for('files.uploaded_files', filename=post.background) }}" style="width: 100%;margin-top: -15%;">
       </div>
     </section>
 {% endblock %}

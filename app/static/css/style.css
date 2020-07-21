@@ -17,6 +17,16 @@
     padding: 0;
     cursor: pointer;
 }
+
+.btn-floating i {
+    font-size: 1.25rem;
+    line-height: 47px;
+    display: inline-block;
+    width: inherit;
+    color: #fff;
+    text-align: center;
+}
+
 #go-to-top {
     position: fixed;
     right: 10px;

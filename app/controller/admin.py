@@ -324,12 +324,8 @@ class LinkBaseModelview(MyBaseModelview):
 
 class PostBaseModelview(MyBaseModelview):
     column_searchable_list = ["title", "body"]
-    column_editable_list = ["category", "is_draft", "deny_comment"]
+    column_editable_list = ["category", "is_draft", "deny_comment", "is_markdown", "is_privacy"]
     column_exclude_list = ["content", "background", "body", "slug", "collection", "archive", "author"]
-    form_overrides = {
-        'body': CKTextAreaField
-    }
-    create_template = edit_template = 'myadmin3/ckeditor.html'
 
 
 class CommentBaseModelview(MyBaseModelview):

@@ -220,16 +220,8 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
     <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
     <script src="{{ url_for('static', filename='toc-helper/js/toc-helper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/post.js') }}"></script>
     <script type="text/javascript">
-        $(function(){
-            var x = document.getElementsByTagName("table");
-            for(i=0; i<x.length; i++) {
-                tab = x[i];
-                tab.classList.add("table");
-                tab.classList.add("table-bordered");
-            }
-        });
-
         hljs.initHighlightingOnLoad();
         new TocHelper(
             {

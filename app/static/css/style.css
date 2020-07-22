@@ -337,3 +337,32 @@ body,
     -webkit-transition: all .3s linear;
     transition: all .3s linear;
 }
+
+.article {
+    font-size: .9rem;
+    line-height: 1.8;
+}
+
+.card .card-body h1 {
+    font-weight: 700;
+}
+
+.card .card-body h2 {
+    font-weight: 600;
+}
+
+.card .card-body h3 {
+    font-weight: 500;
+}
+
+.card .card-body h4 {
+    font-weight: 400;
+}
+
+.card .card-body h5 {
+    font-weight: 400;
+}
+
+.card .card-body h6 {
+    font-weight: 400;
+}

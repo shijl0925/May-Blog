@@ -18,39 +18,8 @@
 
 {% block page_content %}
     <div class="post_content">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>{{ _("Upload Images") }}</h1>
-            </div>
-        </div>
-
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" id="upload-tab" data-toggle="tab" href="#upload" role="tab" aria-controls="upload"
-              aria-selected="true">Upload image</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="uploads-tab" data-toggle="tab" href="#uploads" role="tab" aria-controls="uploads"
-              aria-selected="false">Upload images</a>
-          </li>
-        </ul>
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="upload" role="tabpanel" aria-labelledby="upload-tab">
-            <form method="post" action="{{ url_for('files.upload') }}" enctype="multipart/form-data" class="mt-3">
-                {{ form.csrf_token }}
-                <div class="mb-3">
-                    {{ form.upload_name(required=True) }}
-                    {{ form.upload_img }}
-                </div>
-
-                <button type="submit" class="btn btn-primary" style="margin-left: 0;">{{ _("Upload") }}</button>
-            </form>
-          </div>
-          <div class="tab-pane fade" id="uploads" role="tabpanel" aria-labelledby="uploads-tab">
-            {{ dropzone.create(action='files.uploads') }}
-            <button id="upload-btn" class="btn btn-primary" style="margin-left: 0;">{{ _("Upload") }}</button>
-          </div>
-        </div>
+        {{ dropzone.create(action='files.uploads') }}
+        <button id="upload-btn" class="btn btn-primary" style="margin-left: 0;">{{ _("Upload") }}</button>
         <div class="col-md-12" style="height:45px;"></div>
 
         <hr>
@@ -66,11 +35,11 @@
             </thead>
             <tbody>
                 {% for file_abs in get_abs_existing_files() %}
-                    {% set filename = file_abs|get_filename %}
+                    {% set filename = file_abs|file_name %}
                     <tr>
                         <td>
                             <a href="{{ file_abs }}">
-                                {{ file_abs|get_filename|truncate(50) }}
+                                {{ filename|truncate(50) }}
                             </a>
                         </td>
                         <td>

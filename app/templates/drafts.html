@@ -30,7 +30,7 @@
                       <div class="row">
                         <div class="col-lg-5 mb-1">
                             <div class="view zoom overlay z-depth-1 rounded">
-                              <img src="{{ url_for('files.uploaded_files', filename=post.background) }}" class="img-fluid" alt="First sample image">
+                              <img src="{{ url_for('files.uploaded_files', filename=post.background|filename_m) }}" class="img-fluid" alt="First sample image">
                               <a>
                                 <div class="mask rgba-white-slight waves-effect waves-light"></div>
                               </a>

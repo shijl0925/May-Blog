@@ -7,7 +7,6 @@ import flask
 import PIL
 from PIL import Image
 from urllib.parse import urlparse, urljoin
-from app.config import BaseConfig
 
 
 def strip_trailing_slash(url):
@@ -38,7 +37,7 @@ def random_filename(filename):
 
 
 def remove_preview_avatar(filename):
-    avatar_path = os.path.join(BaseConfig.AVATARS_SAVE_PATH, filename)
+    avatar_path = os.path.join(flask.current_app.config['AVATARS_SAVE_PATH'], filename)
     if os.path.exists(avatar_path):
         os.remove(avatar_path)
 
@@ -52,7 +51,7 @@ def resize_image(image, filename, base_width):
     h_size = int((float(img.size[1]) * float(w_percent)))
     img = img.resize((base_width, h_size), PIL.Image.ANTIALIAS)
 
-    filename += "_thumb" + ext
+    filename += flask.current_app.config['FILEUPLOAD_IMG_PHOTO_SUFFIX'][base_width] + ext
     img.save(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], filename), optimize=True, quality=85)
     return filename
 

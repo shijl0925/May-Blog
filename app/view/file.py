@@ -13,13 +13,14 @@ from app.form.file import UploadForm
 from app.form.forms import OperateForm
 from app.config import BaseConfig
 from app.controller.extensions import csrf
+from app.utils.common import resize_image
 
 
 file_bp = flask.Blueprint('files', __name__, url_prefix='/files')
 
 
 def get_existing_files():
-    return [f for f in os.listdir(BaseConfig.FILEUPLOAD_IMG_FOLDER) if "_thumb" not in f]
+    return [f for f in os.listdir(BaseConfig.FILEUPLOAD_IMG_FOLDER) if "_s." not in f and "_m." not in f]
 
 
 def get_abs_existing_files():
@@ -28,6 +29,18 @@ def get_abs_existing_files():
 
 def get_filename(full_file_path):
     return full_file_path.split('/')[-1]
+
+
+def get_filename_s(filename):
+    filename, ext = os.path.splitext(filename)
+    filename += "_s" + ext
+    return filename
+
+
+def get_filename_m(filename):
+    filename, ext = os.path.splitext(filename)
+    filename += "_m" + ext
+    return filename
 
 
 @file_bp.route('/', methods=["GET", "POST"])
@@ -52,13 +65,16 @@ def upload():
         file_name = secure_filename(filename)
         file_data.save(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], file_name))
 
+        filename_s = resize_image(file_data, file_name, flask.current_app.config['FILEUPLOAD_IMG_SIZE']['small'])
+        filename_m = resize_image(file_data, file_name, flask.current_app.config['FILEUPLOAD_IMG_SIZE']['medium'])
+
         flask.flash(_("Image saved: ") + filename, category="info")
         return flask.redirect(flask.url_for("files.upload"))
 
     return flask.render_template("file/upload.html", form=upload_form, delete_form=delete_form)
 
 
-@file_bp.route('/uploads', methods=["GET", "POST"])
+@file_bp.route('/uploads', methods=["POST"])
 @login_required
 @permission_required('ADMINISTER')
 def uploads():
@@ -66,6 +82,10 @@ def uploads():
         for key, f in flask.request.files.items():
             file_name = secure_filename(f.filename)
             f.save(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], file_name))
+
+            filename_s = resize_image(f, file_name, flask.current_app.config['FILEUPLOAD_IMG_SIZE']['small'])
+            filename_m = resize_image(f, file_name, flask.current_app.config['FILEUPLOAD_IMG_SIZE']['medium'])
+
         return flask.redirect(flask.url_for("files.upload"))
 
 
@@ -87,6 +107,15 @@ def upload_delete(filename):
         else:
             os.remove(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], filename))
 
+            filename, ext = os.path.splitext(filename)
+            filename_s = filename + "_s" + ext
+            if filename_s in os.listdir(BaseConfig.FILEUPLOAD_IMG_FOLDER):
+                os.remove(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], filename_s))
+
+            filename_m = filename + "_m" + ext
+            if filename_m in os.listdir(BaseConfig.FILEUPLOAD_IMG_FOLDER):
+                os.remove(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], filename_m))
+
             flask.flash(_("Delete Image: ") + filename, category="info")
 
     return flask.redirect(flask.url_for("files.upload"))
@@ -106,6 +135,9 @@ def ckeditor_upload():
 
     file_name = secure_filename(f.filename)
     f.save(os.path.join(flask.current_app.config['FILEUPLOAD_IMG_FOLDER'], file_name))
+
+    filename_s = resize_image(f, file_name, flask.current_app.config['FILEUPLOAD_IMG_SIZE']['small'])
+    filename_m = resize_image(f, file_name, flask.current_app.config['FILEUPLOAD_IMG_SIZE']['medium'])
 
     url = flask.url_for('files.uploaded_files', filename=file_name)
     return upload_success(url=url)

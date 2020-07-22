@@ -51,6 +51,15 @@ class BaseConfig:
     FILEUPLOAD_IMG_FOLDER = os.path.join(basedir, 'uploads')
     FILEUPLOAD_ALLOWED_EXTENSIONS = ['gif', 'jpg', 'png', 'jpeg']
 
+    FILEUPLOAD_IMG_SIZE = {
+        'small': 350,
+        'medium': 960
+    }
+    FILEUPLOAD_IMG_PHOTO_SUFFIX = {
+        FILEUPLOAD_IMG_SIZE['small']: '_s',
+        FILEUPLOAD_IMG_SIZE['medium']: '_m',
+    }
+
     WHOOSHEE_MIN_STRING_LEN = 1
 
     DROPZONE_SERVE_LOCAL = True

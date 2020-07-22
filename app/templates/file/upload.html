@@ -47,7 +47,7 @@
                         </td>
                         <td>
                             <a class="thumbnail" href="{{ file_abs }}">
-                                <img style="max-width:80%;" src="{{ file_abs }}">
+                                <img style="max-width:80%;" src="{{ url_for('files.uploaded_files', filename=filename|filename_s) }}">
                             </a>
                         </td>
                         <td>
@@ -78,14 +78,14 @@
                      custom_options='autoProcessQueue: false, addRemoveLinks: true,') }}
 
     <script>
-        $(document).ready(function() {
+        //$(document).ready(function() {
             // Register autofill on new selected image upload
-            document.getElementById("upload_img").addEventListener("change", function(){
-                var file = document.getElementById("upload_img").files[0].name;
-                document.getElementById("upload_name").value = file
-            });
+        //    document.getElementById("upload_img").addEventListener("change", function(){
+        //        var file = document.getElementById("upload_img").files[0].name;
+        //        document.getElementById("upload_name").value = file
+        //    });
 
-        } );
+        //} );
 
         function del(){
             if(!confirm("Are you Sure delete this image?")){

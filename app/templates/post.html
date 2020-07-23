@@ -222,6 +222,18 @@
     <script src="{{ url_for('static', filename='toc-helper/js/toc-helper.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/post.js') }}"></script>
     <script type="text/javascript">
+        var allpre = document.getElementsByTagName("pre");
+        for(i = 0; i < allpre.length; i++)
+        {
+            var onepre = allpre[i];
+            var mycode = onepre.innerHTML;
+            if (mycode.indexOf("<code") === -1){
+                onepre.innerHTML = '<code>'+mycode+'</code>';
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
         hljs.initHighlightingOnLoad();
         new TocHelper(
             {

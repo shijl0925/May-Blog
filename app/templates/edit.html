@@ -219,7 +219,29 @@
             });
         </script>
     {% else %}
-        <script src="{{ url_for('static', filename='ckeditor_standard/ckeditor.js') }}"></script>
-        {{ ckeditor.config(name='body') }}
+{#        <script src="{{ url_for('static', filename='ckeditor_standard/ckeditor.js') }}"></script>#}
+{#        {{ ckeditor.config(name='body') }}#}
+
+        <script type="text/javascript" charset="UTF-8" src="{{ url_for('static', filename='ueditor/ueditor.config.js') }}"></script>
+        <script type="text/javascript" charset="UTF-8" src="{{ url_for('static', filename='ueditor/ueditor.all.min.js') }}"></script>
+        <script type="text/javascript" charset="UTF-8" src="{{ url_for('static', filename='ueditor/lang/zh-cn/zh-cn.js') }}"></script>
+
+        <script type="text/javascript">
+            var ue = UE.getEditor('editor', {
+                serverUrl: "/files/ueditor_upload"
+            });
+
+            ue.ready(function() {
+                var textarea = document.getElementById("body");
+                ue.setContent(textarea.value);
+            });
+
+            $(function(){
+                $("form").submit(function(){
+                    $("textarea[name=body]").val(ue.getContent());
+                    return true;
+                })
+            });
+        </script>
     {% endif %}
 {% endblock %}

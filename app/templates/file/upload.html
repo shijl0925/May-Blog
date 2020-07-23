@@ -53,7 +53,7 @@
                         <td>
                             <form method="POST" action="{{ url_for('files.upload_delete', filename=filename) }}" onclick="return del()">
                                 {{ delete_form.csrf_token }}
-                                <button type="submit" class="btn btn-sm btn-outline-danger shadow-none ml-0">
+                                <button type="submit" class="btn btn-sm btn-primary shadow-none ml-0" style="padding: .3rem .6rem;">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </form>

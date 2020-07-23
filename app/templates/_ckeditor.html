@@ -9,7 +9,9 @@
             {{ _("Upload new File") }}
         </a>
     </p>
-    {{form.body}}
+    {{form.body(style="display: none;")}}
+
+    <script id="editor" type="text/plain" style="width:100%;height:300px;"></script>
 
     {% if form.body.errors %}
       <ul>

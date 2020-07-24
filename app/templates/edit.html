@@ -3,8 +3,6 @@
 
 {% block styles %}
     {{ super() }}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap-select/css/bootstrap-select.min.css') }}">
-
     {% if post.is_markdown %}
       <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='simplemde/simplemde.min.css') }}">
       <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css">
@@ -209,8 +207,6 @@
 
 {% block scripts %}
     {{ super() }}
-    <script src="{{ url_for('static', filename='bootstrap-select/js/bootstrap-select.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='bootstrap-select/js/i18n/defaults-zh_CN.min.js') }}"></script>
 
     {% if post.is_markdown %}
         <script src="{{ url_for('static', filename='simplemde/simplemde.min.js') }}"></script>

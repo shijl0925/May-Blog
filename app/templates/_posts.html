@@ -25,7 +25,7 @@
             <div class="col-lg-5 mb-4">
                 <div class="view zoom overlay z-depth-1 rounded">
                   <img src="{{ url_for('files.uploaded_files', filename=post.background|filename_m ) }}" class="img-fluid" alt="First sample image">
-                  <a>
+                  <a href="{{ url_for('posts.post', post_slug=post.slug) }}">
                     <div class="mask rgba-white-slight waves-effect waves-light"></div>
                   </a>
                 </div>
@@ -42,8 +42,10 @@
                   {% endif %}
                 </h4>
 
-                <p class="dark-grey-text">
-                    {{ post.body|striptags|truncate(150) }}
+                <p>
+                    <a class="dark-grey-text" href="{{ url_for('posts.post', post_slug=post.slug) }}">
+                        {{ post.body|striptags|truncate(150) }}
+                    </a>
                 </p>
 
                 <p class="dark-grey-text">

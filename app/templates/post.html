@@ -72,9 +72,32 @@
 {% endblock %}
 
 {% block page_content %}
+  <div class="px-lg-5">
+    <div class="post-control">
+        <a href="{{ url_for('posts.posts') }}" class="dark-grey-text">
+            <button class="btn btn-sm shadow-none" style="padding: .3rem .6rem;border-radius: 0;width: 30px;">
+                <i class="fas fa-arrow-circle-left"></i>
+            </button>
+        </a>
+
+        {% if current_user.is_admin %}
+        <a href="{{ url_for('posts.edit_post', post_slug=post.slug) }}" class="dark-grey-text">
+            <button class="btn btn-sm shadow-none" style="padding: .3rem .6rem;border-radius: 0;width: 30px;">
+                <i class="far fa-edit"></i>
+            </button>
+        </a>
+
+        <form method="POST" action="{{ url_for('posts.delete_post', post_slug=post.slug) }}" onclick="return del()">
+          {{ operate_form.csrf_token }}
+          <button type="submit" class="btn btn-sm shadow-none" style="padding: .3rem .6rem;border-radius: 0;width: 30px;">
+            <i class="far fa-trash-alt"></i>
+          </button>
+        </form>
+        {% endif %}
+    </div>
     <div class="row" style="margin-top: -125px;">
         <!-- Main List -->
-        <div class="col-md-12 px-lg-5">
+        <div class="col-md-12">
           {% include 'pswp.html' %}
 
           <!--Section: Blog v.4-->
@@ -115,32 +138,7 @@
 
                             <div class="dark-grey-text mb-3 mt-4 mx-4">
                               <div data-toc="#toc" id="articleContent">{{ post.body|safe }}</div>
-
-                              <div class="row mb-3">
-                                  <div class="col-12" style="padding: 10px;">
-                                      {% if current_user.is_admin %}
-                                      <div class="btn-group float-right" role="group">
-                                          <a href="{{ url_for('posts.edit_post', post_slug=post.slug) }}">
-                                              <button type="submit" class="btn btn-sm btn-outline-primary shadow-none">
-                                                  {{ _("Edit") }}
-                                              </button>
-                                          </a>
-                                          <form method="POST" action="{{ url_for('posts.delete_post', post_slug=post.slug) }}" onclick="return del()">
-                                              {{ operate_form.csrf_token }}
-                                              <button type="submit" class="btn btn-sm btn-outline-danger shadow-none ml-0">
-                                                  {{ _("Delete") }}
-                                              </button>
-                                          </form>
-                                      </div>
-                                      {% endif %}
-                                  </div>
-                              </div>
-
                               <div class="mb-5 justify-content-end">
-                                  <a class="float-left" href="{{ url_for('posts.posts') }}">
-                                      <i class="fas fa-arrow-circle-left"></i>
-                                  </a>
-
                                   <span class="float-right">
                                       <span class="badge badge-secondary">{{ post.category.name }}</span>
                                       {% for tag in post.tags %}
@@ -192,7 +190,7 @@
           <!--Section: Blog v.4-->
         </div>
     </div>
-
+  </div>
     <div id="t-g-control" class="t-g-control">
         <button class="btn shadow-none gotop">
             <svg class="icon" width="32px" height="32px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z" fill="#8a8a8a"></path></svg>

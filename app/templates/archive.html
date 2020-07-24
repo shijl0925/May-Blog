@@ -20,9 +20,9 @@
 {% endblock styles %}
 
 {% block page_content %}
-    <section class="section min_content">
+    <section class="section min_content px-lg-5">
       {% if archives %}
-        <div class="timeline mb-3 mt-3" style="margin: 0 60px;">
+        <div class="timeline mb-3 mt-3">
             {% for archive in archives %}
               {% with post_nums = archive|count_post_nums_with_archive %}
                   {% if post_nums %}

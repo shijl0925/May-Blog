@@ -366,3 +366,50 @@ body,
 .card .card-body h6 {
     font-weight: 400;
 }
+
+.fixed-sn nav,
+.fixed-sn main,
+.fixed-sn footer{
+    padding-left: 7rem;
+    padding-right: 7rem;
+}
+
+@media (max-width: 1440px) {
+
+    .fixed-sn nav,
+    .fixed-sn main,
+    .fixed-sn footer {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+@media (min-width: 600px) {
+
+    .fixed-sn main,
+    .fixed-sn .navbar .container-fluid,
+    .fixed-sn .page-footer .container-fluid {
+        margin-right: 2%;
+        margin-left: 2%
+    }
+}
+
+@media (min-width: 992px) {
+
+    .fixed-sn main,
+    .fixed-sn .navbar .container-fluid,
+    .fixed-sn .page-footer .container-fluid {
+        margin-right: 5%;
+        margin-left: 5%
+    }
+}
+
+@media (min-width: 1200px) {
+
+    .fixed-sn main,
+    .fixed-sn .navbar .container-fluid,
+    .fixed-sn .page-footer .container-fluid {
+        margin-right: 6%;
+        margin-left: 6%
+    }
+}

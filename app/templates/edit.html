@@ -21,7 +21,7 @@
 {% endblock styles %}
 
 {% block page_content %}
-    <div class="row mx-4 min_content">
+    <div class="row min_content">
         <!-- Main List -->
         <div class="col-lg-12 col-12">
             <div class="card">
@@ -32,8 +32,14 @@
                     <div class="row">
                       <!-- Grid column -->
                       <div class="col-md-9">
-                        {{ render_field_with_errors(form.title, necessary=True) }}
-                        {{ render_field_with_errors(form.background_image_url, necessary=True) }}
+                        <div class="row">
+                            <div class="col-md-6" style="padding-right: 5px;">
+                                {{ render_field_with_errors(form.title, necessary=True) }}
+                            </div>
+                            <div class="col-md-6" style="padding-left: 5px;">
+                                {{ render_field_with_errors(form.background_image_url, necessary=True) }}
+                            </div>
+                        </div>
 
                         {% if post.is_markdown %}
                           {% include "_markdown.html" %}
@@ -223,7 +229,7 @@
 {#        {{ ckeditor.config(name='body') }}#}
 
         <script type="text/javascript" charset="UTF-8" src="{{ url_for('static', filename='ueditor/ueditor.config.js') }}"></script>
-        <script type="text/javascript" charset="UTF-8" src="{{ url_for('static', filename='ueditor/ueditor.all.min.js') }}"></script>
+        <script type="text/javascript" charset="UTF-8" src="{{ url_for('static', filename='ueditor/ueditor.all.js') }}"></script>
         <script type="text/javascript" charset="UTF-8" src="{{ url_for('static', filename='ueditor/lang/zh-cn/zh-cn.js') }}"></script>
 
         <script type="text/javascript">

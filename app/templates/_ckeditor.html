@@ -4,11 +4,7 @@
     {% if request.endpoint == "posts.create_post" %}
         <a href="{{ url_for('posts.create_post', editor='markdown') }}" class="ml-md-3">Markdown Editor</a>
     {% endif %}
-    <p>
-        <a target="_blank" href="{{ url_for('files.upload') }}">
-            {{ _("Upload new File") }}
-        </a>
-    </p>
+
     {{form.body(style="display: none;")}}
 
     <script id="editor" type="text/plain" style="width:100%;height:300px;"></script>

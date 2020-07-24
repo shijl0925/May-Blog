@@ -4,12 +4,9 @@
     {% if request.endpoint == "posts.create_post" %}
         <a href="{{ url_for('posts.create_post', editor='ckeditor') }}" class="ml-md-3">Html Editor</a>
     {% endif %}
-    <p>
-        <a target="_blank" href="{{ url_for('files.upload') }}">
-            {{ _("Upload new File") }}
-        </a>
-    </p>
+
     {{ form.body }}
+
     {% if form.body.errors %}
       <ul>
       {% for error in form.body.errors %}

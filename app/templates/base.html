@@ -13,7 +13,7 @@
     <header>
         {% block navbar %}
             <nav class="navbar navbar-expand-lg navbar-dark {% block navbar_attribs %}{% endblock navbar_attribs %}">
-                <div class="container">
+                <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -84,10 +84,13 @@
     </header>
 {% endblock header %}
 
+{% block body_attribs %}fixed-sn{% endblock body_attribs %}
+
+
 {% block content %}
     <!--Main Layout-->
     <main>
-        <div class="container">
+        <div class="container-fluid">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
@@ -122,7 +125,7 @@
 {% block footer %}
     <footer class="page-footer text-center text-md-left {% block footer_attribs %}{% endblock footer_attribs %}">
     <!--Copyright-->
-    <div class="footer-copyright py-3 text-center">
+    <div class="py-3 text-center">
       <div class="container-fluid">
           © 2019-2020 Copyright:
           <a href="https://github.com/shijl0925" title="Written by shijl0925">

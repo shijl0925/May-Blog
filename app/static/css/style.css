@@ -367,7 +367,7 @@ body,
     font-weight: 400;
 }
 
-.fixed-sn nav,
+.fixed-sn header nav,
 .fixed-sn main,
 .fixed-sn footer{
     padding-left: 7rem;
@@ -376,7 +376,7 @@ body,
 
 @media (max-width: 1440px) {
 
-    .fixed-sn nav,
+    .fixed-sn header nav,
     .fixed-sn main,
     .fixed-sn footer {
         padding-left: 0;

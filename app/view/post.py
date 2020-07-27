@@ -221,10 +221,10 @@ def create_post():
         if is_markdown:
             content = post_form.body.data
             body = md.convert(content)
-            is_markdown = True
+            markdown = True
         else:
             body = post_form.body.data
-            is_markdown = False
+            markdown = False
 
         slug = slugify(title, max_length=100)
         if Post.query.filter_by(slug=slug).first():
@@ -239,7 +239,7 @@ def create_post():
             tags=[Tag.query.filter_by(name=item).first() for item in tag_names],
             deny_comment=deny_comment,
             is_privacy=privacy,
-            is_markdown=is_markdown,
+            is_markdown=markdown,
             background=background,
             body=body,
             timestamp=datetime.now(),
@@ -351,7 +351,7 @@ def edit_post(post_slug):
         search_post.background = background
         search_post.is_privacy = privacy
         search_post.body = body
-        search_post.timestamp=datetime.now()
+        search_post.timestamp = datetime.now()
 
         if is_markdown:
             search_post.content = content

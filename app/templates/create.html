@@ -271,7 +271,6 @@
     <script>
         $('#myClassicTabShadow a[href="#html"]').on('click', function (e) {
             e.preventDefault();
-            //console.log("html");
             $(this).tab('show');
 
             // hide simplemde
@@ -285,7 +284,6 @@
 
         $('#myClassicTabShadow a[href="#markdown"]').on('click', function (e) {
             e.preventDefault();
-            //console.log("markdown");
             $(this).tab('show');
 
             //show simplemde
@@ -301,9 +299,6 @@
     <script>
         $(function(){
             $("form").submit(function(){
-                console.log(ue.getContent());
-                console.log(simplemde.value());
-
                 var result = $("#myClassicTabShadow").find(".active");
                 active_link = result[0];
 

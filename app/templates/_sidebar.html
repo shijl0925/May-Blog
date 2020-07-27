@@ -26,7 +26,7 @@
 
         {% if current_user.is_admin %}
           <div style="text-align: center;">
-              <a href="{{ url_for('posts.create_post', editor='ckeditor') }}" class="white-text">
+              <a href="{{ url_for('posts.create_post') }}" class="white-text">
                   <button type="submit" class="btn btn-sm green" style="width:85px;padding-left:2px;padding-right:2px;margin-right: 0;border-top-right-radius: 0;border-bottom-right-radius: 0;">
                       <i class="far fa-edit"></i> {{ _("Create") }}
                   </button>

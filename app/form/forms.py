@@ -102,6 +102,8 @@ class PostForm(FlaskForm):
     deny_comment = BooleanField(_('Deny Comment'))
     privacy = BooleanField(_('Set Private'))
 
+    is_markdown = BooleanField(_('Markdown'))
+
     save_submit = SubmitField(
         _('Save As Draft'),
         render_kw={'class': 'btn btn-blue-grey shadow-none'}

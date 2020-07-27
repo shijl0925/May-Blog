@@ -200,10 +200,10 @@ def search_post():
     )
 
 
-@posts_bp.route('/post/create/<editor>', methods=['GET', 'POST'])
+@posts_bp.route('/post/create', methods=['GET', 'POST'])
 @login_required
 @permission_required('ADMINISTER')
-def create_post(editor):
+def create_post():
     post_form = PostForm()
     create_category_form = CreateForm()
     create_collection_form = CreateTopicForm()
@@ -216,8 +216,9 @@ def create_post(editor):
         tag_names = post_form.tags.data
         deny_comment = post_form.deny_comment.data
         privacy = post_form.privacy.data
+        is_markdown = post_form.is_markdown.data
 
-        if editor == "markdown":
+        if is_markdown:
             content = post_form.body.data
             body = md.convert(content)
             is_markdown = True
@@ -245,7 +246,7 @@ def create_post(editor):
             author=current_user
         )
 
-        if editor == "markdown":
+        if is_markdown:
             post.content = content
 
         db.session.add(post)
@@ -264,7 +265,6 @@ def create_post(editor):
 
     return flask.render_template(
         'create.html',
-        editor=editor,
         form=post_form,
         create_category_form=create_category_form,
         create_collection_form=create_collection_form,
@@ -308,6 +308,7 @@ def edit_post(post_slug):
     post_form.background_image_url.data = search_post.background
     post_form.deny_comment.data = search_post.deny_comment
     post_form.privacy.data = search_post.is_privacy
+    post_form.is_markdown.data = is_markdown
 
     if is_markdown:
         post_form.body.data = search_post.content

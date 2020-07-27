@@ -3,10 +3,9 @@
 
 {% block styles %}
     {{ super() }}
-    {% if editor == "markdown" %}
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='simplemde/simplemde.min.css') }}">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css">
-    {% endif %}
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='simplemde/simplemde.min.css') }}">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css">
 
     <style>
         .navbar {
@@ -24,14 +23,7 @@
         <div class="col-lg-12 col-12">
             <div class="card">
                 <!-- Card content -->
-                <form class="card-body" method="POST"
-                      action="
-  {% if editor == 'markdown' %}
-    {{ url_for('posts.create_post', editor='markdown') }}
-  {% else %}
-    {{ url_for('posts.create_post', editor='ckeditor') }}
-  {% endif %}"
-                >
+                <form class="card-body" method="POST" action="{{ url_for('posts.create_post') }}">
                     {{ form.csrf_token }}
                     <div class="row">
                       <!-- Grid column -->
@@ -45,11 +37,43 @@
                             </div>
                         </div>
 
-                        {% if editor == "markdown" %}
-                          {% include "_markdown.html" %}
-                        {% else %}
-                          {% include "_ckeditor.html" %}
-                        {% endif %}
+                        <div class="classic-tabs">
+                          <ul class="nav tabs-green" id="myClassicTabShadow" role="tablist">
+                            <li class="nav-item">
+                              <a class="nav-link waves-light active" id="html-tab" data-toggle="tab" href="#html"
+                                role="tab" aria-controls="html" aria-selected="true">HTML Editor</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link waves-light" id="markdown-tab" data-toggle="tab" href="#markdown"
+                                role="tab" aria-controls="markdown" aria-selected="false">Markdown</a>
+                            </li>
+                          </ul>
+
+                          <div class="tab-content" id="myClassicTabContentShadow">
+                            <div class="tab-pane fade active show" id="html" role="tabpanel" aria-labelledby="html-tab">
+
+                            </div>
+                            <div class="tab-pane fade" id="markdown" role="tabpanel" aria-labelledby="markdown-tab">
+
+                            </div>
+                          </div>
+                        </div>
+
+                        <script id="editor" type="text/plain" style="width:100%;height:300px;"></script>
+
+                        <div class="form-group">
+                            {{form.body(style="display: none;")}}
+                            {% if form.body.errors %}
+                              <ul>
+                              {% for error in form.body.errors %}
+                                <li>
+                                    <small class="form-text text-muted mb-4">{{ error }}</small>
+                                </li>
+                              {% endfor %}
+                              </ul>
+                            {% endif %}
+                        </div>
+
                       </div>
                       <!-- Grid column -->
 
@@ -115,6 +139,10 @@
                           <div class="form-group">
                               {{ form.privacy }}
                               {{ form.privacy.label }}
+                          </div>
+                          <div class="form-group" style="display: none;">
+                              {{ form.is_markdown }}
+                              {{ form.is_markdown.label }}
                           </div>
                       </div>
                       <!-- Grid column -->
@@ -214,37 +242,81 @@
 {% block scripts %}
     {{ super() }}
 
-    {% if editor == "markdown" %}
-        <script src="{{ url_for('static', filename='simplemde/simplemde.min.js') }}"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
-        <script>
-            var simplemde = new SimpleMDE({
-                element: document.getElementById("body"),
-                renderingConfig: {
-                    singleLineBreaks: false,
-                    codeSyntaxHighlighting: true,
-                }
-            });
-        </script>
-    {% else %}
-{#        <script src="{{ url_for('static', filename='ckeditor_standard/ckeditor.js') }}"></script>#}
-{#        {{ ckeditor.config(name='body') }}#}
+    <script src="{{ url_for('static', filename='simplemde/simplemde.min.js') }}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
 
-        <script type="text/javascript" charset="UTF-8" src="{{ url_for('static', filename='ueditor/ueditor.config.js') }}"></script>
-        <script type="text/javascript" charset="UTF-8" src="{{ url_for('static', filename='ueditor/ueditor.all.js') }}"></script>
-        <script type="text/javascript" charset="UTF-8" src="{{ url_for('static', filename='ueditor/lang/zh-cn/zh-cn.js') }}"></script>
+    <script type="text/javascript" charset="UTF-8" src="{{ url_for('static', filename='ueditor/ueditor.config.js') }}"></script>
+    <script type="text/javascript" charset="UTF-8" src="{{ url_for('static', filename='ueditor/ueditor.all.js') }}"></script>
+    <script type="text/javascript" charset="UTF-8" src="{{ url_for('static', filename='ueditor/lang/zh-cn/zh-cn.js') }}"></script>
 
-        <script type="text/javascript">
-            var ue = UE.getEditor('editor', {
-                serverUrl: "/files/ueditor_upload"
-            });
+    <script>
+        var simplemde = new SimpleMDE({
+            element: document.getElementById("body"),
+            renderingConfig: {
+                singleLineBreaks: false,
+                codeSyntaxHighlighting: true,
+            }
+        });
 
-            $(function(){
-                $("form").submit(function(){
+        var ue = UE.getEditor('editor', {
+            serverUrl: "/files/ueditor_upload"
+        });
+
+        $(".editor-toolbar").hide();
+        $(".CodeMirror").hide();
+        $(".editor-statusbar").hide();
+
+    </script>
+
+    <script>
+        $('#myClassicTabShadow a[href="#html"]').on('click', function (e) {
+            e.preventDefault();
+            //console.log("html");
+            $(this).tab('show');
+
+            // hide simplemde
+            $(".editor-toolbar").hide();
+            $(".CodeMirror").hide();
+            $(".editor-statusbar").hide();
+
+            //show ueditor
+            $("#editor").show();
+        });
+
+        $('#myClassicTabShadow a[href="#markdown"]').on('click', function (e) {
+            e.preventDefault();
+            //console.log("markdown");
+            $(this).tab('show');
+
+            //show simplemde
+            $(".editor-toolbar").show();
+            $(".CodeMirror").show();
+            $(".editor-statusbar").show();
+
+            //hide ueditor
+            $("#editor").hide();
+        });
+    </script>
+
+    <script>
+        $(function(){
+            $("form").submit(function(){
+                console.log(ue.getContent());
+                console.log(simplemde.value());
+
+                var result = $("#myClassicTabShadow").find(".active");
+                active_link = result[0];
+
+                if (active_link.id === "html-tab") {
+                    $("#is_markdown").prop("checked", false);
                     $("textarea[name=body]").val(ue.getContent());
-                    return true;
-                })
-            });
-        </script>
-    {% endif %}
+                }
+                else if (active_link.id === "markdown-tab") {
+                    $("#is_markdown").prop("checked", true);
+                    $("textarea[name=body]").val(simplemde.value());
+                }
+                return true;
+            })
+        });
+    </script>
 {% endblock %}

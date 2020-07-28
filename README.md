@@ -29,6 +29,8 @@ $ python3 manage.py runserver
 
 ## Screenshots
 ![home screenshot](https://raw.githubusercontent.com/shijl0925/May-Blog/master/screenshot/home.png)
+![post screenshot](https://raw.githubusercontent.com/shijl0925/May-Blog/master/screenshot/post1.png)
+![post screenshot](https://raw.githubusercontent.com/shijl0925/May-Blog/master/screenshot/post2.png)
 ![topics screenshot](https://raw.githubusercontent.com/shijl0925/May-Blog/master/screenshot/topics.png)
 ![html edit screenshot](https://raw.githubusercontent.com/shijl0925/May-Blog/master/screenshot/ckeditor.png)
 ![markdown edit screenshot](https://raw.githubusercontent.com/shijl0925/May-Blog/master/screenshot/markdown.png)

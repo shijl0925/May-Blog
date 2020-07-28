@@ -1,113 +1,109 @@
 <div class="col-lg-3 col-12 px-4 mt-1">
     <!-- Author -->
     {% if admin %}
-    <div class="card mb-5">
-
-      <!-- Card image -->
-      <div class="view overlay">
-          <img src="{{ url_for('auth.get_avatar', filename=admin.avatar_l) }}" class="card-img-top" alt="">
-          <div class="mask rgba-white-slight waves-effect waves-light"></div>
-      </div>
-      <!-- Card image -->
-
-      <!-- Card content -->
-      <div class="card-body">
-        <!-- Title -->
-
-        <h5 class="card-title dark-grey-text text-center grey lighten-4 py-2">
-          <strong>
-            {% if admin.nick_name %}
-              {{ admin.nick_name }}
-            {% else %}
-              {{ admin.full_name }}
-            {% endif %}
-          </strong>
-        </h5>
-
-        {% if current_user.is_admin %}
-          <div style="text-align: center;">
-              <a href="{{ url_for('posts.create_post') }}" class="white-text">
-                  <button type="submit" class="btn btn-sm green" style="width:85px;padding-left:2px;padding-right:2px;margin-right: 0;border-top-right-radius: 0;border-bottom-right-radius: 0;">
-                      <i class="far fa-edit"></i> {{ _("Create") }}
-                  </button>
-              </a>
-              <a href="{{ url_for('posts.draft') }}" class="white-text">
-                  <button type="submit" class="btn btn-sm grey" style="width:85px;padding-left:2px;padding-right:2px;margin-left: 0;border-top-left-radius: 0;border-bottom-left-radius: 0;">
-                      <i class="far fa-folder"></i> {{ _("Draft") }}
-                      {% if draft_nums %}
-                          <span class="badge badge-warning">
-                               {{ draft_nums }}
-                          </span>
-                      {% endif %}
-                  </button>
-              </a>
+    <div class="card testimonial-card mb-5">
+          <div class="card-up blue-gradient"></div>
+          <!-- Avatar -->
+          <div class="avatar mx-auto white">
+            <img src="{{ url_for('auth.get_avatar', filename=admin.avatar_l) }}" class="rounded-circle" alt="woman avatar">
           </div>
-        {% endif %}
 
-        <div class="post-card-measures mt-3">
-            <div class="post-card-measure">
-                <div class="post-card-measure-inner">
-                    <div class="post-number dark-grey-text">
-                        <a href="{{ url_for('posts.posts') }}" class="dark-grey-text">
-                            {{ post_nums }}
-                        </a>
-                    </div>
-                    <div class="dark-grey-text text-center py-1 mb-3" style="font-size: 12px;">
-                        {{ _("POSTS") }}
-                    </div>
-                </div>
-            </div>
+          <!-- Content -->
+          <div class="card-body">
+            <!-- Name -->
+            <h5 class="card-title dark-grey-text text-center grey lighten-4 py-2">
+              <strong>
+                {% if admin.nick_name %}
+                  {{ admin.nick_name }}
+                {% else %}
+                  {{ admin.full_name }}
+                {% endif %}
+              </strong>
+            </h5>
 
-            <div class="post-card-measure">
-                <div class="post-card-measure-inner">
-                    <div class="post-number dark-grey-text">
-                        <a href="#tags" class="dark-grey-text">
-                            {{ tag_nums }}
-                        </a>
-                    </div>
-                    <div class="dark-grey-text text-center py-1 mb-3" style="font-size: 12px;">
-                        {{ _("TAGS") }}
-                    </div>
-                </div>
-            </div>
-
-            <div class="post-card-measure">
-                <div class="post-card-measure-inner">
-                    <div class="post-number dark-grey-text">
-                        <a href="#categories" class="dark-grey-text">
-                            {{ category_nums }}
-                        </a>
-                    </div>
-                    <div class="dark-grey-text text-center py-1 mb-3" style="font-size: 12px;">
-                        {{ _("CATEGORIES") }}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Description -->
-        <p class="mt-1 dark-grey-text font-small text-center">
-            {% if admin.bio %}{{ admin.bio }}{% endif %}
-        </p>
-        <p class="mt-1 dark-grey-text font-small text-center">
-            {% if admin.location %}
-                <svg class="octicon octicon-location" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M11.536 3.464a5 5 0 010 7.072L8 14.07l-3.536-3.535a5 5 0 117.072-7.072v.001zm1.06 8.132a6.5 6.5 0 10-9.192 0l3.535 3.536a1.5 1.5 0 002.122 0l3.535-3.536zM8 9a2 2 0 100-4 2 2 0 000 4z"></path></svg>
-                {{ admin.location }}
+            {% if current_user.is_admin %}
+              <div style="text-align: center;">
+                  <a href="{{ url_for('posts.create_post') }}" class="white-text">
+                      <button type="submit" class="btn btn-sm green" style="width:85px;padding-left:2px;padding-right:2px;margin-right: 0;border-top-right-radius: 0;border-bottom-right-radius: 0;">
+                          <i class="far fa-edit"></i> {{ _("Create") }}
+                      </button>
+                  </a>
+                  <a href="{{ url_for('posts.draft') }}" class="white-text">
+                      <button type="submit" class="btn btn-sm grey" style="width:85px;padding-left:2px;padding-right:2px;margin-left: 0;border-top-left-radius: 0;border-bottom-left-radius: 0;">
+                          <i class="far fa-folder"></i> {{ _("Draft") }}
+                          {% if draft_nums %}
+                              <span class="badge badge-warning">
+                                   {{ draft_nums }}
+                              </span>
+                          {% endif %}
+                      </button>
+                  </a>
+              </div>
             {% endif %}
-        </p>
 
-        <ul class="mt-1 list-unstyled list-inline-item list-unstyled flex-center">
-            <!-- Github -->
-            {% if admin.website %}
-            <li>
-                <a href="{{ admin.website }}" style="color: #171c2b!important;">
-                    <span class="badge badge-pill pink"><i class="fab fa-github" aria-hidden="true"></i></span>
-                </a>
-            </li>
-            {% endif %}
-        </ul>
-      </div>
-      <!-- Card content -->
+            <div class="post-card-measures mt-3">
+                <div class="post-card-measure">
+                    <div class="post-card-measure-inner">
+                        <div class="post-number dark-grey-text">
+                            <a href="{{ url_for('posts.posts') }}" class="dark-grey-text">
+                                {{ post_nums }}
+                            </a>
+                        </div>
+                        <div class="dark-grey-text text-center py-1 mb-3" style="font-size: 12px;">
+                            {{ _("POSTS") }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-card-measure">
+                    <div class="post-card-measure-inner">
+                        <div class="post-number dark-grey-text">
+                            <a href="#tags" class="dark-grey-text">
+                                {{ tag_nums }}
+                            </a>
+                        </div>
+                        <div class="dark-grey-text text-center py-1 mb-3" style="font-size: 12px;">
+                            {{ _("TAGS") }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-card-measure">
+                    <div class="post-card-measure-inner">
+                        <div class="post-number dark-grey-text">
+                            <a href="#categories" class="dark-grey-text">
+                                {{ category_nums }}
+                            </a>
+                        </div>
+                        <div class="dark-grey-text text-center py-1 mb-3" style="font-size: 12px;">
+                            {{ _("CATEGORIES") }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <p class="mt-1 dark-grey-text font-small text-center">
+                {% if admin.bio %}{{ admin.bio }}{% endif %}
+            </p>
+            <p class="mt-1 dark-grey-text font-small text-center">
+                {% if admin.location %}
+                    <svg class="octicon octicon-location" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M11.536 3.464a5 5 0 010 7.072L8 14.07l-3.536-3.535a5 5 0 117.072-7.072v.001zm1.06 8.132a6.5 6.5 0 10-9.192 0l3.535 3.536a1.5 1.5 0 002.122 0l3.535-3.536zM8 9a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+                    {{ admin.location }}
+                {% endif %}
+            </p>
+
+            <ul class="mt-1 list-unstyled list-inline-item list-unstyled flex-center">
+                <!-- Github -->
+                {% if admin.website %}
+                <li>
+                    <a href="{{ admin.website }}" style="color: #171c2b!important;">
+                        <span class="badge badge-pill pink"><i class="fab fa-github" aria-hidden="true"></i></span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+          </div>
     </div>
     {% endif %}
     <!-- Author -->

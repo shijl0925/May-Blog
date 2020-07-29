@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="col-lg-7 mb-4">
-                <h4 class="mt-0">
+                <h5 class="mt-0">
                   <strong>
                     <a class="dark-grey-text" href="{{ url_for('posts.post', post_slug=post.slug) }}">{{ post.title }}</a>
                   </strong>
@@ -40,11 +40,11 @@
                       Private
                     </span>
                   {% endif %}
-                </h4>
+                </h5>
 
                 <p>
                     <a class="dark-grey-text" href="{{ url_for('posts.post', post_slug=post.slug) }}">
-                        {{ post.body|striptags|truncate(150) }}
+                        {{ post.body|striptags|truncate(100) }}
                     </a>
                 </p>
 

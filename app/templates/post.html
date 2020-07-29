@@ -174,9 +174,7 @@
                             </div>
                         </section>
 
-                        {% if post.comments|length %}
-                            {% include "_comments.html" %}
-                        {% endif %}
+                        {% include "_comments.html" %}
 
                         {% if not post.deny_comment %}
                             {% include "_reply.html" %}

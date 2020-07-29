@@ -310,7 +310,7 @@ class Post(db.Model):
         return Post.query.order_by(Post.id).filter(Post.is_draft == False, Post.id > self.id).first()
 
     def __repr__(self):
-        return '<Post %r>' % self.id
+        return '<Post %r>' % self.title
 
     __mapper_args__ = {"order_by": timestamp.desc()}
 
@@ -419,4 +419,4 @@ class Link(db.Model):
     url = db.Column(db.String(256))
 
     def __repr__(self):
-        return '<Link %r>' % self.id
+        return '<Link %r>' % self.name

@@ -346,7 +346,6 @@ class CategoryBaseModelview(MyBaseModelview):
 
 class CollectionBaseModelview(MyBaseModelview):
     column_exclude_list = ["description", "background"]
-    form_columns = ["name", "description", "background", "timestamp"]
 
 
 class ArchiveBaseModelview(MyBaseModelview):

@@ -7,6 +7,9 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='simplemde/simplemde.min.css') }}">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css">
 
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='select2/css/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='select2/css/select2-bootstrap4.min.css') }}">
+
     <style>
         .navbar {
             background-color: #6f7782;
@@ -244,6 +247,14 @@
 
 {% block scripts %}
     {{ super() }}
+
+    <script src="{{ url_for('static', filename='select2/js/select2.full.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.custom-select').select2();
+        });
+    </script>
 
     <script src="{{ url_for('static', filename='simplemde/simplemde.min.js') }}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>

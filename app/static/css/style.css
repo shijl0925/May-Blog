@@ -527,3 +527,10 @@ body,
     color: #bdbdbd;
     transition: all .4s;
 }
+.circle-icons i:hover {
+    color: #fff;
+}
+
+.circle-icons i:hover {
+  background-color: #4285f4 !important; }
+

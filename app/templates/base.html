@@ -108,8 +108,8 @@
             </div>
         </div>
 
-        <div id="go-to-top">
-            <span class="btn-floating btn-sm btn-primary text-center shadow-none" style="display: none;">
+        <div id="go-to-top" style="display: none;">
+            <span id="up-btn" class="btn-floating btn-sm btn-primary text-center shadow-none">
                 <i class="fa fa-angle-up" style="font-size: 20px;"></i>
             </span>
         </div>
@@ -145,46 +145,8 @@
 {#    <script src="{{ url_for('static', filename='js/sakura.js') }}"></script>#}
     {{ moment.include_moment(local_js=url_for('static', filename='js/moment-with-locales.min.js')) }}
     {{ moment.locale('zh-cn') }}
+    <script src="{{ url_for('static', filename='js/updown.js') }}"></script>
     <script>
-        window.onscroll = function() {
-            var toTop = document.getElementById('go-to-top');
-            var oldTop = document.documentElement.scrollTop || document.body.scrollTop;
-            var timer;
-            toTop.onclick = function() {
-                var speed = 10;
-                timer = setInterval(function() {
-                    var top = document.documentElement.scrollTop || document.body.scrollTop;
-                    var goSpeed = top/50;
-                    if (goSpeed > speed) {
-                        goSpeed = speed;
-                    } else if (goSpeed < 6) {
-                        goSpeed = 6;
-                    }
-
-                    if (top > speed) {
-                        if(document.documentElement.scrollTop){
-                            top = document.documentElement.scrollTop-=speed;
-                        }else{
-                            top = document.body.scrollTop-=speed;
-                        }
-                    } else {
-                        clearInterval(timer);
-                    }
-                }, 0);
-            };
-
-            var newTop = document.documentElement.scrollTop || document.body.scrollTop;
-            if (newTop > 100) {
-                $("#go-to-top").slideDown(300);
-            } else {
-                $("#go-to-top").slideUp(300);
-            }
-            if (newTop > oldTop) {
-                clearInterval(timer);
-            }
-            oldTop = newTop;
-        };
-
         $(document).ready(function(){
             $("#alert_div").fadeTo(2000, 500).slideUp(500, function(){
                 $("#alert_div").slideUp(500);

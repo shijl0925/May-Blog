@@ -4,8 +4,11 @@
     <div class="card testimonial-card mb-5">
           <div class="card-up blue-gradient"></div>
           <!-- Avatar -->
-          <div class="avatar mx-auto white">
+          <div class="avatar mx-auto white view">
             <img src="{{ url_for('auth.get_avatar', filename=admin.avatar_l) }}" class="rounded-circle" alt="woman avatar">
+            <a>
+                <div class="mask rgba-white-slight waves-effect waves-light"></div>
+            </a>
           </div>
 
           <!-- Content -->

@@ -43,18 +43,18 @@
                   </a>
 
                   <!-- Card content -->
-                  <div class="card-body">
+                  <div class="card-body" style="height: 200px;">
 
                     <!-- Title -->
-                    <h4 class="card-title">
+                    <h5 class="card-title">
                         <strong>
-                            {{ topic.name|truncate(30) }}
+                            {{ topic.name|truncate(25) }}
                         </strong>
-                    </h4>
+                    </h5>
                     <hr>
 
                     <!-- Text -->
-                    <p class="card-text">{{ topic.description|truncate(250) }}</p>
+                    <p class="card-text">{{ topic.description|truncate(150) }}</p>
                   </div>
                   <!-- Card content -->
 

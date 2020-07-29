@@ -87,7 +87,7 @@ class PostForm(FlaskForm):
     tags = QuerySelectMultipleField(
         _('Tags'),
         validators=[validators.DataRequired()],
-        render_kw={'class': 'custom-select'},
+        render_kw={'class': 'custom-select select2-basic-multiple'},
         query_factory=tag_choices,
         allow_blank=True,
         get_pk=get_pk

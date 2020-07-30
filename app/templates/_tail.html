@@ -22,7 +22,9 @@
               <div class="col-9 mb-1">
                 <!-- Post data -->
                   <h6 class="mt-1 mb-3">
-                    <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="text-hover font-weight-bold">{{ post.title }}</a>
+                    <a href="{{ url_for('posts.post', post_slug=post.slug) }}" class="dark-grey-text">
+                        <strong>{{ post.title }}</strong>
+                    </a>
                     {% if post.is_privacy %}
                       <span class="Label Label--outline v-align-middle ml-1 mb-1">
                         Private

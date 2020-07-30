@@ -3,6 +3,13 @@
 {% block styles %}
     {{ super() }}
     <style>
+        html,
+        body,
+        .jarallax {
+          height: 200px;
+          min-height: 200px;
+        }
+
         .navbar {
             background-color: #6f7782;
         }
@@ -27,15 +34,9 @@
 
                 <!-- Card -->
                 <div class="card">
-
-                  <!-- Card image -->
-                  <div class="view zoom overlay">
-                    <img src="{{ url_for('files.uploaded_files', filename=topic.background|filename_m) }}" class="card-img-top" alt="sample image">
-                    <a href="{{ url_for('posts.topic', topic_id=topic.id) }}">
-                      <div class="mask rgba-white-slight waves-effect waves-light"></div>
-                    </a>
+                  <div class="view jarallax" data-jarallax='{"speed": 0.2}' style="background-image: url({{ url_for('files.uploaded_files', filename=topic.background|filename_m) }}); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+                    <div class="mask rgba-white-slight waves-effect waves-light"></div>
                   </div>
-                  <!-- Card image -->
 
                   <!-- Button -->
                   <a href="{{ url_for('posts.topic', topic_id=topic.id) }}" class="btn-floating btn-action ml-auto mr-4 waves-effect waves-light" style="background-color: #6f7782;">

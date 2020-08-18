@@ -17,9 +17,9 @@
     <section class="section mb-5 min_content" style="margin: 15px 60px;">
         <div class="post-content">
             {% for tag in tags %}
-                <div class="chip hvr-buzz-out">
+                <a class="chip hvr-buzz-out" href="{{ url_for('posts.tag', tag_id=tag.id) }}">
                   {{ tag.name }} {{ tag|count_post_nums_with_tag }}
-                </div>
+                </a>
             {% endfor %}
           </div>
     </section>

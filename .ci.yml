@@ -1,0 +1,10 @@
+package: May-Blog
+type: python
+stages:
+  - deploy
+
+step:
+    stage: deploy
+    is_pkg: true
+    CompressType: zip
+    CompressFolder: .

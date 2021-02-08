@@ -5,6 +5,6 @@ stages:
 
 step:
     stage: deploy
-    is_pkg: true
-    CompressType: zip
-    CompressFolder: .
+    is_package: true
+    ArchiveType: zip
+    ArchiveFolder: .

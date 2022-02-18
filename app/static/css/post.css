@@ -87,16 +87,11 @@
 }
 
 .post-control {
-    background-color: rgba(0,0,0,.02);
-    position: absolute;
     display: -webkit-box;
     display: -ms-flexbox;
-    display: flex;
     flex-direction: column;
     -webkit-box-direction: normal;
-    -webkit-box-orient: vertical;
+    -webkit-box-orient: horizontal;
     -ms-flex-direction: column;
-    margin-top: 100px;
-    margin-left: -45px;
     z-index: 666;
 }

@@ -49,6 +49,26 @@ class Role(db.Model, RoleMixin):
     def __repr__(self):
         return '<Role %r>' % self.name
 
+    def has_permission(self, perm):
+        search_permission = Permission.query.filter_by(name=perm).first()
+        return search_permission and search_permission in self.permissions
+
+    def add_permission(self, perm):
+        search_permission = Permission.query.filter_by(name=perm).first()
+        if search_permission and not self.has_permission(perm):
+            self.permissions.append(search_permission)
+            db.session.commit()
+
+    def remove_permission(self, perm):
+        search_permission = Permission.query.filter_by(name=perm).first()
+        if search_permission and self.has_permission(perm):
+            self.permissions.remove(search_permission)
+            db.session.commit()
+
+    def reset_permissions(self):
+        self.permissions = []
+        db.session.commit()
+
     @staticmethod
     def init_role():
         roles_permissions_map = {
@@ -161,11 +181,11 @@ class User(db.Model, UserMixin):
     def is_admin(self):
         return self.has_role('Administrator')
 
-    def get_role_names(self):
+    def has_roles(self):
         roles = [item.name for item in self.roles]
         return roles
 
-    def get_permission_names(self):
+    def has_permissions(self):
         permissions = []
         for role in self.roles:
             permissions.extend(role.permissions)
@@ -173,7 +193,7 @@ class User(db.Model, UserMixin):
         return [item.name for item in list(set(permissions))]
 
     def can(self, permission_name):
-        return permission_name in self.get_permission_names()
+        return permission_name in self.has_permissions()
 
     @property
     def full_name(self):

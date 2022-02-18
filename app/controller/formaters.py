@@ -63,7 +63,7 @@ def _send_mail(view, context, model, name):
 
 
 def _show_roles(view, context, model, name):
-    roles = model.get_role_names()
+    roles = model.has_roles()
     _html = ""
     for role in roles:
         _html += """<h6>{role}</h6>""".format(role=role)

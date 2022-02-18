@@ -1,4 +1,4 @@
-flask
+flask==1.1.4
 flask-wtf
 WTForms-SQLAlchemy
 flask-bootstrap
@@ -6,7 +6,7 @@ flask-mail
 flask-security
 flask-script
 flask-avatars
-flask-migrate
+flask-migrate==2.7.0
 flask-debugtoolbar
 SQLAlchemy>=1.2.15
 Flask-SQLAlchemy>=2.3.2
@@ -24,5 +24,7 @@ markdown
 html2text
 flask-whooshee
 flask-restful
-flask-jwt-extended
+flask-jwt-extended==3.25.1
 flask-dropzone
+Pygments
+faker

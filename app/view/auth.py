@@ -92,7 +92,7 @@ def user_loader_callback(identity):
 
     return UserObject(
         username=identity,
-        permissions=user.get_permission_names()
+        permissions=user.has_permissions()
     )
 
 

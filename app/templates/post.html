@@ -61,19 +61,8 @@
     </style>
 {% endblock styles %}
 
-
-{% block navbar %}
-    {{ super() }}
-    <section>
-      <div class="view overlay entry-cover">
-        <img src="{{ url_for('files.uploaded_files', filename=post.background) }}" style="width: 100%;margin-top: -15%;">
-      </div>
-    </section>
-{% endblock %}
-
 {% block page_content %}
-  <div class="px-lg-5">
-    <div class="row" style="margin-top: -125px;">
+    <div class="row min_content mt-3 mb-3">
         <!-- Main List -->
         <div class="col-md-12">
           {% include 'pswp.html' %}
@@ -182,7 +171,7 @@
           <!--Section: Blog v.4-->
         </div>
     </div>
-  </div>
+
     <div id="t-g-control" class="t-g-control">
         <button class="btn shadow-none gotop">
             <svg class="icon" width="32px" height="32px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M793.024 710.272a32 32 0 1 0 45.952-44.544l-310.304-320a32 32 0 0 0-46.4 0.48l-297.696 320a32 32 0 0 0 46.848 43.584l274.752-295.328 286.848 295.808z" fill="#8a8a8a"></path></svg>

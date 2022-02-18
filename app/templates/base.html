@@ -48,10 +48,6 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                         {% if current_user.is_admin %}
-                                        <a class="dropdown-item" href="{{ url_for('files.upload') }}">
-                                            <i class="fas fa-cloud-upload-alt"></i>
-                                            <span class="ml-1">{{ _("Upload Image") }}</span>
-                                        </a>
                                         <a class="dropdown-item" href="{{ url_for('admin.index') }}">
                                             <i class="fas fa-user-cog"></i>
                                             <span class="ml-1">{{ _("Admin Dashboard") }}</span>

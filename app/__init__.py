@@ -3,7 +3,6 @@ import flask
 from sqlalchemy import func
 from datetime import datetime
 from flask_wtf.csrf import CSRFError
-from flask_security import current_user
 from app.utils import config_log, get_abs_dir
 from app.config import config
 from app.controller.extensions import (

@@ -47,13 +47,13 @@
 }
 
 .hljs, .highlight {
+    margin: 0 auto;
     border: none;
     font-family: "Consulas", "Courier New", Courier, mono, serif;
     font-size: 15px;
     line-height: 1.45;
-    background-color: rgba(0,0,0,.02);
     display: block;
-    width: 100%;
+    width: 85%;
     font-weight: 500;
     color: #000;
     white-space: pre-wrap;

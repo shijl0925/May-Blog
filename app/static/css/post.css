@@ -48,14 +48,11 @@
 
 .hljs, .highlight {
     border: none;
-    border-left: 5px solid rgba(0,0,0,.08);
     font-family: "Consulas", "Courier New", Courier, mono, serif;
     font-size: 15px;
     line-height: 1.45;
     background-color: rgba(0,0,0,.02);
     display: block;
-    padding: 16px;
-    margin: 15px 0;
     width: 100%;
     font-weight: 500;
     color: #000;

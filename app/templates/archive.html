@@ -55,7 +55,7 @@
             {% endfor %}
         </div>
         <nav class="mb-3">
-            {% from "mdbootstrap/pagination.html" import render_pagination %}
+            {% from "pagination.html" import render_pagination %}
             {{ render_pagination(pagination,
              prev=('<span aria-hidden="true">&larr;</span> Pre')|safe,
              next=('Next <span aria-hidden="true">&rarr;</span>')|safe,

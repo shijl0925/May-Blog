@@ -13,8 +13,6 @@ from app.controller.extensions import (
     babel,
     avatars,
     adminlte,
-    mdb,
-    boostrap,
     ckeditor,
     dropzone,
     csrf,
@@ -138,8 +136,6 @@ def create_app(env=None):
         env = os.environ.get('FLASK_ENV', 'default')
     app_.config.from_object(config.get(env))
 
-    boostrap.init_app(app_)
-    mdb.init_app(app_)
     mail.init_app(app_)
     db.init_app(app_)
     # toolbar.init_app(app_)
@@ -171,6 +167,7 @@ def create_app(env=None):
 
     app_.jinja_env.trim_blocks = True
     app_.jinja_env.lstrip_blocks = True
+    app_.jinja_env.add_extension('jinja2.ext.do')
 
     init_blue_print(app_)
     register_errorhandlers(app_)

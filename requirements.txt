@@ -1,7 +1,6 @@
 flask==1.1.4
 flask-wtf
 WTForms-SQLAlchemy
-flask-bootstrap
 flask-mail
 flask-security
 flask-script
@@ -13,7 +12,6 @@ Flask-SQLAlchemy>=2.3.2
 gevent==1.4.0
 gunicorn>=19.9.0
 Flask_AdminLTE3
-Flask-MDBootstrap
 python-slugify
 email_validator
 werkzeug==0.15.4
@@ -29,4 +27,5 @@ flask-dropzone
 Pygments
 faker
 marko
+mysqlclinet
 concurrent-log-handler

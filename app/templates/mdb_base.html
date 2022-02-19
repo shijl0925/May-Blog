@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {%- block head %}
+    <title>
+      {% block title %}
+      {% endblock title %}
+    </title>
+    {%- block metas %}
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+    {%- endblock metas %}
+
+    {%- block styles %}
+      <!-- Font Awesome -->
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='plugins/fontawesome-free/css/all.css') }}" rel="stylesheet">
+      <!-- Bootstrap -->
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='MDB/css/bootstrap.css') }}" rel="stylesheet">
+      <!-- MDB -->
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='MDB/css/mdb.css') }}" rel="stylesheet">
+    {%- endblock styles %}
+
+    {%- endblock head %}
+  </head>
+
+  <body class="{% block body_attribs %}{% endblock body_attribs %}">
+    {% block body %}
+      {% block header %}
+        {% block sidebar %}
+        {% endblock sidebar %}
+
+        {% block navbar %}
+        {% endblock navbar %}
+      {% endblock header %}
+
+      {% block content %}
+      {% endblock content %}
+
+      {% block footer %}
+      {% endblock footer %}
+    {% endblock body %}
+
+    {% block scripts %}
+      <!-- jQuery -->
+      <script src="{{ url_for('static', filename='MDB/js/jquery.js') }}"></script>
+
+      <!-- Bootstrap tooltips -->
+      <script src="{{ url_for('static', filename='MDB/js/popper.js') }}"></script>
+
+      <!-- Bootstrap core JavaScript -->
+      <script src="{{ url_for('static', filename='MDB/js/bootstrap.js') }}"></script>
+
+      <!-- MDB core JavaScript -->
+      <script src="{{ url_for('static', filename='MDB/js/mdb.js') }}"></script>
+
+    {% endblock scripts %}
+
+  </body>
+</html>

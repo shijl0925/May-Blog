@@ -55,7 +55,9 @@
                     <hr>
 
                     <!-- Text -->
+                    {% if topics.description %}
                     <p class="card-text">{{ topic.description|truncate(150) }}</p>
+                    {% endif %}
                   </div>
                   <!-- Card content -->
 

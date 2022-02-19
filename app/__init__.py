@@ -128,7 +128,7 @@ def format_date(str):
 
 
 def create_app(env=None):
-    config_log()
+    # config_log()
     app_ = flask.Flask(
         __name__,
         template_folder=os.path.join(apps_abs_dir, 'templates'),

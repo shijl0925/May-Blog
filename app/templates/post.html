@@ -113,23 +113,22 @@
                                       {% endfor %}
                                   </span>
                               </div>
-
-                              <div class="post-control float-right">
-                                {% if current_user.is_admin %}
-                                <a href="{{ url_for('posts.edit_post', post_slug=post.slug) }}" class="dark-grey-text">
-                                    <button class="btn btn-sm shadow-none" style="padding: .3rem .6rem;border-radius: 0;width: 30px;">
-                                        <i class="far fa-edit"></i>
-                                    </button>
-                                </a>
-
-                                <form method="POST" action="{{ url_for('posts.delete_post', post_slug=post.slug) }}" onclick="return del()">
-                                  {{ operate_form.csrf_token }}
-                                  <button type="submit" class="btn btn-sm shadow-none" style="padding: .3rem .6rem;border-radius: 0;width: 30px;">
-                                    <i class="far fa-trash-alt"></i>
-                                  </button>
-                                </form>
-                                {% endif %}
+                            
+                              {% if current_user.is_admin %}
+                              <div class="btn-group float-right" role="group">
+                                  <a href="{{ url_for('posts.edit_post', post_slug=post.slug) }}">
+                                      <button type="submit" class="btn btn-sm btn-outline-primary shadow-none">
+                                          {{ _("Edit") }}
+                                      </button>
+                                  </a>
+                                  <form method="POST" action="{{ url_for('posts.delete_post', post_slug=post.slug) }}" onclick="return del()">
+                                      {{ operate_form.csrf_token }}
+                                      <button type="submit" class="btn btn-sm btn-outline-danger shadow-none ml-0">
+                                          {{ _("Delete") }}
+                                      </button>
+                                  </form>
                               </div>
+                              {% endif %}
                             </div>
                         </section>
 

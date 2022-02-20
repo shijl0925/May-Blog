@@ -3,11 +3,11 @@
 
 {% block styles %}
     {{ super() }}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='simplemde/simplemde.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/simplemde/1.11.2/simplemde.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css">
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='select2/css/select2.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='select2/css/select2-bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/select2/4.0.13/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/select2-bootstrap-css/1.4.2/select2-bootstrap.min.css">
 
     <style>
         .navbar {
@@ -226,7 +226,7 @@
 
 {% block scripts %}
     {{ super() }}
-    <script src="{{ url_for('static', filename='select2/js/select2.full.min.js') }}"></script>
+    <script src="https://cdn.staticfile.org/select2/4.0.13/js/select2.full.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -234,7 +234,7 @@
         });
     </script>
 
-    <script src="{{ url_for('static', filename='simplemde/simplemde.min.js') }}"></script>
+    <script src="https://cdn.staticfile.org/simplemde/1.11.2/simplemde.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
 
     <script>

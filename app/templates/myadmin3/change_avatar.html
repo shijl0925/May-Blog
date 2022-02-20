@@ -1,7 +1,7 @@
 {% extends 'myadmin3/my_master.html' %}
 {% block head_css %}
     {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('static', filename='jcrop/jquery.Jcrop.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/jquery-jcrop/0.9.12/css/jquery.Jcrop.min.css">
 {% endblock head_css %}
 
 {% block body %}
@@ -62,6 +62,6 @@
 
 {% block tail_js %}
     {{ super() }}
-    <script src="{{ url_for('static', filename='jcrop/jquery.Jcrop.min.js') }}"></script>
+    <script src="https://cdn.staticfile.org/jquery-jcrop/0.9.12/js/jquery.Jcrop.min.js"></script>
     {{ avatars.init_jcrop() }}
 {% endblock tail_js %}

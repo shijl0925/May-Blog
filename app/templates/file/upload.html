@@ -2,8 +2,8 @@
 
 {% block styles %}
     {{ super() }}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lightgallery/css/lightgallery.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lightgallery/css/lg-transitions.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/lightgallery/1.7.1/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/lightgallery/1.7.1/css/lg-transitions.min.css">
     {{ dropzone.load_css() }}
     {{ dropzone.style('border: 2px dashed #0087F7; margin: 5px 0; min-height: 300px;') }}
     <style>
@@ -68,10 +68,10 @@
 
 {% block scripts %}
     {{ super() }}
-    <script src="{{ url_for('static', filename='lightgallery/js/lightgallery.js') }}"></script>
-    <script src="{{ url_for('static', filename='lightgallery/modules/lg-fullscreen.js') }}"></script>
-    <script src="{{ url_for('static', filename='lightgallery/modules/lg-thumbnail.js') }}"></script>
-    <script src="{{ url_for('static', filename='lightgallery/modules/lg-zoom.js') }}"></script>
+    <script src="https://cdn.staticfile.org/lightgallery/1.7.1/js/lightgallery.min.js"></script>
+    <script src="https://cdn.staticfile.org/lg-fullscreen/1.2.1/lg-fullscreen.min.js"></script>
+    <script src="https://cdn.staticfile.org/lg-thumbnail/1.2.1/lg-thumbnail.min.js"></script>
+    <script src="https://cdn.staticfile.org/lg-zoom/1.2.1/lg-zoom.min.js"></script>
 
     {{ dropzone.load_js() }}
     {{ dropzone.config(custom_init='dz = this;document.getElementById("upload-btn").addEventListener("click", function handler(e) {dz.processQueue();});',

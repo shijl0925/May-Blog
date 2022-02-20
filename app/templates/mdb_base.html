@@ -14,11 +14,11 @@
 
     {%- block styles %}
       <!-- Font Awesome -->
-      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='plugins/fontawesome-free/css/all.css') }}" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
       <!-- Bootstrap -->
-      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='MDB/css/bootstrap.css') }}" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet">
       <!-- MDB -->
-      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='MDB/css/mdb.css') }}" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/mdbootstrap/4.12.0/css/mdb.min.css" rel="stylesheet">
     {%- endblock styles %}
 
     {%- endblock head %}
@@ -43,16 +43,16 @@
 
     {% block scripts %}
       <!-- jQuery -->
-      <script src="{{ url_for('static', filename='MDB/js/jquery.js') }}"></script>
+      <script src="{{ url_for('static', filename='MDB/js/jquery.min.js') }}"></script>
 
       <!-- Bootstrap tooltips -->
-      <script src="{{ url_for('static', filename='MDB/js/popper.js') }}"></script>
+      <script src="{{ url_for('static', filename='MDB/js/popper.min.js') }}"></script>
 
       <!-- Bootstrap core JavaScript -->
-      <script src="{{ url_for('static', filename='MDB/js/bootstrap.js') }}"></script>
+      <script src="https://cdn.staticfile.org/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 
       <!-- MDB core JavaScript -->
-      <script src="{{ url_for('static', filename='MDB/js/mdb.js') }}"></script>
+      <script src="https://cdn.staticfile.org/mdbootstrap/4.12.0/js/mdb.min.js"></script>
 
     {% endblock scripts %}
 

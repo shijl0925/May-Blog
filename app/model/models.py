@@ -364,8 +364,10 @@ def update_post_archive(target, value, oldvalue, initiator):
     search_archive = Archive.query.filter_by(label=label).first()
     if search_archive is None:
         search_archive = Archive(label=label)
+        db.session.add(search_archive)
+        db.session.commit()
 
-    target.archive = search_archive
+    target.archive_id = search_archive.id
 
 
 class Archive(db.Model):

@@ -272,7 +272,7 @@ def create_post():
     )
 
 
-@posts_bp.route('/post/edit/<post_slug>', methods=['POST'])
+@posts_bp.route('/post/edit/<post_slug>', methods=['GET', 'POST'])
 @login_required
 @permission_required('ADMINISTER')
 def edit_post(post_slug):

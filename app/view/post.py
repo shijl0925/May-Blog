@@ -368,7 +368,7 @@ def edit_post(post_slug):
         search_post.is_privacy = privacy
         search_post.is_top = top
         search_post.body = body
-        search_post.timestamp = datetime.now()
+        # search_post.timestamp = datetime.now()
 
         if is_markdown:
             search_post.content = content

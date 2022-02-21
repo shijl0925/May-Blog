@@ -24,7 +24,18 @@ from app.view import init_blue_print
 from app.controller.security import create_security
 from app.controller.request import save_request
 from app.model.models import User, Post, Category, Tag, Archive, Link
-from app.view.file import get_abs_existing_files, get_filename, get_filename_s, get_filename_m
+from app.controller.jwt import (
+    my_user_loader_callback,
+    my_expired_token_callback,
+    my_invalid_token_callback,
+    my_unauthorized_token_callback
+)
+from app.view.file import (
+    get_abs_existing_files,
+    get_filename,
+    get_filename_s,
+    get_filename_m
+)
 
 apps_abs_dir = get_abs_dir(__file__)
 
@@ -60,8 +71,45 @@ def get_locale():
     return flask.request.accept_languages.best_match(['zh', 'en'])
 
 
+def add_template_filters(app):
+    app.add_template_filter(get_filename, "file_name")
+    app.add_template_filter(get_filename_m, "filename_m")
+    app.add_template_filter(get_filename_s, "filename_s")
+
+    app.add_template_filter(count_post_nums_with_tag, 'count_post_nums_with_tag')
+    app.add_template_filter(count_post_nums_with_category, 'count_post_nums_with_category')
+    app.add_template_filter(count_post_nums_with_archive, 'count_post_nums_with_archive')
+    app.add_template_filter(count_post_nums_with_topic, 'count_post_nums_with_topic')
+
+    app.add_template_filter(format_date, 'format_date')
+
+
+def init_jwt():
+    jwt.user_loader_callback_loader(my_user_loader_callback)
+    jwt.expired_token_loader(my_expired_token_callback)
+    jwt.invalid_token_loader(my_invalid_token_callback)
+    jwt.unauthorized_loader(my_unauthorized_token_callback)
+
+
+def register_extensions(app):
+    mail.init_app(app)
+    db.init_app(app)
+    if app.config['DEBUG']:
+        toolbar.init_app(app)
+    moment.init_app(app)
+    admin.init_app(app)
+    adminlte.init_app(app)
+    babel.init_app(app)
+    avatars.init_app(app)
+    ckeditor.init_app(app)
+    dropzone.init_app(app)
+    whooshee.init_app(app)
+    csrf.init_app(app)
+    jwt.init_app(app)
+
+
 def inject_context_variables():
-    admin = User.query.get(1)
+    admin = User.query.first()
     categories = Category.query.all()
     archives = Archive.query.all()
     tags = Tag.query.all()
@@ -136,34 +184,14 @@ def create_app(env=None):
         env = os.environ.get('FLASK_ENV', 'default')
     app_.config.from_object(config.get(env))
 
-    mail.init_app(app_)
-    db.init_app(app_)
-    # toolbar.init_app(app_)
-    moment.init_app(app_)
-    admin.init_app(app_)
-    adminlte.init_app(app_)
-    babel.init_app(app_)
-    avatars.init_app(app_)
-    ckeditor.init_app(app_)
-    dropzone.init_app(app_)
-    whooshee.init_app(app_)
-    csrf.init_app(app_)
-    jwt.init_app(app_)
+    init_jwt()
+    register_extensions(app_)
 
     # app_.after_request(save_request)
 
     app_.context_processor(inject_context_variables)
     app_.add_template_global(get_abs_existing_files, "get_abs_existing_files")
-    app_.add_template_filter(get_filename, "file_name")
-    app_.add_template_filter(get_filename_m, "filename_m")
-    app_.add_template_filter(get_filename_s, "filename_s")
-
-    app_.add_template_filter(count_post_nums_with_tag, 'count_post_nums_with_tag')
-    app_.add_template_filter(count_post_nums_with_category, 'count_post_nums_with_category')
-    app_.add_template_filter(count_post_nums_with_archive, 'count_post_nums_with_archive')
-    app_.add_template_filter(count_post_nums_with_topic, 'count_post_nums_with_topic')
-
-    app_.add_template_filter(format_date, 'format_date')
+    add_template_filters(app_)
 
     app_.jinja_env.trim_blocks = True
     app_.jinja_env.lstrip_blocks = True

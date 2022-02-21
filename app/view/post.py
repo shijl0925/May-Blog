@@ -200,7 +200,7 @@ def search_post():
     )
 
 
-@posts_bp.route('/post/create', methods=['POST'])
+@posts_bp.route('/post/create', methods=['GET', 'POST'])
 @login_required
 @permission_required('ADMINISTER')
 def create_post():
@@ -391,16 +391,15 @@ def delete_post(post_slug):
 @login_required
 @permission_required('ADMINISTER')
 def create_category():
-    if flask.request.method == "POST":
-        category_name = flask.request.form.get('name')
-        if Category.query.filter_by(name=category_name).first():
-            flask.flash(_("This Category already exists!"), category="warning")
-            return redirect_back()
-
-        category = Category(name=category_name)
-        db.session.add(category)
-        db.session.commit()
+    category_name = flask.request.form.get('name')
+    if Category.query.filter_by(name=category_name).first():
+        flask.flash(_("This Category already exists!"), category="warning")
         return redirect_back()
+
+    category = Category(name=category_name)
+    db.session.add(category)
+    db.session.commit()
+    return redirect_back()
 
 
 @posts_bp.route('/post/collection/new', methods=['POST'])

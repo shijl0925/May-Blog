@@ -195,6 +195,17 @@ class User(db.Model, UserMixin):
     def full_name(self):
         return self.last_name + self.first_name
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "email": self.email,
+            "username": self.username,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "active": self.active,
+            "locked": self.locked,
+        }
+
 
 @db.event.listens_for(User, 'after_delete', named=True)
 def delete_avatars(**kwargs):

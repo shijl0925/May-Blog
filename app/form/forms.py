@@ -101,6 +101,7 @@ class PostForm(FlaskForm):
 
     deny_comment = BooleanField(_('Deny Comment'))
     privacy = BooleanField(_('Set Private'))
+    top = BooleanField(_('Set Top'))
 
     is_markdown = BooleanField(_('Markdown'))
 

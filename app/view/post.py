@@ -1,7 +1,7 @@
 from datetime import datetime
 import flask
 from flask_security import login_required, current_user
-from sqlalchemy import or_, func
+from sqlalchemy import func
 from slugify import slugify
 from flask_babelex import gettext as _
 from app.model.models import Post, Category, Tag, Archive, Collection, Comment, About
@@ -18,7 +18,10 @@ posts_bp = flask.Blueprint('posts', __name__, url_prefix='/')
 @posts_bp.route('/', methods=['GET'])
 def posts():
     page = int(flask.request.args.get('page', 1))
-    pagination = Post.query.filter_by(is_draft=False).paginate(page=page, per_page=10)
+    pagination = Post.query.filter_by(is_draft=False).\
+        order_by(Post.is_top.desc()).\
+        order_by(Post.timestamp.desc()).\
+        paginate(page=page, per_page=10)
     count_post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).scalar()
 
     if pagination.page == 1:
@@ -69,7 +72,10 @@ def topic(topic_id):
         flask.abort(404)
 
     page = int(flask.request.args.get('page', 1))
-    pagination = Post.query.filter_by(is_draft=False, collection_id=topic_id).paginate(page=page, per_page=10)
+    pagination = Post.query.filter_by(is_draft=False, collection_id=topic_id). \
+        order_by(Post.is_top.desc()). \
+        order_by(Post.timestamp.desc()). \
+        paginate(page=page, per_page=10)
 
     count_post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False, collection_id=topic_id).scalar()
 
@@ -89,7 +95,9 @@ def tag(tag_id):
         flask.abort(404)
 
     page = int(flask.request.args.get('page', 1))
-    pagination = Post.query.filter_by(is_draft=False).filter(Post.tags.contains(search_tag)).\
+    pagination = Post.query.filter_by(is_draft=False).filter(Post.tags.contains(search_tag)). \
+        order_by(Post.is_top.desc()). \
+        order_by(Post.timestamp.desc()). \
         paginate(page=page, per_page=10)
 
     count_post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).\
@@ -113,7 +121,9 @@ def category(category_id):
         flask.abort(404)
 
     page = int(flask.request.args.get('page', 1))
-    pagination = Post.query.filter_by(is_draft=False).filter_by(category=search_category).\
+    pagination = Post.query.filter_by(is_draft=False).filter_by(category=search_category). \
+        order_by(Post.is_top.desc()). \
+        order_by(Post.timestamp.desc()). \
         paginate(page=page, per_page=10)
 
     count_post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).\
@@ -137,7 +147,9 @@ def archive(archive_id):
         flask.abort(404)
 
     page = int(flask.request.args.get('page', 1))
-    pagination = Post.query.filter_by(is_draft=False).filter_by(archive_id=archive_id).\
+    pagination = Post.query.filter_by(is_draft=False).filter_by(archive_id=archive_id). \
+        order_by(Post.is_top.desc()). \
+        order_by(Post.timestamp.desc()). \
         paginate(page=page, per_page=10)
     count_post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).\
         filter_by(archive_id=archive_id).scalar()
@@ -216,6 +228,7 @@ def create_post():
         tag_names = post_form.tags.data
         deny_comment = post_form.deny_comment.data
         privacy = post_form.privacy.data
+        top = post_form.top.data
         is_markdown = post_form.is_markdown.data
 
         if is_markdown:
@@ -239,6 +252,7 @@ def create_post():
             tags=[Tag.query.filter_by(name=item).first() for item in tag_names],
             deny_comment=deny_comment,
             is_privacy=privacy,
+            is_top=top,
             is_markdown=markdown,
             background=background,
             body=body,
@@ -308,6 +322,7 @@ def edit_post(post_slug):
     post_form.background_image_url.data = search_post.background
     post_form.deny_comment.data = search_post.deny_comment
     post_form.privacy.data = search_post.is_privacy
+    post_form.top.data = search_post.is_top
     post_form.is_markdown.data = is_markdown
 
     if is_markdown:
@@ -323,6 +338,7 @@ def edit_post(post_slug):
         tag_names = flask.request.form.getlist('tags')
         background = flask.request.form.get('background_image_url')
         privacy = True if flask.request.form.get('privacy') else False
+        top = True if flask.request.form.get('top') else False
 
         if is_markdown:
             content = flask.request.form.get('body')
@@ -350,6 +366,7 @@ def edit_post(post_slug):
         search_post.tags = [Tag.query.filter_by(name=item).first() for item in tag_names]
         search_post.background = background
         search_post.is_privacy = privacy
+        search_post.is_top = top
         search_post.body = body
         search_post.timestamp = datetime.now()
 

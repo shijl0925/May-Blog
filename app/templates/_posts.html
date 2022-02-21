@@ -35,6 +35,9 @@
                   <strong>
                     <a class="dark-grey-text" href="{{ url_for('posts.post', post_slug=post.slug) }}">{{ post.title }}</a>
                   </strong>
+                  {% if post.is_top %}
+                    <span class="badge badge-danger">Top</span>
+                  {% endif %}
                   {% if post.is_privacy %}
                     <span class="Label Label--outline v-align-middle ml-1" style="vertical-align: top; margin-top: 5px;">
                       Private

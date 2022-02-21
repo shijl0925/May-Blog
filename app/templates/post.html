@@ -113,7 +113,7 @@
                                       {% endfor %}
                                   </span>
                               </div>
-                            
+
                               {% if current_user.is_admin %}
                               <div class="btn-group float-right" role="group">
                                   <a href="{{ url_for('posts.edit_post', post_slug=post.slug) }}">

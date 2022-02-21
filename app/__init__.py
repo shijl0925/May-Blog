@@ -111,7 +111,7 @@ def count_post_nums_with_category(search_category):
 
 def count_post_nums_with_archive(search_archive):
     post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).filter_by(
-        archive=search_archive).scalar()
+        archive_id=search_archive.id).scalar()
     return post_nums
 
 

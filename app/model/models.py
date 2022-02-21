@@ -33,7 +33,6 @@ class Permission(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(30), unique=True)
-    roles = db.relationship('Role', secondary=roles_permissions, back_populates='permissions')
 
     def __repr__(self):
         return '<Permission %r>' % self.name
@@ -43,8 +42,7 @@ class Role(db.Model, RoleMixin):
     id = db.Column(db.Integer(), primary_key=True)
 
     name = db.Column(db.String(32), unique=True)
-    permissions = db.relationship('Permission', secondary=roles_permissions, back_populates='roles')
-    users = db.relationship('User', secondary=roles_users, back_populates='roles')
+    permissions = db.relationship('Permission', secondary=roles_permissions)
 
     def __repr__(self):
         return '<Role %r>' % self.name
@@ -114,9 +112,7 @@ class User(db.Model, UserMixin):
 
     locked = db.Column(db.Boolean, default=False)
 
-    roles = db.relationship('Role', secondary=roles_users, back_populates='users')
-
-    posts = db.relationship('Post', back_populates='author')
+    roles = db.relationship('Role', secondary=roles_users)
 
     avatar_s = db.Column(db.String(64))
     avatar_m = db.Column(db.String(64))
@@ -214,7 +210,6 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(30), unique=True)
-    posts = db.relationship('Post', back_populates='category')
 
     @staticmethod
     def init_category():
@@ -243,8 +238,6 @@ class Collection(db.Model):
     background = db.Column(db.String(256), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.now)
 
-    posts = db.relationship('Post', back_populates='collection')
-
     def __repr__(self):
         return '<Collection %r>' % self.name
 
@@ -262,7 +255,6 @@ class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(30), unique=True)
-    posts = db.relationship('Post', secondary=post_tag, back_populates='tags')
 
     @staticmethod
     def init_tag():
@@ -303,22 +295,20 @@ class Post(db.Model):
     deny_comment = db.Column(db.Boolean, default=False)
 
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    author = db.relationship('User', back_populates='posts')
+    author = db.relationship('User')
 
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
-    category = db.relationship('Category', back_populates='posts')
+    category = db.relationship('Category')
 
     archive_id = db.Column(db.Integer, db.ForeignKey('archive.id'))
-    archive = db.relationship('Archive', back_populates='posts')
 
     collection_id = db.Column(db.Integer, db.ForeignKey('collection.id'))
-    collection = db.relationship('Collection', back_populates='posts')
+    collection = db.relationship('Collection')
 
-    tags = db.relationship('Tag', secondary='post_tag', back_populates='posts')
+    tags = db.relationship('Tag', secondary='post_tag')
 
-    comments = db.relationship('Comment', back_populates='post', cascade='all, delete-orphan')
+    comments = db.relationship('Comment', cascade='all, delete-orphan')
 
-    trackers = db.relationship('Tracker', back_populates='post', cascade='all')
     visit_count = db.Column(db.Integer, default=0)
 
     @property
@@ -346,7 +336,6 @@ class Comment(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.now, index=True)
 
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-    post = db.relationship('Post', back_populates='comments')
 
     replied_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
     replies = db.relationship('Comment', back_populates='replied', cascade='all, delete-orphan')
@@ -372,7 +361,7 @@ class Archive(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     label = db.Column(db.String(32), nullable=False, unique=True)
-    posts = db.relationship('Post', back_populates='archive')
+    posts = db.relationship('Post')
 
     def __repr__(self):
         return '<Archive %r>' % self.label
@@ -396,7 +385,7 @@ class Tracker(db.Model):
     user_agent = db.Column(db.String(256))
 
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-    post = db.relationship('Post', back_populates='trackers')
+    post = db.relationship('Post')
 
     def __repr__(self):
         return '<Tracker %r>' % self.id

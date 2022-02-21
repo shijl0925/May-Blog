@@ -69,9 +69,9 @@ def topic(topic_id):
         flask.abort(404)
 
     page = int(flask.request.args.get('page', 1))
-    pagination = Post.query.filter_by(is_draft=False).with_parent(search_topic).paginate(page=page, per_page=10)
+    pagination = Post.query.filter_by(is_draft=False, collection_id=topic_id).paginate(page=page, per_page=10)
 
-    count_post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).with_parent(search_topic).scalar()
+    count_post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False, collection_id=topic_id).scalar()
 
     return flask.render_template(
         "topic.html",
@@ -137,10 +137,10 @@ def archive(archive_id):
         flask.abort(404)
 
     page = int(flask.request.args.get('page', 1))
-    pagination = Post.query.filter_by(is_draft=False).filter_by(archive=search_archive).\
+    pagination = Post.query.filter_by(is_draft=False).filter_by(archive_id=archive_id).\
         paginate(page=page, per_page=10)
     count_post_nums = db.session.query(func.count(Post.id)).filter_by(is_draft=False).\
-        filter_by(archive=search_archive).scalar()
+        filter_by(archive_id=archive_id).scalar()
 
     posts_template = "posts.html"
 
@@ -190,17 +190,17 @@ def post(post_slug):
 def search_post():
     q = flask.request.args.get('q')
     page = int(flask.request.args.get('page', 1))
-    # pagination = Post.query.filter(or_(Post.title.like(u'%{}%'.format(q)),
-    #                                Post.body.like(u'%{}%'.format(q)))).paginate(page=page, per_page=10)
-    pagination = Post.query.whooshee_search(q).paginate(page=page, per_page=10)
+    pagination = Post.query.whooshee_search(q, order_by_relevance=0).paginate(page=page, per_page=10)
+    count_post_nums = Post.query.whooshee_search(q, order_by_relevance=0).count()
     return flask.render_template(
         "posts.html",
         pagination=pagination,
-        posts=pagination.items
+        posts=pagination.items,
+        count_post_nums=count_post_nums
     )
 
 
-@posts_bp.route('/post/create', methods=['GET', 'POST'])
+@posts_bp.route('/post/create', methods=['POST'])
 @login_required
 @permission_required('ADMINISTER')
 def create_post():
@@ -272,7 +272,7 @@ def create_post():
     )
 
 
-@posts_bp.route('/post/edit/<post_slug>', methods=['GET', 'POST'])
+@posts_bp.route('/post/edit/<post_slug>', methods=['POST'])
 @login_required
 @permission_required('ADMINISTER')
 def edit_post(post_slug):
@@ -381,11 +381,10 @@ def edit_post(post_slug):
 @login_required
 @permission_required('ADMINISTER')
 def delete_post(post_slug):
-    if flask.request.method == "POST":
-        search_post = Post.query.filter_by(slug=post_slug).first_or_404()
-        db.session.delete(search_post)
-        flask.flash(_("Delete The Post Successful!"), category="success")
-        return flask.redirect(flask.url_for('posts.posts'))
+    search_post = Post.query.filter_by(slug=post_slug).first_or_404()
+    db.session.delete(search_post)
+    flask.flash(_("Delete The Post Successful!"), category="success")
+    return flask.redirect(flask.url_for('posts.posts'))
 
 
 @posts_bp.route('/post/category/new', methods=['POST'])
@@ -408,73 +407,69 @@ def create_category():
 @login_required
 @permission_required('ADMINISTER')
 def create_collection():
-    if flask.request.method == "POST":
-        collection_name = flask.request.form.get('name')
-        collection_description = flask.request.form.get('description')
-        collection_background = flask.request.form.get('background')
-        if Collection.query.filter_by(name=collection_name).first():
-            flask.flash(_("This topic already exists!"), category="warning")
-            return redirect_back()
-
-        collection = Collection(
-            name=collection_name,
-            description=collection_description,
-            background=collection_background
-        )
-        db.session.add(collection)
-        db.session.commit()
+    collection_name = flask.request.form.get('name')
+    collection_description = flask.request.form.get('description')
+    collection_background = flask.request.form.get('background')
+    if Collection.query.filter_by(name=collection_name).first():
+        flask.flash(_("This topic already exists!"), category="warning")
         return redirect_back()
+
+    collection = Collection(
+        name=collection_name,
+        description=collection_description,
+        background=collection_background
+    )
+    db.session.add(collection)
+    db.session.commit()
+    return redirect_back()
 
 
 @posts_bp.route('/post/tag/new', methods=['POST'])
 @login_required
 @permission_required('ADMINISTER')
 def create_tag():
-    if flask.request.method == "POST":
-        tag_name = flask.request.form.get('name')
-        if Tag.query.filter_by(name=tag_name).first():
-            flask.flash(_("This Tag already exists!"), category="warning")
-            return redirect_back()
-
-        tag = Tag(name=tag_name)
-        db.session.add(tag)
-        db.session.commit()
+    tag_name = flask.request.form.get('name')
+    if Tag.query.filter_by(name=tag_name).first():
+        flask.flash(_("This Tag already exists!"), category="warning")
         return redirect_back()
+
+    tag = Tag(name=tag_name)
+    db.session.add(tag)
+    db.session.commit()
+    return redirect_back()
 
 
 @posts_bp.route('/post/create_comment/<post_slug>', methods=['POST'])
 def create_comment(post_slug):
-    if flask.request.method == "POST":
-        search_post = Post.query.filter_by(slug=post_slug).first_or_404()
-        author = flask.request.form.get("author")
-        email = flask.request.form.get("email")
-        body = flask.request.form.get("body")
+    search_post = Post.query.filter_by(slug=post_slug).first_or_404()
+    author = flask.request.form.get("author")
+    email = flask.request.form.get("email")
+    body = flask.request.form.get("body")
 
-        comment = Comment(
-            author=author,
-            email=email,
-            body=body,
-            post=search_post
-        )
+    comment = Comment(
+        author=author,
+        email=email,
+        body=body,
+        post_id=search_post.id
+    )
 
-        db.session.add(comment)
-        db.session.commit()
-        return flask.redirect(flask.url_for('posts.post', post_slug=search_post.slug))
+    db.session.add(comment)
+    db.session.commit()
+    return flask.redirect(flask.url_for('posts.post', post_slug=search_post.slug))
 
 
 @posts_bp.route('/post/delete-comment/<comment_id>', methods=['POST'])
 @login_required
 @permission_required('ADMINISTER')
 def delete_comment(comment_id):
-    if flask.request.method == "POST":
-        search_comment = Comment.query.get(comment_id)
-        post_slug = search_comment.post.slug
-        db.session.delete(search_comment)
-        flask.flash(_("Delete The Comment Successful!"), category="success")
-        return flask.redirect(flask.url_for('posts.post', post_slug=post_slug))
+    search_comment = Comment.query.get(comment_id)
+    post_slug = search_comment.post.slug
+    db.session.delete(search_comment)
+    flask.flash(_("Delete The Comment Successful!"), category="success")
+    return flask.redirect(flask.url_for('posts.post', post_slug=post_slug))
 
 
 @posts_bp.route('/about')
 def about():
-    about = About.query.get(1)
+    about = About.query.first()
     return flask.render_template("about.html", about=about)

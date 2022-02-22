@@ -275,7 +275,7 @@ def create_post():
             db.session.commit()
             flask.flash(_("Create A New Post Successful!"), category="success")
 
-        return flask.redirect(flask.url_for('posts.posts'))
+        return flask.redirect(flask.url_for('posts.post', post_slug=slug))
 
     return flask.render_template(
         'create.html',
@@ -382,7 +382,7 @@ def edit_post(post_slug):
             db.session.commit()
             flask.flash(_("Update and Publish The Post Successful!"), category="success")
 
-        return flask.redirect(flask.url_for('posts.posts'))
+        return flask.redirect(flask.url_for('posts.post', post_slug=new_slug))
 
     return flask.render_template(
         'edit.html',

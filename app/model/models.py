@@ -325,11 +325,13 @@ class Post(db.Model):
 
     @property
     def previous(self):
-        return Post.query.order_by(Post.id.desc()).filter(Post.is_draft == False, Post.id < self.id).first()
+        return Post.query.order_by(Post.timestamp.desc()).\
+            filter(Post.is_draft.is_(False), Post.timestamp < self.timestamp).first()
 
     @property
     def next(self):
-        return Post.query.order_by(Post.id).filter(Post.is_draft == False, Post.id > self.id).first()
+        return Post.query.order_by(Post.timestamp).\
+            filter(Post.is_draft.is_(False), Post.timestamp > self.timestamp).first()
 
     def __repr__(self):
         return '<Post %r>' % self.title

@@ -271,11 +271,12 @@ def create_post():
             db.session.commit()
             flask.flash(_("The Post has been saved as a Draft Successful!"), category="success")
 
+            return flask.redirect(flask.url_for('posts.posts'))
+
         elif post_form.publish_submit.data:
-            db.session.commit()
             flask.flash(_("Create A New Post Successful!"), category="success")
 
-        return flask.redirect(flask.url_for('posts.post', post_slug=slug))
+            return flask.redirect(flask.url_for('posts.post', post_slug=slug))
 
     return flask.render_template(
         'create.html',
@@ -377,12 +378,15 @@ def edit_post(post_slug):
             search_post.is_draft = True
             db.session.commit()
             flask.flash(_("The Post has been saved as a Draft Successful!"), category="success")
+
+            return flask.redirect(flask.url_for('posts.posts'))
+
         elif post_form.publish_submit.data:
             search_post.is_draft = False
             db.session.commit()
             flask.flash(_("Update and Publish The Post Successful!"), category="success")
 
-        return flask.redirect(flask.url_for('posts.post', post_slug=new_slug))
+            return flask.redirect(flask.url_for('posts.post', post_slug=new_slug))
 
     return flask.render_template(
         'edit.html',

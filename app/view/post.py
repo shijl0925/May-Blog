@@ -483,10 +483,11 @@ def create_comment(post_slug):
 @permission_required('ADMINISTER')
 def delete_comment(comment_id):
     search_comment = Comment.query.get(comment_id)
-    post_slug = search_comment.post.slug
+    search_post = Post.query.get_or_404(search_comment.post_id)
+
     db.session.delete(search_comment)
     flask.flash(_("Delete The Comment Successful!"), category="success")
-    return flask.redirect(flask.url_for('posts.post', post_slug=post_slug))
+    return flask.redirect(flask.url_for('posts.post', post_slug=search_post.slug))
 
 
 @posts_bp.route('/about')

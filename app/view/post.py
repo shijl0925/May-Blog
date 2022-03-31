@@ -340,6 +340,7 @@ def edit_post(post_slug):
         background = flask.request.form.get('background_image_url')
         privacy = True if flask.request.form.get('privacy') else False
         top = True if flask.request.form.get('top') else False
+        deny_comment = True if flask.request.form.get('deny_comment') else False
 
         if is_markdown:
             content = flask.request.form.get('body')
@@ -369,7 +370,7 @@ def edit_post(post_slug):
         search_post.is_privacy = privacy
         search_post.is_top = top
         search_post.body = body
-        # search_post.timestamp = datetime.now()
+        search_post.deny_comment = deny_comment
 
         if is_markdown:
             search_post.content = content
@@ -462,6 +463,10 @@ def create_tag():
 @posts_bp.route('/post/create_comment/<post_slug>', methods=['POST'])
 def create_comment(post_slug):
     search_post = Post.query.filter_by(slug=post_slug).first_or_404()
+    if search_post.deny_comment:
+        flask.flash(_("This post deny comment!"), category="warning")
+        return flask.redirect(flask.url_for('posts.post', post_slug=search_post.slug))
+
     author = flask.request.form.get("author")
     email = flask.request.form.get("email")
     body = flask.request.form.get("body")

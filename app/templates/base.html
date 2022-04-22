@@ -137,7 +137,7 @@
 
 {% block scripts %}
     {{ super() }}
-    {{ moment.include_moment() }}
+    {{ moment.include_moment(local_js="https://cdn.staticfile.org/moment.js/2.29.1/moment-with-locales.js") }}
     {{ moment.locale('zh-cn') }}
     <script src="{{ url_for('static', filename='js/updown.js') }}"></script>
     <script>

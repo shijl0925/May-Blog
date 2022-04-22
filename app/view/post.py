@@ -202,8 +202,13 @@ def post(post_slug):
 def search_post():
     q = flask.request.args.get('q')
     page = int(flask.request.args.get('page', 1))
-    pagination = Post.query.whooshee_search(q, order_by_relevance=0).paginate(page=page, per_page=10)
-    count_post_nums = Post.query.whooshee_search(q, order_by_relevance=0).count()
+    search_post = Post.query
+    if q:
+        search_post = search_post.whooshee_search(q, order_by_relevance=0)
+
+    pagination = search_post.paginate(page=page, per_page=10)
+    count_post_nums = search_post.count()
+
     return flask.render_template(
         "posts.html",
         pagination=pagination,

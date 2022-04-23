@@ -17,7 +17,7 @@ posts_bp = flask.Blueprint('posts', __name__, url_prefix='/')
 
 @posts_bp.route('/', methods=['GET'])
 def posts():
-    page = int(flask.request.args.get('page', 1))
+    page = flask.request.args.get('page', 1, type=int)
     pagination = Post.query.filter_by(is_draft=False).\
         order_by(Post.is_top.desc()).\
         order_by(Post.timestamp.desc()).\
@@ -39,7 +39,7 @@ def posts():
 
 @posts_bp.route('/archives', methods=['GET'])
 def archives():
-    page = int(flask.request.args.get('page', 1))
+    page = flask.request.args.get('page', 1, type=int)
     pagination = Archive.query.paginate(page=page, per_page=5)
     return flask.render_template(
         "archive.html",
@@ -56,7 +56,7 @@ def tags():
 
 @posts_bp.route('/topics', methods=['GET'])
 def topics():
-    page = int(flask.request.args.get('page', 1))
+    page = flask.request.args.get('page', 1, type=int)
     pagination = Collection.query.paginate(page=page, per_page=6)
     return flask.render_template(
         "topics.html",
@@ -71,7 +71,7 @@ def topic(topic_id):
     if not search_topic:
         flask.abort(404)
 
-    page = int(flask.request.args.get('page', 1))
+    page = flask.request.args.get('page', 1, type=int)
     pagination = Post.query.filter_by(is_draft=False, collection_id=topic_id). \
         order_by(Post.is_top.desc()). \
         order_by(Post.timestamp.desc()). \
@@ -94,7 +94,7 @@ def tag(tag_id):
     if not search_tag:
         flask.abort(404)
 
-    page = int(flask.request.args.get('page', 1))
+    page = flask.request.args.get('page', 1, type=int)
     pagination = Post.query.filter_by(is_draft=False).filter(Post.tags.contains(search_tag)). \
         order_by(Post.is_top.desc()). \
         order_by(Post.timestamp.desc()). \
@@ -120,7 +120,7 @@ def category(category_id):
     if not search_category:
         flask.abort(404)
 
-    page = int(flask.request.args.get('page', 1))
+    page = flask.request.args.get('page', 1, type=int)
     pagination = Post.query.filter_by(is_draft=False).filter_by(category=search_category). \
         order_by(Post.is_top.desc()). \
         order_by(Post.timestamp.desc()). \
@@ -146,7 +146,7 @@ def archive(archive_id):
     if not search_archive:
         flask.abort(404)
 
-    page = int(flask.request.args.get('page', 1))
+    page = flask.request.args.get('page', 1, type=int)
     pagination = Post.query.filter_by(is_draft=False).filter_by(archive_id=archive_id). \
         order_by(Post.is_top.desc()). \
         order_by(Post.timestamp.desc()). \
@@ -170,7 +170,7 @@ def archive(archive_id):
 @permission_required('ADMINISTER')
 def draft():
     operate_form = OperateForm()
-    page = int(flask.request.args.get('page', 1))
+    page = flask.request.args.get('page', 1, type=int)
     pagination = Post.query.filter_by(is_draft=True).paginate(page=page, per_page=10)
 
     return flask.render_template(
@@ -201,7 +201,7 @@ def post(post_slug):
 @posts_bp.route('/search', methods=['GET'])
 def search_post():
     q = flask.request.args.get('q')
-    page = int(flask.request.args.get('page', 1))
+    page = flask.request.args.get('page', 1, type=int)
     search_post = Post.query
     if q:
         search_post = search_post.whooshee_search(q, order_by_relevance=0)

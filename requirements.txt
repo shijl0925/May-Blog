@@ -14,7 +14,7 @@ gunicorn>=19.9.0
 Flask_AdminLTE3
 python-slugify
 email_validator
-werkzeug==0.15.4
+werkzeug==0.15.5
 flask-moment
 flask-ckeditor
 redis

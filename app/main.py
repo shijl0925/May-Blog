@@ -2,6 +2,7 @@ import os
 import flask
 from sqlalchemy import func
 from datetime import datetime
+from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFError
 from app.utils import config_log, get_abs_dir
 from app.config import config
@@ -19,6 +20,7 @@ from app.controller.extensions import (
     whooshee,
     jwt
 )
+from app.controller.commands import initdb
 from app.controller.admin import admin
 from app.view import init_blue_print
 from app.controller.security import create_security
@@ -82,6 +84,13 @@ def add_template_filters(app):
     app.add_template_filter(count_post_nums_with_topic, 'count_post_nums_with_topic')
 
     app.add_template_filter(format_date, 'format_date')
+
+
+def register_commands(app):
+    """Register Click commands."""
+    commands = [initdb]
+    for command in commands:
+        app.cli.add_command(command)
 
 
 def init_jwt():
@@ -186,6 +195,12 @@ def create_app(env=None):
 
     init_jwt()
     register_extensions(app_)
+    register_commands(app_)
+
+    if app_.config['SQLALCHEMY_DATABASE_URI'].startswith("sqlite:"):
+        Migrate(app_, db, render_as_batch=True)
+    else:
+        Migrate(app_, db)
 
     # app_.after_request(save_request)
 

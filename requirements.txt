@@ -26,7 +26,7 @@ flask-dropzone==1.6.0
 Pygments
 faker
 marko==1.1.0
-# mysqlclient==2.1.1
+mysqlclient==2.1.1
 concurrent-log-handler
 Flask-BabelEx==0.9.4
 MarkupSafe==1.1.1

@@ -3,9 +3,9 @@ ARG IMAGE=shijl0925/rockylinux-8-python:3.11.9
 
 FROM ${IMAGE}
 
-# RUN dnf install --nogpgcheck -y unzip mysql-devel git vim && \
-#     dnf clean all && \
-#     dnf autoremove -y
+RUN dnf install --nogpgcheck -y unzip mysql-devel git vim && \
+    dnf clean all && \
+    dnf autoremove -y
 
 # setup environment variable
 ENV DockerHOME=/Blog
@@ -21,7 +21,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # install dependencies
-# RUN pip3 install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
+RUN pip3 install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 # copy whole project to your docker home directory.
 COPY . $DockerHOME

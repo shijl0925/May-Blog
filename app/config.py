@@ -3,17 +3,17 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class BaseConfig:
-    SECRET_KEY = b'********'
+    SECRET_KEY = b'_5#y2L"F4Q8z\n\xec]flask_app/'
     DEBUG = False
     TESTING = False
     DATABASE_URI = 'sqlite:///:memory:'
 
-    MAIL_SERVER = '********'
-    MAIL_PORT = 25
-    MAIL_USE_SSL = False
-    MAIL_USERNAME = '********'
-    MAIL_PASSWORD = '********'
-    MAIL_DEFAULT_SENDER = MAIL_USERNAME
+    # MAIL_SERVER = '********'
+    # MAIL_PORT = 25
+    # MAIL_USE_SSL = False
+    # MAIL_USERNAME = '********'
+    # MAIL_PASSWORD = '********'
+    # MAIL_DEFAULT_SENDER = MAIL_USERNAME
 
     AVATARS_IDENTICON_ROWS = 7
     AVATARS_IDENTICON_COLS = 7
@@ -24,10 +24,10 @@ class BaseConfig:
     AVATARS_CROP_BASE_WIDTH = 350
 
     # Flask-Security setup
-    SECURITY_EMAIL_SENDER = MAIL_DEFAULT_SENDER
+    # SECURITY_EMAIL_SENDER = MAIL_DEFAULT_SENDER
     SECURITY_LOGIN_WITHOUT_CONFIRMATION = True
     SECURITY_REGISTERABLE = True
-    SECURITY_SEND_REGISTER_EMAIL = True
+    # SECURITY_SEND_REGISTER_EMAIL = True
     SECURITY_RECOVERABLE = True
     SECURITY_URL_PREFIX = '/auth'
 
@@ -88,7 +88,7 @@ class TestingConfig(DevelopmentConfig):
 
 
 class ProductionConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = 'postgresql://deploy:deploy@deploy@localhost/analysis'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or os.path.join(basedir, 'data.sqlite')  # 'postgresql://deploy:deploy@deploy@localhost/analysis'
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False

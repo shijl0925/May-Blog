@@ -19,16 +19,9 @@ from app.model.models import (
 
 
 @click.command()
-@click.option('--drop', is_flag=True, help='Create after drop.')
 @with_appcontext
-def initdb(drop):
+def initdb():
     """Initialize the database."""
-    if drop:
-        click.confirm('This operation will delete the database, do you want to continue?', abort=True)
-        db.drop_all()
-        click.echo('Drop tables.')
-
-    db.create_all()
 
     Role.init_role()
     Category.init_category()

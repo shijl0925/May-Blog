@@ -30,6 +30,11 @@ $ python3 -m flask --help # for help
 
 $ export FLASK_DEBUG=1
 $ export FLASK_APP=app.main
+
+$ python3 -m flask db init
+$ python3 -m flask db migrate -m "Initial migration."
+$ python3 -m flask db upgrade
+
 $ python3 -m flask initdb
 $ python3 -m flask run
 ```

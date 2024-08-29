@@ -30,4 +30,5 @@ mysqlclient==2.1.1
 concurrent-log-handler
 Flask-BabelEx==0.9.4
 MarkupSafe==1.1.1
-Pillow==9.5.0
+Flask-DotEnv
+Pillow

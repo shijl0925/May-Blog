@@ -18,13 +18,30 @@
 * Flask-Mail for sending emails
 * flask-admin(with AdminLTE3) for Admin management
 
-How to run:
+## How to install
+
 ```
-$ python3 manage.py reset_db
-$ python3 manage.py init_db
-$ python3 manage.py runserver
-* Running on http://127.0.0.1:8080/
+$ pip3 install -r requirements.txt
 ```
+
+## How to run
+```
+$ python3 -m flask --help # for help
+
+$ export FLASK_DEBUG=1
+$ export FLASK_APP=app.main
+$ python3 -m flask initdb
+$ python3 -m flask run
+```
+
+## How to Migrate database
+```
+$ python3 -m flask db init # create the database or enable migrations
+$ python3 -m flask db migrate # generate an initial migration
+$ python3 -m flask db upgrade # apply the migration to the database
+```
+
+Running on http://127.0.0.1:5000/
 
 ## License
 

@@ -1,5 +1,5 @@
 services:
-  memos:
+  app:
     image: may-blog:latest
     container_name: memos
     build:

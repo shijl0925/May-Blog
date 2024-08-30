@@ -1,0 +1,13 @@
+services:
+  memos:
+    image: may-blog:latest
+    container_name: memos
+    build:
+      context: .
+      dockerfile: Dockerfile
+    expose:
+      - '8080'
+    volumes:
+      - /home/logs:/home/logs
+    ports:
+      - 8080:8080

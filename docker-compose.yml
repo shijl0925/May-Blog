@@ -1,7 +1,7 @@
 services:
   app:
     image: may-blog:latest
-    container_name: memos
+    container_name: may-blog
     build:
       context: .
       dockerfile: Dockerfile

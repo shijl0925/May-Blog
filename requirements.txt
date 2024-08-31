@@ -31,4 +31,4 @@ concurrent-log-handler
 Flask-BabelEx==0.9.4
 MarkupSafe==1.1.1
 Flask-DotEnv
-Pillow
+Pillow==9.5.0
